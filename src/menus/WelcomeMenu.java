@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -14,6 +13,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 import general.Main;
+import general.World;
 
 
 public class WelcomeMenu extends Menu implements OnClickListener{
@@ -24,23 +24,17 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 
 	private Image background;
 	private int blinkPeriod=10;
-	private Music Mbackground;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		try {	
-			Mbackground=new Music("musics/menu.ogg");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 		
-		background=new Image("Images/LogoTGD_transparent.png");
+		background=new Image("images/LogoTGD_transparent.png");
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		Mbackground.loop();
+		
 	}
 
 	@Override
@@ -50,7 +44,7 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 	
 	@Override
 	public void onOptionItemSelected(int position) {
-		game.enterState(MainMenu.ID, new FadeOutTransition(),new FadeInTransition());
+		game.enterState(World.ID, new FadeOutTransition(),new FadeInTransition());
 	}
 	
 	@Override
