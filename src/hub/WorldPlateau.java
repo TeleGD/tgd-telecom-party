@@ -4,6 +4,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class WorldPlateau {
+	
+	static int gridWidth;
+	static int gridHeight;
+	
 	private Case[] chemin;
 	private int nbJoueurs;
 	private JoueurPlateau[] listeJoueurs;

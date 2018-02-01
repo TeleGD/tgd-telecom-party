@@ -5,6 +5,9 @@ import org.newdawn.slick.SlickException;
 
 public class Case {
 	private int id;
+	private float x;
+	private float y;
+	
 	/* liste des cases :
 	 * 0 : Normal (sans effet)
 	 * 1 : Fin
@@ -26,5 +29,16 @@ public class Case {
 	public Case(int id) throws SlickException {
 		this.id=id;
 		sprite=new Image("images/case" + id);
+		x = id * WorldPlateau.gridWidth;
+		y = id * WorldPlateau.gridHeight;
 	}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+	
 }
