@@ -1,12 +1,13 @@
 package hub;
 
+import org.newdawn.slick.Image;
+
 public class JoueurPlateau {
 	private int place;
-	private String couleur;
+	private Image sprite;
 	
 	public JoueurPlateau() {
 		place=0;
-		couleur="blue";
 	}
 	
 	public void avance(int n) {
@@ -21,12 +22,14 @@ public class JoueurPlateau {
 		this.place = place;
 	}
 
-	public String getCouleur() {
-		return couleur;
+	public Image getSprite() {
+		return sprite;
 	}
 
-	public void setCouleur(String couleur) {
-		this.couleur = couleur;
+	public void setSprite(Image sprite) {
+		this.sprite = sprite;
 	}
+
+	
 	
 }
