@@ -10,7 +10,7 @@ public class WorldPlateau {
 		nbJoueurs=n;
 		listeJoueurs = new JoueurPlateau[n];
 		for (int i=0;i<n;i++) {
-			listeJoueurs[i].setCouleur(listeCouleurs[i]);
+			listeJoueurs[i].setcolor(listeCouleurs[i]);
 		}
 	}
 	
