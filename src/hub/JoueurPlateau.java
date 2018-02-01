@@ -1,4 +1,4 @@
-package general;
+package hub;
 
 public class JoueurPlateau {
 	private int place;

@@ -1,4 +1,4 @@
-package general;
+package hub;
 
 import org.newdawn.slick.Image;
 
