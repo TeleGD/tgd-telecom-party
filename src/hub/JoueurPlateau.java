@@ -9,14 +9,16 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 public class JoueurPlateau {
-	private int place;
-	private String nameSprite;
+	private int place,number;
+	private String name;
 	private Image sprite;
 	private float x;
 	private float y;
 	
-	public JoueurPlateau(String color) {
+	public JoueurPlateau(int num, String name, String nameSprite) {
 		place=0;
+		this.number=num;
+		this.name = name;
 		try {
 			sprite = new Image(nameSprite);
 		} catch (SlickException e) {

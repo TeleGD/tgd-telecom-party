@@ -44,7 +44,7 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 	
 	@Override
 	public void onOptionItemSelected(int position) {
-		game.enterState(World.ID, new FadeOutTransition(),new FadeInTransition());
+		game.enterState(MainMenu.ID, new FadeOutTransition(),new FadeInTransition());
 	}
 	
 	@Override
