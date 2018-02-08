@@ -7,6 +7,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class WorldPlateau {
+	
+	static int gridWidth;
+	static int gridHeight;
+	
 	private Case[] chemin;
 	private int[] cheminEntiers={0,0,0,0,0,0,0,0,1};
 	private int nbJoueurs;
