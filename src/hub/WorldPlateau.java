@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.Main;
 import general.World;
 import general.ui.Button;
 import general.ui.TGDComponent;
@@ -17,23 +18,29 @@ import general.ui.TGDComponent.OnClickListener;
 
 
 public class WorldPlateau extends BasicGameState {
-	
-	static int gridWidth;
-	static int gridHeight;
+
+	private SpiralTrack track;
+	private int gridWidth;
+	private int gridHeight;
+	private int gridGap;
 	
 	public static int ID=7;
 	public static String name = "Jeu de plateau";
 	
 	private boolean menu;
-	private Button plus,moins;
+	private Button plus, moins, ok;
 	
-	private Case[] chemin;
-	private int[] cheminEntiers={0,0,0,0,0,0,0,0,1};
+	// private int[] cheminEntiers={0,0,0,0,0,0,0,0,1};
 	private int nbJoueur;
 	private JoueurPlateau[] listeJoueurs;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
+		this.track = new SpiralTrack (128);
+		this.gridWidth = 64;
+		this.gridHeight = 64;
+		this.gridGap = 16;
+		
 		// TODO Auto-generated method stub
 		menu=true;
 		nbJoueur=1;
@@ -42,7 +49,7 @@ public class WorldPlateau extends BasicGameState {
 		plus.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(TGDComponent componenent) {
+			public void onClick(TGDComponent component) {
 				if (nbJoueur<4) {
 					nbJoueur++;
 				}
@@ -53,12 +60,20 @@ public class WorldPlateau extends BasicGameState {
 		moins.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(TGDComponent componenent) {
+			public void onClick(TGDComponent component) {
 				if (nbJoueur>1) {
 					nbJoueur--;
 				}
 
 			}});
+		
+		ok = new Button ("Start", container, 500, 100, 80, 20);
+		ok.setOnClickListener (new OnClickListener () {
+			@Override
+			public void onClick (TGDComponent component) {
+				menu = false;
+			};
+		});
 
 	}
 	
@@ -68,8 +83,22 @@ public class WorldPlateau extends BasicGameState {
 			g.drawString("nombre de joueurs : " + nbJoueur, 500, 50);
 			plus.render(container, game, g);
 			moins.render(container, game, g);
+			ok.render(container, game, g);
 		} else {
-			
+			int width = this.gridWidth - this.gridGap / 2;
+			int height = this.gridHeight - this.gridGap / 2;
+			int dx = (Main.width - this.gridWidth) / 2;
+			int dy = (Main.height - this.gridHeight) / 2;
+			int radius = this.gridGap / 2;
+			Color backgroundColor = new Color (255, 0, 0);
+			Color textColor = new Color (127, 0, 0);
+			for (int i = 0; i < this.track.length; i++) {
+				int [] xy = this.track.getCoordinates (i);
+				g.setColor (backgroundColor);
+				g.fillRoundRect ((float) xy [0] * this.gridWidth + dx, (float) xy [1] * this.gridHeight + dy, width, height, radius);
+				g.setColor (textColor);
+				g.drawString ("[" + i + "]", xy [0] * this.gridWidth + dx, xy [1] * this.gridHeight + dy);
+			};
 		}
 	}
 	

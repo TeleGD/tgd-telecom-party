@@ -27,10 +27,10 @@ public class Case {
 	private Image sprite;
 	
 	public Case(int id) throws SlickException {
-		this.id=id;
-		sprite=new Image("images/case" + id);
-		x = id * WorldPlateau.gridWidth;
-		y = id * WorldPlateau.gridHeight;
+		this.id = id;
+		// sprite=new Image("images/case" + id);
+		// x = id * WorldPlateau.gridWidth;
+		// y = id * WorldPlateau.gridHeight;
 	}
 
 	public float getX() {

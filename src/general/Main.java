@@ -15,6 +15,8 @@ public class Main extends StateBasedGame{
 	
 	public static int longueur=1280;
 	public static int hauteur=720;
+	public static int width = longueur;
+	public static int height = hauteur;
 	
 	public static void main(String[] args) throws SlickException {
 		//Normalement c'est plus necessaire, c'est fait dans le setup du projet en theorie
