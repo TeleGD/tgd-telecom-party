@@ -1,19 +1,17 @@
 package hub;
 
-import org.newdawn.slick.SlickException;
-
 public class SpiralTrack {
 	
 	public final int length;
 	private Case [] cases;
 	
-	public SpiralTrack (int length) throws SlickException {
+	public SpiralTrack (int length) {
 		assert length >= 0;
 		this.length = length;
 		this.cases = new Case [length];
 		for (int i = 0; i < length; i++) {
 			this.cases [i] = new Case (i); // TODO: add effect
-		}
+		};
 	}
 	
 	public Case getCase (int i) {

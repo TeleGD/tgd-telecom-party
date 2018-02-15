@@ -9,41 +9,40 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import menus.MainMenu;
 import menus.WelcomeMenu;
+import menus.GamesMenu;
 
-
-public class Main extends StateBasedGame{
+public class Main extends StateBasedGame {
 	
-	public static int longueur=1280;
-	public static int hauteur=720;
+	public static int longueur = 1280;
+	public static int hauteur = 720;
 	public static int width = longueur;
 	public static int height = hauteur;
 	
-	public static void main(String[] args) throws SlickException {
+	public static void main (String[] args) throws SlickException {
 		//Normalement c'est plus necessaire, c'est fait dans le setup du projet en theorie
 		//Et pourtant quand je cree un runnable jar il le faut sinon le jar ne se lance pas...
-		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
-		AppGameContainer app = new AppGameContainer(new Main(),longueur, hauteur, false);
-		app.setTargetFrameRate(60);
-		app.setVSync(true);
-		app.setShowFPS(true);
-		app.start();
+		System.setProperty ("org.lwjgl.librarypath", new File ("natives").getAbsolutePath ());
+		AppGameContainer app = new AppGameContainer (new Main (), longueur, hauteur, false);
+		app.setTargetFrameRate (60);
+		app.setVSync (true);
+		app.setShowFPS (true);
+		app.start ();
 	}
 	
 
-	public Main() {
-		super("Projet_2018 #NoName");
+	public Main () {
+		super ("Projet_2018 #NoName");
 	}
 
-
-
 	@Override
-	public void initStatesList(GameContainer container) throws SlickException {
-		addState(new WelcomeMenu());
-		addState(new MainMenu());
-		addState(new World());
-		addState(new hub.WorldPlateau());
-		addState(new games.battle.World());
+	public void initStatesList (GameContainer container) {
+		addState (new WelcomeMenu ());
+		addState (new MainMenu ());
+		addState (new GamesMenu ());
+		// addState (new World ());
+		addState (new hub.WorldPlateau ());
+		addState (new games.battle.World ());
 		
-		this.enterState(WelcomeMenu.ID);
+		this.enterState (WelcomeMenu.ID);
 	}
 }

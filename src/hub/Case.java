@@ -1,10 +1,9 @@
 package hub;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+// import org.newdawn.slick.Image;
 
 public class Case {
-	private int id;
+	// private int id;
 	private float x;
 	private float y;
 	
@@ -24,20 +23,20 @@ public class Case {
 	 * 12 : Rémi Bachelet : tp sur une autre case Rémi Bachelet aléatoire
 	 */
 	
-	private Image sprite;
+	// private Image sprite;
 	
-	public Case(int id) throws SlickException {
-		this.id = id;
+	public Case (int id) {
+		// this.id = id;
 		// sprite=new Image("images/case" + id);
 		// x = id * WorldPlateau.gridWidth;
 		// y = id * WorldPlateau.gridHeight;
 	}
 
-	public float getX() {
+	public float getX () {
 		return x;
 	}
 
-	public float getY() {
+	public float getY () {
 		return y;
 	}
 	
