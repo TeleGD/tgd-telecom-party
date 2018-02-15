@@ -26,13 +26,14 @@ public class WorldPlateau extends BasicGameState {
 	private int gridWidth;
 	private int gridHeight;
 	private int gridGap;
+	private int playerHeight, playerWidth;
 	
 	private boolean menu;
 	private Button plus, moins, ok;
 	
 	// private int [] cheminEntiers = {0, 0, 0, 0, 0, 0, 0, 0, 1};
 	private int nbJoueur;
-	// private JoueurPlateau [] listeJoueurs;
+	private JoueurPlateau [] listeJoueurs;
 	
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
@@ -45,6 +46,13 @@ public class WorldPlateau extends BasicGameState {
 		this.gridWidth = 64;
 		this.gridHeight = 64;
 		this.gridGap = 16;
+		this.playerHeight = this.gridHeight - 10;
+		this.playerWidth = this.gridWidth - 10;
+		
+		this.listeJoueurs = new JoueurPlateau [1]; // 1 joueurs max
+		
+		// TEST JOUEUR
+		this.listeJoueurs [0] = new JoueurPlateau (0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
 		
 		// TODO Auto-generated method stub
 		this.menu = true;
@@ -93,7 +101,9 @@ public class WorldPlateau extends BasicGameState {
 		if (this.menu) {
 			
 		} else {
-			
+			for (JoueurPlateau p: this.listeJoueurs) {
+				p.update (container, game, delta, this);
+			};
 		};
 	}
 	
@@ -104,6 +114,7 @@ public class WorldPlateau extends BasicGameState {
 			this.moins.render (container, game, context);
 			this.ok.render (container, game, context);
 		} else {
+			// Affichage du plateau :
 			int width = this.gridWidth - this.gridGap / 2;
 			int height = this.gridHeight - this.gridGap / 2;
 			int dx = (Main.width - this.gridWidth) / 2;
@@ -117,6 +128,11 @@ public class WorldPlateau extends BasicGameState {
 				context.fillRoundRect ((float) xy [0] * this.gridWidth + dx, (float) xy [1] * this.gridHeight + dy, width, height, radius);
 				context.setColor (textColor);
 				context.drawString ("[" + i + "]", xy [0] * this.gridWidth + dx, xy [1] * this.gridHeight + dy);
+			};
+			// Fin d'affichage du plateau
+			// Affichage des joueurs :
+			for (JoueurPlateau p: this.listeJoueurs) {
+				p.render (container, game, context);
 			};
 		}
 	}
@@ -134,6 +150,18 @@ public class WorldPlateau extends BasicGameState {
 			default:
 				super.keyPressed (key, c);
 		};
+	}
+	
+	public SpiralTrack getTrack () {
+		return this.track;
+	}
+	
+	public int getGridWidth () {
+		return this.gridWidth;
+	}
+
+	public int getGridHeight () {
+		return this.gridHeight;
 	}
 	
 	@Override
