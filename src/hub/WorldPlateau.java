@@ -19,17 +19,18 @@ import general.ui.TGDComponent.OnClickListener;
 
 public class WorldPlateau extends BasicGameState {
 
-	private SpiralTrack track;
+	public static SpiralTrack track;
 	private int gridWidth;
 	private int gridHeight;
 	private int gridGap;
+	private int playerHeight, playerWidth;
 	
 	public static int ID=7;
 	public static String name = "Jeu de plateau";
 	
 	private boolean menu;
 	private Button plus, moins, ok;
-	
+
 	// private int[] cheminEntiers={0,0,0,0,0,0,0,0,1};
 	private int nbJoueur;
 	private JoueurPlateau[] listeJoueurs;
@@ -40,6 +41,13 @@ public class WorldPlateau extends BasicGameState {
 		this.gridWidth = 64;
 		this.gridHeight = 64;
 		this.gridGap = 16;
+		playerHeight = gridHeight - 10;
+		playerWidth = gridWidth - 10;
+		
+		listeJoueurs = new JoueurPlateau[1]; // 1 joueurs max
+		
+		// TEST JOUEUR
+		listeJoueurs[0] = new JoueurPlateau(0, "NOM", "images/player/pion.png", playerHeight, playerWidth);
 		
 		// TODO Auto-generated method stub
 		menu=true;
@@ -85,6 +93,8 @@ public class WorldPlateau extends BasicGameState {
 			moins.render(container, game, g);
 			ok.render(container, game, g);
 		} else {
+			
+			// Affichage du plateau :
 			int width = this.gridWidth - this.gridGap / 2;
 			int height = this.gridHeight - this.gridGap / 2;
 			int dx = (Main.width - this.gridWidth) / 2;
@@ -98,7 +108,14 @@ public class WorldPlateau extends BasicGameState {
 				g.fillRoundRect ((float) xy [0] * this.gridWidth + dx, (float) xy [1] * this.gridHeight + dy, width, height, radius);
 				g.setColor (textColor);
 				g.drawString ("[" + i + "]", xy [0] * this.gridWidth + dx, xy [1] * this.gridHeight + dy);
-			};
+			}
+			// Fin d'affichage du plateau
+			// Affichage des joueurs :
+			for(JoueurPlateau p : listeJoueurs){
+				p.render(container,game,g);
+			}
+			
+			;
 		}
 	}
 	
@@ -106,6 +123,11 @@ public class WorldPlateau extends BasicGameState {
 		if (menu) {
 			
 		} else {
+			
+			// Update des joueurs :
+			for(JoueurPlateau p : listeJoueurs){
+				p.update(container,game,delta,this);
+			}
 			
 		}
 	}
@@ -117,5 +139,13 @@ public class WorldPlateau extends BasicGameState {
 	public int getID() {
 		// TODO Auto-generated method stub
 		return ID;
+	}
+	
+	public int getGridWidth() {
+		return gridWidth;
+	}
+
+	public int getGridHeight() {
+		return gridHeight;
 	}
 }

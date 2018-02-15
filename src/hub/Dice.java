@@ -26,6 +26,10 @@ public class Dice {
 		return this.num;
 	}
 	
+	public int getRolledValue() {
+		roll();
+		return getValue();
+	}
 	
 
 }
