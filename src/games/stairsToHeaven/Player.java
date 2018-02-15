@@ -7,17 +7,18 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Player {
 	private int floor;
+	
+	private int value;
+	private int compteur;
+	private int T1;
+	private int T3;
+	private int T5;
 	private boolean onePress;
 	private boolean threePress;
 	private boolean fivePress;
 	private boolean onePressEn;
 	private boolean threePressEn;
 	private boolean fivePressEn;
-	private int value;
-	private int compteur;
-	private int T1;
-	private int T3;
-	private int T5;
 	
 	public Player(int T1,int T3, int T5) {
 		
@@ -99,16 +100,16 @@ public class Player {
 		
 		public void keyPressed(int key, char c) {
 		 
-		if (fivePressEn == true && threePressEn == false && onePressEn == false){	
+		if (fivePressEn == true && threePressEn == true && onePressEn == true){	
 			if (key == T5){
 				fivePress = true;
 				fivePressEn = false;
 			}
-			if (key == T1) {
+			else if (key == T1) {
 				onePress = true;
 				onePressEn = false;
 			}
-			if (key == T3) {
+			else if (key == T3) {
 				threePress = true;
 				threePressEn = false;
 			}
