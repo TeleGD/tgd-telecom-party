@@ -42,6 +42,7 @@ public class Main extends StateBasedGame{
 		addState(new MainMenu());
 		addState(new World());
 		addState(new hub.WorldPlateau());
+		addState(new games.battle.World());
 		
 		this.enterState(WelcomeMenu.ID);
 	}
