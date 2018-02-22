@@ -39,6 +39,7 @@ public class WorldPlateau extends BasicGameState {
 	
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
+
 		WorldPlateau that;
 		that = this;
 		
@@ -52,16 +53,13 @@ public class WorldPlateau extends BasicGameState {
 		this.playerWidth = this.gridWidth - 10;
 		
 		this.turnNumber = 0; // numéro du tour
-		this.listeJoueurs = new JoueurPlateau [2]; // 1 joueurs max pour l'instant
+//		this.listeJoueurs = new JoueurPlateau [4]; // 4 joueurs max pour l'instant
 		
 		// TEST JOUEUR
-		//TODO Initialisation des joueurs en accord avec ce qui a été selectionné à l'aide des boutons
-		this.listeJoueurs [0] = new JoueurPlateau (0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
-		this.listeJoueurs [1] = new JoueurPlateau (1, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
 
 		// TODO Auto-generated method stub
 		this.menu = true;
-		this.nbJoueur = 2;
+		this.nbJoueur = 1;
 				
 		this.plus = new Button ("+", container, 700, 50, 20, 20);
 		this.plus.setOnClickListener (new OnClickListener () {
@@ -70,6 +68,7 @@ public class WorldPlateau extends BasicGameState {
 			public void onClick (TGDComponent component) {
 				if (that.nbJoueur < 4) {
 					that.nbJoueur++;
+					System.out.println("onclick");
 				};
 			}
 			
@@ -93,13 +92,17 @@ public class WorldPlateau extends BasicGameState {
 			@Override
 			public void onClick (TGDComponent component) {
 				that.menu = false;
+				listeJoueurs = new JoueurPlateau [nbJoueur];
+				for (int i = 0 ; i < nbJoueur ; i++) {
+					listeJoueurs [i] = new JoueurPlateau (i, "NOM", "images/player/pion.png", playerHeight, playerWidth);
+				}
 			}
 			
 		});
 	}
 	
 	public void enter (GameContainer container, StateBasedGame game) {
-		this.init (container, game);
+//		this.init (container, game);
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
