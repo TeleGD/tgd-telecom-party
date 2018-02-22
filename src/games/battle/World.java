@@ -66,20 +66,41 @@ public class World extends BasicGameState {
 		context.drawLine (0, general.Main.height / 2, general.Main.width, general.Main.height / 2);
 		this.player.render (container, game, context);
 	};
-	public void keyReleased (int key, char c) {
-		switch (key) {
-			case Input.KEY_ENTER:
+	public void controllerButtonPressed (int controller, int button) {
+		switch (button) {
+			case 1:
+				this.key_enter = true;
+				break;
+			case 2:
+			case 3:
+			case 4:
+				this.key_space = true;
+				break;
+		};
+	};
+	public void controllerButtonReleased (int controller, int button) {
+		switch (button) {
+			case 1:
 				this.key_enter = false;
 				break;
-			case Input.KEY_SPACE:
+			case 2:
+			case 3:
+			case 4:
 				this.key_space = false;
 				break;
-			case Input.KEY_LEFT:
-				this.key_left = false;
-				break;
-			case Input.KEY_RIGHT:
-				this.key_right = false;
 		};
+	};
+	public void controllerLeftPressed (int controller) {
+		this.key_left = true;
+	};
+	public void controllerLeftReleased (int controller) {
+		this.key_left = false;
+	};
+	public void controllerRightPressed (int controller) {
+		this.key_right = true;
+	};
+	public void controllerRightReleased (int controller) {
+		this.key_right = false;
 	};
 	public void keyPressed (int key, char c) {
 		switch (key) {
@@ -100,6 +121,21 @@ public class World extends BasicGameState {
 				break;
 			default:
 				super.keyPressed (key, c);
+		};
+	};
+	public void keyReleased (int key, char c) {
+		switch (key) {
+			case Input.KEY_ENTER:
+				this.key_enter = false;
+				break;
+			case Input.KEY_SPACE:
+				this.key_space = false;
+				break;
+			case Input.KEY_LEFT:
+				this.key_left = false;
+				break;
+			case Input.KEY_RIGHT:
+				this.key_right = false;
 		};
 	};
 	public int getID () {

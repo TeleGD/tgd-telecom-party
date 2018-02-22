@@ -157,7 +157,7 @@ public class WorldPlateau extends BasicGameState {
 			case Input.KEY_ESCAPE:
 				this.game.enterState (menus.MainMenu.ID, new FadeOutTransition (), new FadeInTransition ());
 				break;
-			case Input.KEY_ENTER :
+			case Input.KEY_ENTER:
 				enterPress = true ;
 				break;		
 			default:

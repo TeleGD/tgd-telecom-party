@@ -21,7 +21,7 @@ public class Main extends StateBasedGame {
 	public static void main (String[] args) throws SlickException {
 		//Normalement c'est plus necessaire, c'est fait dans le setup du projet en theorie
 		//Et pourtant quand je cree un runnable jar il le faut sinon le jar ne se lance pas...
-		System.setProperty ("org.lwjgl.librarypath", new File ("natives").getAbsolutePath ());
+		//System.setProperty ("org.lwjgl.librarypath", new File ("natives").getAbsolutePath ());
 		AppGameContainer app = new AppGameContainer (new Main (), longueur, hauteur, false);
 		app.setTargetFrameRate (60);
 		app.setVSync (true);
