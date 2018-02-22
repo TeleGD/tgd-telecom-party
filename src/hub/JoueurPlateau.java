@@ -13,7 +13,7 @@ import general.Main;
 public class JoueurPlateau {
 	
 	private Dice playerDice;
-	private int place,number;
+	private int place,number; // place : nb de cases depuis le début (début = 0) ; number : numéro du joueur
 	private String name;
 	private Image sprite;
 	private float x;
@@ -21,7 +21,7 @@ public class JoueurPlateau {
 	
 	public JoueurPlateau(int num, String name, String nameSprite, int height, int width) {
 		place=0;
-		Dice playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
+		playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
 		this.number=num;
 		this.name = name;
 		try {
@@ -51,8 +51,28 @@ public class JoueurPlateau {
 		int[] coord = worldP.getTrack().getCoordinates(place);
 		x = coord[0] * worldP.getGridWidth() + Main.width/2 - worldP.getGridWidth()/2 ;
 		y = coord[1] * worldP.getGridHeight() + Main.height/2 - worldP.getGridHeight()/2 ;
+	}
+	
+	public void playRound() {
+		// Permet de faire jouer un tour au joueur
+		
+		/*Règle du tour :
+		 * 1 : 	le joueur lance son dé (peut être modifié par des effets) il avance du nombre de cases correspondant
+		 * 2 : 	arrive sur une case :
+		 * 			si c’est une case à effet : applique l’effet de la case
+		 * 			sinon : fait le mini-jeu du type de la case (duel, normal…)
+		 * 3 : 	le gagnant d’un mini-jeu gagne un avantage (meilleur dé pour son prochain lancer)
+		 */
+		
+		playerDice.roll();
+		//TODO : affiche résultat du dé
+		System.out.println("Joueur " + number + "Avance de " + playerDice.getValue());
+		avance(playerDice.getValue());
+		
+		//TODO : gérer l'étape 2 et 3
 		
 	}
+	
 	public int getPlace() {
 		return place;
 	}
@@ -68,13 +88,4 @@ public class JoueurPlateau {
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
-	
-	public void playRound() {
-		// Permet de faire jouer un tour au joueur
-		
-		
-	}
-
-	
-	
 }
