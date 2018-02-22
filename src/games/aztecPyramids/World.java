@@ -16,18 +16,24 @@ public class World extends BasicGameState {
 	private Image aztecPyramid;
 	private Image aztecCalendar;
 	private Image aztecSnake;
-	 
+	private Image aztecHead1; 
+	private Image aztecHead2;
+	private Image aztecHead3;
+	private Image aztecHead4;
 	
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-		aztecPyramid = new Image("images/AztecPyramids/Aztec.jpg");
-		aztecCalendar = new Image("images/AztecPyramids/aztec-calendar.jpg");
-		aztecSnake = new Image("images/AztecPyramids/snake.jpg");
-	
+		
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-
+			aztecPyramid = new Image("images/AztecPyramids/aztec.jpg");
+			aztecCalendar = new Image("images/AztecPyramids/aztec-calendar.jpg");
+			aztecSnake = new Image("images/AztecPyramids/snake.jpg");
+			aztecHead1 = new Image("images/AztecPyramids/bluehead.png");
+			aztecHead2 = new Image("images/AztecPyramids/pinkhead.png");
+			aztecHead3 = new Image("images/AztecPyramids/yellowhead.png");
+			aztecHead4 = new Image("images/AztecPyramids/greenhead.png");
 	}
 
 
@@ -40,10 +46,10 @@ public class World extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(aztecPyramid,0,0);
 		g.drawImage(aztecCalendar,1080,0);
-		g.drawImage(aztecSnake,1080,630);
-		g.drawString("AZTEC PYRAMID",1100,230);
-		g.drawString("Score :",1200,240);
-		
+		g.drawImage(aztecSnake,1080,610);
+		g.drawString("AZTEC PYRAMID",1120,220);
+		g.drawString("Score :",1150,250);
+		g.drawImage(aztecHead1,500,400);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

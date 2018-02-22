@@ -15,10 +15,10 @@ public class Player {
 	private int T5;
 	private boolean onePress;
 	private boolean twoPress;
-	private boolean fivePress;
+	private boolean threePress;
 	private boolean onePressEn;
 	private boolean twoPressEn;
-	private boolean fivePressEn;
+	private boolean threePressEn;
 	
 	public Player(int T1,int T3, int T5) {
 		
@@ -28,7 +28,7 @@ public class Player {
 		floor = 0;
 		onePress = false;
 		twoPress = false;
-		fivePress = false;
+		threePress = false;
 		value=0;
 		compteur = 0;
 		
@@ -57,7 +57,7 @@ public class Player {
 		if (twoPress == true){
 			this.value = 3;
 		}
-		if (fivePress == true){
+		if (threePress == true){
 			this.value = 5;
 		}
 	}
@@ -67,7 +67,7 @@ public class Player {
 	public void afterChange() {
 		onePress = false;
 		twoPress = false;
-		fivePress = false;
+		threePress = false;
 		}
 	
 	public int getValue() {
@@ -88,7 +88,7 @@ public class Player {
 	public void keyReleased(int key, char c) {
 
 			if (key == T5) {
-				fivePressEn = true;
+				threePressEn = true;
 			}
 			if (key == T1) {
 				onePressEn = true;
@@ -100,10 +100,10 @@ public class Player {
 		
 		public void keyPressed(int key, char c) {
 		 
-		if (fivePressEn == true && twoPressEn == true && onePressEn == true){	
+		if (threePressEn == true && twoPressEn == true && onePressEn == true){	
 			if (key == T5){
-				fivePress = true;
-				fivePressEn = false;
+				threePress = true;
+				threePressEn = false;
 			}
 			else if (key == T1) {
 				onePress = true;
