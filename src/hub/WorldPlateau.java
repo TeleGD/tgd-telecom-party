@@ -27,6 +27,7 @@ public class WorldPlateau extends BasicGameState {
 	private int gridHeight;
 	private int gridGap;
 	private int playerHeight, playerWidth;
+	private int turnNumber;
 	
 	private boolean menu;
 	private Button plus, moins, ok;
@@ -34,6 +35,7 @@ public class WorldPlateau extends BasicGameState {
 	// private int [] cheminEntiers = {0, 0, 0, 0, 0, 0, 0, 0, 1};
 	private int nbJoueur;
 	private JoueurPlateau [] listeJoueurs;
+	private boolean enterPress;
 	
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
@@ -49,14 +51,17 @@ public class WorldPlateau extends BasicGameState {
 		this.playerHeight = this.gridHeight - 10;
 		this.playerWidth = this.gridWidth - 10;
 		
-		this.listeJoueurs = new JoueurPlateau [1]; // 1 joueurs max
+		this.turnNumber = 0; // numéro du tour
+		this.listeJoueurs = new JoueurPlateau [2]; // 1 joueurs max pour l'instant
 		
 		// TEST JOUEUR
+		//TODO Initialisation des joueurs en accord avec ce qui a été selectionné à l'aide des boutons
 		this.listeJoueurs [0] = new JoueurPlateau (0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
-		
+		this.listeJoueurs [1] = new JoueurPlateau (1, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
+
 		// TODO Auto-generated method stub
 		this.menu = true;
-		this.nbJoueur = 1;
+		this.nbJoueur = 2;
 				
 		this.plus = new Button ("+", container, 700, 50, 20, 20);
 		this.plus.setOnClickListener (new OnClickListener () {
@@ -100,7 +105,12 @@ public class WorldPlateau extends BasicGameState {
 	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (this.menu) {
 			
-		} else {
+		} else { // Si le jeu est lancé : on est sur le plateau
+			if (enterPress) { 
+				listeJoueurs[turnNumber % nbJoueur].playRound(); // Lance le tour du joueur à qui c'est le tour	
+				enterPress = false;
+				turnNumber ++;
+			}
 			for (JoueurPlateau p: this.listeJoueurs) {
 				p.update (container, game, delta, this);
 			};
@@ -147,6 +157,9 @@ public class WorldPlateau extends BasicGameState {
 			case Input.KEY_ESCAPE:
 				this.game.enterState (menus.MainMenu.ID, new FadeOutTransition (), new FadeInTransition ());
 				break;
+			case Input.KEY_ENTER :
+				enterPress = true ;
+				break;		
 			default:
 				super.keyPressed (key, c);
 		};
