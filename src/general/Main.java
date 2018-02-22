@@ -42,6 +42,7 @@ public class Main extends StateBasedGame {
 		// addState (new World ());
 		addState (new hub.WorldPlateau ());
 		addState (new games.battle.World ());
+		addState (new games.aztecPyramids.World());
 		
 		this.enterState (WelcomeMenu.ID);
 	}

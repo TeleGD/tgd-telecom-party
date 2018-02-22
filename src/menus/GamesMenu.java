@@ -14,7 +14,7 @@ public class GamesMenu extends Menu {
 		super.setTitrePrincipal ("INSERER TITRE ICI");
 		super.setTitreSecondaire ("SOUS TITRE");
 		
-		super.setItems (games.battle.World.name, "Retour");
+		super.setItems (games.battle.World.name, games.aztecPyramids.World.name, "Retour");
 
 		super.setEnableClignote (false);
 		super.setCouleurClignote (Color.red);
@@ -33,6 +33,9 @@ public class GamesMenu extends Menu {
 				this.game.enterState (games.battle.World.ID, new FadeOutTransition (), new FadeInTransition ());
 				break;
 			case 1:
+				this.game.enterState(games.aztecPyramids.World.ID);
+				break;
+			case 2 :
 				this.game.enterState (MainMenu.ID);
 		};
 	}

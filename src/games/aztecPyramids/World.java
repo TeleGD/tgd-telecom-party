@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class World extends BasicGameState {
 
-	public static int ID=2;
+	public static int ID=11;
 	public static String name = "aztecPyramids";
 	private Image aztecPyramid;
 	private Image aztecCalendar;
