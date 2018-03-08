@@ -1,11 +1,20 @@
 package hub;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
+
+import general.Main;
+
 // import org.newdawn.slick.Image;
 
 public class Case {
-	// private int id;
-	private float x;
-	private float y;
+	private int id;
+	private int x;
+	private int y;
+	private int type;
+	private int width, height, radius;
 	
 	/* liste des cases :
 	 * 0 : Normal (sans effet)
@@ -25,11 +34,30 @@ public class Case {
 	
 	// private Image sprite;
 	
-	public Case (int id) {
-		// this.id = id;
-		// sprite=new Image("images/case" + id);
-		// x = id * WorldPlateau.gridWidth;
-		// y = id * WorldPlateau.gridHeight;
+	public Case (int id, int x, int y, int type) {
+		this.id = id;
+		this.type = type;
+		// sprite=new Image("images/case" + id + ".jpg");
+		this.x = x;
+		this.y = y;
+		
+		width = WorldPlateau.getGridWidth() - WorldPlateau.getGridGap() / 2;
+		height = WorldPlateau.getGridHeight() - WorldPlateau.getGridGap() / 2;
+		radius = WorldPlateau.getGridGap() / 2;
+	}
+	
+	public void render(GameContainer container,StateBasedGame game, Graphics g) {
+		
+		Color backgroundColor = new Color (255, 0, 0);
+		Color textColor = new Color (127, 0, 0);
+		g.setColor (backgroundColor);
+		g.fillRoundRect ((float) x , (float) y, width, height, radius);
+		g.setColor (textColor);
+		g.drawString ("[" + id + "]", x, y);
+	}
+
+	public int getType() {
+		return type;
 	}
 
 	public float getX () {
@@ -39,5 +67,7 @@ public class Case {
 	public float getY () {
 		return y;
 	}
+	
+	
 	
 }

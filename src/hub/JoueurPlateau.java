@@ -37,8 +37,8 @@ public class JoueurPlateau {
 		g.drawImage(sprite, x, y);
 	}
 	
-	public void update(GameContainer container,StateBasedGame game, int delta, WorldPlateau worldP) {
-		updateCoordonnees(worldP);
+	public void update(GameContainer container,StateBasedGame game, int delta) {
+		updateCoordonnees();
 	}
 	
 	public void avance(int n) {
@@ -46,11 +46,13 @@ public class JoueurPlateau {
 		
 	}
 
-	public void updateCoordonnees(WorldPlateau worldP) {
+	public void updateCoordonnees() {
 		// Met à jour x et y en fonction du numéro de case sur lequel le joueur se trouve
-		int[] coord = worldP.getTrack().getCoordinates(place);
-		x = coord[0] * worldP.getGridWidth() + Main.width/2 - worldP.getGridWidth()/2 ;
-		y = coord[1] * worldP.getGridHeight() + Main.height/2 - worldP.getGridHeight()/2 ;
+		int[] coord = WorldPlateau.getTrack().getCoordinates(place);
+//		x = coord[0] * WorldPlateau.getGridWidth() + Main.width/2 - WorldPlateau.getGridWidth()/2 ;
+//		y = coord[1] * WorldPlateau.getGridHeight() + Main.height/2 - WorldPlateau.getGridHeight()/2 ;
+		x = coord[0];
+		y = coord[1];
 	}
 	
 	public void playRound() {
