@@ -11,7 +11,7 @@ public class World extends BasicGameState {
 	public static int ID = 16;
 	public static String name = "PacMan Battle";
 	static private float jump (float x, float h, float d) {
-		// y = (4h / d) (x - x² / d)
+		// y = (4h / d) (x - xÂ² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
 	};
 	private StateBasedGame game;

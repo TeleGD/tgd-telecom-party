@@ -12,12 +12,12 @@ import menus.WelcomeMenu;
 import menus.GamesMenu;
 
 public class Main extends StateBasedGame {
-	
+
 	public static int longueur = 1280;
 	public static int hauteur = 720;
 	public static int width = longueur;
 	public static int height = hauteur;
-	
+
 	public static void main (String[] args) throws SlickException {
 		//Normalement c'est plus necessaire, c'est fait dans le setup du projet en theorie
 		//Et pourtant quand je cree un runnable jar il le faut sinon le jar ne se lance pas...
@@ -28,7 +28,7 @@ public class Main extends StateBasedGame {
 		app.setShowFPS (true);
 		app.start ();
 	}
-	
+
 
 	public Main () {
 		super ("Projet_2018 #NoName");
@@ -43,7 +43,7 @@ public class Main extends StateBasedGame {
 		addState (new hub.WorldPlateau ());
 		addState (new games.battle.World ());
 		addState (new games.aztecPyramids.World());
-		
+
 		this.enterState (WelcomeMenu.ID);
 	}
 }

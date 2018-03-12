@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Player {
 	private int floor;
-	
+
 	private int value;
 	private int compteur;
 	private int T1;
@@ -19,9 +19,9 @@ public class Player {
 	private boolean onePressEn;
 	private boolean twoPressEn;
 	private boolean threePressEn;
-	
+
 	public Player(int T1,int T3, int T5) {
-		
+
 		this.T1 = T1;
 		this.T3 = T3;
 		this.T5 = T5;
@@ -31,11 +31,11 @@ public class Player {
 		threePress = false;
 		value=0;
 		compteur = 0;
-		
-	}	
-	
+
+	}
+
 	private Player tabPlay[] = {new Player(Input.KEY_LEFT,Input.KEY_UP,Input.KEY_RIGHT),new Player(Input.KEY_A,Input.KEY_Z,Input.KEY_E)};
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
 		compteur += 1;
 		if (compteur >= 300) {
@@ -46,8 +46,8 @@ public class Player {
 			}
 			climb();
 		}
-		
-		
+
+
 	}
 
 	public void valueChange() {
@@ -61,30 +61,30 @@ public class Player {
 			this.value = 5;
 		}
 	}
-	
-	
-	
+
+
+
 	public void afterChange() {
 		onePress = false;
 		twoPress = false;
 		threePress = false;
 		}
-	
+
 	public int getValue() {
 		return this.value;
 	}
-	
+
 	public void isEqual(Player P1,Player P2) {
 		if (P1.getValue() == P2.getValue()){
 			P1.value=0;
 			P2.value=0;
 		}
 	}
-	
+
 	public void climb(){
 		this.floor = this.floor + this.value;
 	}
-	
+
 	public void keyReleased(int key, char c) {
 
 			if (key == T5) {
@@ -96,11 +96,11 @@ public class Player {
 			if (key == T3) {
 				twoPressEn = true;
 			}
-	} 
-		
+	}
+
 		public void keyPressed(int key, char c) {
-		 
-		if (threePressEn == true && twoPressEn == true && onePressEn == true){	
+
+		if (threePressEn == true && twoPressEn == true && onePressEn == true){
 			if (key == T5){
 				threePress = true;
 				threePressEn = false;
@@ -114,36 +114,11 @@ public class Player {
 				twoPressEn = false;
 			}
 		}
-			
-			
-			
-	} 
-	
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+
+
+	}
+
+
+
+	}

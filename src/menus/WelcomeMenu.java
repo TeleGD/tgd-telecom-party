@@ -16,9 +16,9 @@ import general.Main;
 
 public class WelcomeMenu extends Menu implements OnClickListener {
 
-	public static int ID = 0;	
+	public static int ID = 0;
 	public static String name = "Accueil";
-	
+
 	private static final String CONFIRM_TEXT = "PRESS ENTER";
 
 	private Image background;
@@ -27,29 +27,29 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 	@Override
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		super.init (container, game);
-		
-		this.background = new Image ("images/LogoTGD_transparent.png");
+
+		this.background = new Image ("images/logo.png");
 		this.blinkPeriod = 10;
 	}
-	
+
 	@Override
 	public void enter (GameContainer container, StateBasedGame game) {
-		
+
 	}
-	
+
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		
+
 	}
-	
-	
+
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
 		// context.drawImage (new Image ("img/accueil.png"), 0, 0);
 		context.setColor (Color.white);
 
 		context.drawRect (Main.longueur / 2 - 300, 25, 600, 37);
-		
+
 		context.setFont (this.fontConfirmText);
 		int alpha = (int) ((System.currentTimeMillis () / blinkPeriod) % 1000);
 		if (alpha > 255) {
@@ -61,7 +61,7 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 		context.setColor (new Color (255 - alpha, 255 - alpha, 255 - alpha));
 		context.drawString (WelcomeMenu.CONFIRM_TEXT, Main.longueur / 2 - this.fontConfirmText.getWidth (WelcomeMenu.CONFIRM_TEXT) / 2, 35);
 		context.drawImage (this.background, Main.longueur / 2 - this.background.getWidth () / 2, Main.hauteur / 2 - this.background.getHeight () / 2);
-		
+
 		context.setColor (Color.white);
 	}
 
@@ -69,12 +69,12 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 	public void onOptionItemFocusedChanged (int position){
 		this.time = System.currentTimeMillis ();
 	}
-	
+
 	@Override
 	public void onOptionItemSelected (int position) {
 		this.game.enterState (MainMenu.ID, new FadeOutTransition (), new FadeInTransition ());
 	}
-	
+
 	@Override
 	public void keyPressed (int key, char c) {
 		switch (key) {
@@ -91,9 +91,9 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 
 	@Override
 	public void onClick (TGDComponent component) {
-		
+
 	}
-	
+
 	@Override
 	public int getID () {
 		return WelcomeMenu.ID;

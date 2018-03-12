@@ -13,14 +13,14 @@ public class GamesMenu extends Menu {
 	public GamesMenu () {
 		super.setTitrePrincipal ("INSERER TITRE ICI");
 		super.setTitreSecondaire ("SOUS TITRE");
-		
+
 		super.setItems (games.battle.World.name, games.aztecPyramids.World.name, "Retour");
 
 		super.setEnableClignote (false);
 		super.setCouleurClignote (Color.red);
 		super.setTempsClignote (400);
 	}
-	
+
 	@Override
 	public void onOptionItemFocusedChanged (int position) {
 		this.time = System.currentTimeMillis ();
@@ -50,7 +50,7 @@ public class GamesMenu extends Menu {
 				super.keyPressed (key, c);
 		};
 	}
-	
+
 	@Override
 	public int getID () {
 		return GamesMenu.ID;

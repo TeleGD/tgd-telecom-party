@@ -9,18 +9,18 @@ public class MainMenu extends Menu {
 
 	public static int ID = 1;
 	public static String name = "Menu principal";
-	
+
 	public MainMenu () {
 		super.setTitrePrincipal ("INSERER TITRE ICI");
 		super.setTitreSecondaire ("SOUS TITRE");
-		
+
 		super.setItems (hub.WorldPlateau.name, menus.GamesMenu.name, "Quitter");
 
 		super.setEnableClignote (false);
 		super.setCouleurClignote (Color.red);
 		super.setTempsClignote (400);
 	}
-	
+
 	@Override
 	public void onOptionItemFocusedChanged (int position) {
 		this.time = System.currentTimeMillis ();
@@ -39,7 +39,7 @@ public class MainMenu extends Menu {
 				System.exit (0);
 		};
 	}
-	
+
 	@Override
 	public void keyPressed (int key, char c) {
 		switch (key) {
@@ -50,7 +50,7 @@ public class MainMenu extends Menu {
 				super.keyPressed (key, c);
 		};
 	}
-	
+
 	@Override
 	public int getID () {
 		return MainMenu.ID;

@@ -16,13 +16,13 @@ public class World extends BasicGameState {
 	private Image aztecPyramid;
 	private Image aztecCalendar;
 	private Image aztecSnake;
-	private Image aztecHead1; 
+	private Image aztecHead1;
 	private Image aztecHead2;
 	private Image aztecHead3;
 	private Image aztecHead4;
-	
+
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-		
+
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
@@ -53,7 +53,7 @@ public class World extends BasicGameState {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+
 	}
 
 	public void keyReleased(int key, char c) {

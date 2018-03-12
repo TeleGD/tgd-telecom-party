@@ -11,14 +11,14 @@ import general.Main;
 
 
 public class JoueurPlateau {
-	
+
 	private Dice playerDice;
 	private int place,number; // place : nb de cases depuis le début (début = 0) ; number : numéro du joueur
 	private String name;
 	private Image sprite;
 	private float x;
 	private float y;
-	
+
 	public JoueurPlateau(int num, String name, String nameSprite, int height, int width) {
 		place=0;
 		playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
@@ -32,18 +32,18 @@ public class JoueurPlateau {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void render(GameContainer container,StateBasedGame game, Graphics g) {
 		g.drawImage(sprite, x, y);
 	}
-	
+
 	public void update(GameContainer container,StateBasedGame game, int delta) {
 		updateCoordonnees();
 	}
-	
+
 	public void avance(int n) {
 		place+=n;
-		
+
 	}
 
 	public void updateCoordonnees() {
@@ -54,10 +54,10 @@ public class JoueurPlateau {
 		x = coord[0];
 		y = coord[1];
 	}
-	
+
 	public void playRound() {
 		// Permet de faire jouer un tour au joueur
-		
+
 		/*Règle du tour :
 		 * 1 : 	le joueur lance son dé (peut être modifié par des effets) il avance du nombre de cases correspondant
 		 * 2 : 	arrive sur une case :
@@ -65,16 +65,16 @@ public class JoueurPlateau {
 		 * 			sinon : fait le mini-jeu du type de la case (duel, normal…)
 		 * 3 : 	le gagnant d’un mini-jeu gagne un avantage (meilleur dé pour son prochain lancer)
 		 */
-		
+
 		playerDice.roll();
 		//TODO : affiche résultat du dé
 		System.out.println("Joueur " + number + "Avance de " + playerDice.getValue());
 		avance(playerDice.getValue());
-		
+
 		//TODO : gérer l'étape 2 et 3
-		
+
 	}
-	
+
 	public int getPlace() {
 		return place;
 	}

@@ -15,7 +15,7 @@ public class Case {
 	private int y;
 	private int type;
 	private int width, height, radius;
-	
+
 	/* liste des cases :
 	 * 0 : Normal (sans effet)
 	 * 1 : Fin
@@ -31,23 +31,23 @@ public class Case {
 	 * 11 : Festor : passe ton tour (on ne joue plus après 19h)
 	 * 12 : Rémi Bachelet : tp sur une autre case Rémi Bachelet aléatoire
 	 */
-	
+
 	// private Image sprite;
-	
+
 	public Case (int id, int x, int y, int type) {
 		this.id = id;
 		this.type = type;
 		// sprite=new Image("images/case" + id + ".jpg");
 		this.x = x;
 		this.y = y;
-		
+
 		width = WorldPlateau.getGridWidth() - WorldPlateau.getGridGap() / 2;
 		height = WorldPlateau.getGridHeight() - WorldPlateau.getGridGap() / 2;
 		radius = WorldPlateau.getGridGap() / 2;
 	}
-	
+
 	public void render(GameContainer container,StateBasedGame game, Graphics g) {
-		
+
 		Color backgroundColor = new Color (255, 0, 0);
 		Color textColor = new Color (127, 0, 0);
 		g.setColor (backgroundColor);
@@ -67,7 +67,7 @@ public class Case {
 	public float getY () {
 		return y;
 	}
-	
-	
-	
+
+
+
 }
