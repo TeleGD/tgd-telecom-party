@@ -1,7 +1,7 @@
 package hub;
 
 import java.util.Random;
-import org.newdawn.slick.Image;
+//import org.newdawn.slick.Image;
 
 public class Dice {
 

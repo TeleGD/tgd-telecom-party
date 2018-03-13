@@ -1,6 +1,6 @@
 package games.aztecPyramids;
 
-import java.io.File;
+//import java.io.File;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,8 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class World extends BasicGameState {
 
-	public static int ID=11;
-	public static String name = "aztecPyramids";
+	private int ID;
+
 	private Image aztecPyramid;
 	private Image aztecCalendar;
 	private Image aztecSnake;
@@ -21,10 +21,21 @@ public class World extends BasicGameState {
 	private Image aztecHead3;
 	private Image aztecHead4;
 
+	public World (int ID) {
+		this.ID = ID;
+	}
+
+	@Override
+	public int getID () {
+		return this.ID;
+	}
+
+	@Override
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
 
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 			aztecPyramid = new Image("images/AztecPyramids/aztec.jpg");
@@ -43,6 +54,7 @@ public class World extends BasicGameState {
 	public void startAgain() throws SlickException{
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(aztecPyramid,0,0);
 		g.drawImage(aztecCalendar,1080,0);
@@ -52,25 +64,19 @@ public class World extends BasicGameState {
 		g.drawImage(aztecHead1,500,400);
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 	}
 
-
+	@Override
 	public void keyPressed(int key, char c) {
 		if(key==Input.KEY_SPACE)
 			System.exit(0);
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public static void reset() {
-		// TODO Auto-generated method stub
 	}
 
 }

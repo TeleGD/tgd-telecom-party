@@ -1,24 +1,40 @@
 package menus;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import general.AppGame;
+
 public class MainMenu extends Menu {
 
-	public static int ID = 1;
-	public static String name = "Menu principal";
+	private int ID;
 
-	public MainMenu () {
-		super.setTitrePrincipal ("INSERER TITRE ICI");
-		super.setTitreSecondaire ("SOUS TITRE");
+	public MainMenu (int ID) {
+		this.ID = ID;
+	}
 
-		super.setItems (hub.WorldPlateau.name, menus.GamesMenu.name, "Quitter");
+	@Override
+	public int getID () {
+		return this.ID;
+	}
 
-		super.setEnableClignote (false);
-		super.setCouleurClignote (Color.red);
-		super.setTempsClignote (400);
+	@Override
+	public void init (GameContainer container, StateBasedGame game) throws SlickException {
+		super.init (container, game);
+
+		this.setTitrePrincipal ("INSERER TITRE ICI");
+		this.setTitreSecondaire ("SOUS TITRE");
+
+		this.setItems (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU], AppGame.TITLES [AppGame.MENUS_GAMES_MENU], "Quitter");
+
+		this.setEnableClignote (false);
+		this.setCouleurClignote (Color.red);
+		this.setTempsClignote (400);
 	}
 
 	@Override
@@ -30,10 +46,10 @@ public class MainMenu extends Menu {
 	public void onOptionItemSelected (int position) {
 		switch (position) {
 			case 0:
-				this.game.enterState (hub.WorldPlateau.ID, new FadeOutTransition (), new FadeInTransition ());
+				this.game.enterState (AppGame.HUB_WORLD_PLATEAU, new FadeOutTransition (), new FadeInTransition ());
 				break;
 			case 1:
-				this.game.enterState (menus.GamesMenu.ID);
+				this.game.enterState (AppGame.MENUS_GAMES_MENU);
 				break;
 			case 2:
 				System.exit (0);
@@ -49,11 +65,6 @@ public class MainMenu extends Menu {
 			default:
 				super.keyPressed (key, c);
 		};
-	}
-
-	@Override
-	public int getID () {
-		return MainMenu.ID;
 	}
 
 }

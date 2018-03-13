@@ -1,6 +1,6 @@
 package hub;
 
-import org.newdawn.slick.Color;
+//import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,32 +10,42 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.Main;
+import general.AppGame;
 import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 
 public class WorldPlateau extends BasicGameState {
 
-	public static int ID = 9;
-	public static String name = "Jeu de plateau";
+	private int ID;
 
 	private StateBasedGame game;
 
-	private static SpiralTrack track;
-	protected static int gridWidth;
-	private static int gridHeight;
-	private static int gridGap;
+	private SpiralTrack track;
+	private int gridWidth;
+	private int gridHeight;
+	private int gridGap;
 	private int playerHeight, playerWidth;
 	private int turnNumber;
 
 	private boolean menu;
-	private Button plus, moins, ok;
+	private Button plus;
+	private Button moins;
+	private Button ok;
 
 	// private int [] cheminEntiers = {0, 0, 0, 0, 0, 0, 0, 0, 1};
 	private int nbJoueur;
 	private JoueurPlateau [] listeJoueurs;
 	private boolean enterPress;
+
+	public WorldPlateau (int ID) {
+		this.ID = ID;
+	}
+
+	@Override
+	public int getID () {
+		return this.ID;
+	}
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
@@ -44,7 +54,7 @@ public class WorldPlateau extends BasicGameState {
 
 		this.game = game;
 
-		this.track = new SpiralTrack (128);
+		this.track = new SpiralTrack (this, 128);
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
@@ -56,8 +66,8 @@ public class WorldPlateau extends BasicGameState {
 
 		// TEST JOUEUR
 		//TODO Initialisation des joueurs en accord avec ce qui a été selectionné à l'aide des boutons
-		this.listeJoueurs [0] = new JoueurPlateau (0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
-		this.listeJoueurs [1] = new JoueurPlateau (1, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
+		this.listeJoueurs [0] = new JoueurPlateau (this, 0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
+		this.listeJoueurs [1] = new JoueurPlateau (this, 1, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
 
 		// TODO Auto-generated method stub
 		this.menu = true;
@@ -98,10 +108,12 @@ public class WorldPlateau extends BasicGameState {
 		});
 	}
 
+	@Override
 	public void enter (GameContainer container, StateBasedGame game) {
 		this.init (container, game);
 	}
 
+	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (this.menu) {
 
@@ -117,6 +129,7 @@ public class WorldPlateau extends BasicGameState {
 		};
 	}
 
+	@Override
 	public void render (GameContainer container,StateBasedGame game, Graphics context) throws SlickException {
 		if (this.menu) {
 			context.drawString ("nombre de joueurs : " + nbJoueur, 500, 50);
@@ -135,15 +148,11 @@ public class WorldPlateau extends BasicGameState {
 		}
 	}
 
-	public static void reset () {
-
-	}
-
 	@Override
 	public void keyPressed (int key, char c) {
 		switch (key) {
 			case Input.KEY_ESCAPE:
-				this.game.enterState (menus.MainMenu.ID, new FadeOutTransition (), new FadeInTransition ());
+				this.game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
 				break;
 			case Input.KEY_ENTER:
 				enterPress = true ;
@@ -153,25 +162,20 @@ public class WorldPlateau extends BasicGameState {
 		};
 	}
 
-	public static SpiralTrack getTrack () {
-		return track;
+	public SpiralTrack getTrack () {
+		return this.track;
 	}
 
-	public static int getGridWidth () {
-		return gridWidth;
+	public int getGridWidth () {
+		return this.gridWidth;
 	}
 
-	public static int getGridHeight () {
-		return gridHeight;
+	public int getGridHeight () {
+		return this.gridHeight;
 	}
 
-	@Override
-	public int getID () {
-		return WorldPlateau.ID;
-	}
-
-	public static int getGridGap() {
-		return gridGap;
+	public int getGridGap() {
+		return this.gridGap;
 	}
 
 }

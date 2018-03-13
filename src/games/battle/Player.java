@@ -43,8 +43,8 @@ public class Player {
 		float maxRadius;
 		float start;
 		float end;
-		x = this.x + general.Main.width / 2;
-		y = this.y + general.Main.height / 2;
+		x = this.x + container.getWidth () / 2;
+		y = this.y + container.getHeight () / 2;
 		maxRadius = this.radius - this.y / 8;
 		start = (float) ((this.gape ? 1f : 0f) / 8 + this.direction) * 180;
 		end = (float) (2 - (this.gape ? 1f : 0f) / 8 + this.direction) * 180;

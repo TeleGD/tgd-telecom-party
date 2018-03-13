@@ -5,16 +5,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.Main;
-
 // import org.newdawn.slick.Image;
 
 public class Case {
+	private WorldPlateau plateau;
 	private int id;
 	private int x;
 	private int y;
 	private int type;
-	private int width, height, radius;
+	private int width;
+	private int height;
+	private int radius;
 
 	/* liste des cases :
 	 * 0 : Normal (sans effet)
@@ -34,16 +35,16 @@ public class Case {
 
 	// private Image sprite;
 
-	public Case (int id, int x, int y, int type) {
-		this.id = id;
+	public Case (WorldPlateau plateau, int id, int x, int y, int type) {
+		this.plateau = plateau;
 		this.type = type;
 		// sprite=new Image("images/case" + id + ".jpg");
 		this.x = x;
 		this.y = y;
 
-		width = WorldPlateau.getGridWidth() - WorldPlateau.getGridGap() / 2;
-		height = WorldPlateau.getGridHeight() - WorldPlateau.getGridGap() / 2;
-		radius = WorldPlateau.getGridGap() / 2;
+		width = this.plateau.getGridWidth() - this.plateau.getGridGap() / 2;
+		height = this.plateau.getGridHeight() - this.plateau.getGridGap() / 2;
+		radius = this.plateau.getGridGap() / 2;
 	}
 
 	public void render(GameContainer container,StateBasedGame game, Graphics g) {

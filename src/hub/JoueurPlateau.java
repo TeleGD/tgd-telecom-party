@@ -1,25 +1,28 @@
 package hub;
 
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
+//import org.newdawn.slick.Music;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.Main;
+// import general.AppGame;
 
 
 public class JoueurPlateau {
 
+	private WorldPlateau plateau;
 	private Dice playerDice;
-	private int place,number; // place : nb de cases depuis le début (début = 0) ; number : numéro du joueur
+	private int place;
+	private int number; // place : nb de cases depuis le début (début = 0) ; number : numéro du joueur
 	private String name;
 	private Image sprite;
 	private float x;
 	private float y;
 
-	public JoueurPlateau(int num, String name, String nameSprite, int height, int width) {
+	public JoueurPlateau(WorldPlateau plateau, int num, String name, String nameSprite, int height, int width) {
+		this.plateau = plateau;
 		place=0;
 		playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
 		this.number=num;
@@ -48,9 +51,9 @@ public class JoueurPlateau {
 
 	public void updateCoordonnees() {
 		// Met à jour x et y en fonction du numéro de case sur lequel le joueur se trouve
-		int[] coord = WorldPlateau.getTrack().getCoordinates(place);
-//		x = coord[0] * WorldPlateau.getGridWidth() + Main.width/2 - WorldPlateau.getGridWidth()/2 ;
-//		y = coord[1] * WorldPlateau.getGridHeight() + Main.height/2 - WorldPlateau.getGridHeight()/2 ;
+		int[] coord = this.plateau.getTrack().getCoordinates(place);
+//		x = coord[0] * this.plateau.getGridWidth() + AppGame.width/2 - this.plateau.getGridWidth()/2 ;
+//		y = coord[1] * this.plateau.getGridHeight() + AppGame.height/2 - this.plateau.getGridHeight()/2 ;
 		x = coord[0];
 		y = coord[1];
 	}

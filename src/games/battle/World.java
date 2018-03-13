@@ -7,13 +7,13 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import general.AppGame;
 public class World extends BasicGameState {
-	public static int ID = 16;
-	public static String name = "PacMan Battle";
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
 	};
+	private int ID;
 	private StateBasedGame game;
 	private int width;
 	// private int height;
@@ -25,12 +25,18 @@ public class World extends BasicGameState {
 	private boolean key_left;
 	private boolean key_right;
 	private Player player;
+	public World (int ID) {
+		this.ID = ID;
+	};
+	public int getID () {
+		return this.ID;
+	};
 	public void init (GameContainer container, StateBasedGame game) {
 		int radius;
 		radius = 32;
 		this.game = game;
-		this.width = general.Main.width + radius * 2;
-		// this.height = general.Main.height + radius * 2;
+		this.width = container.getWidth () + radius * 2;
+		// this.height = container.getHeight () + radius * 2;
 		this.backgroundColor = new Color (255, 255, 255, 0);
 		this.fillColor = new Color (51, 153, 102);
 		this.strokeColor = new Color (0, 102, 51);
@@ -57,13 +63,15 @@ public class World extends BasicGameState {
 		};
 	};
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		int width = container.getWidth ();
+		int height = container.getHeight ();
 		context.setAntiAlias (true);
 		context.setBackground (this.backgroundColor);
 		context.setLineWidth (2);
 		context.setColor (this.fillColor);
-		context.fillRect (0, general.Main.height / 2, general.Main.width, general.Main.height / 2);
+		context.fillRect (0, height / 2, width, height / 2);
 		context.setColor (this.strokeColor);
-		context.drawLine (0, general.Main.height / 2, general.Main.width, general.Main.height / 2);
+		context.drawLine (0, height / 2, width, height / 2);
 		this.player.render (container, game, context);
 	};
 	public void controllerButtonPressed (int controller, int button) {
@@ -117,7 +125,7 @@ public class World extends BasicGameState {
 				this.key_right = true;
 				break;
 			case Input.KEY_ESCAPE:
-				this.game.enterState (menus.GamesMenu.ID, new FadeOutTransition (), new FadeInTransition ());
+				this.game.enterState (AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 				break;
 			default:
 				super.keyPressed (key, c);
@@ -137,8 +145,5 @@ public class World extends BasicGameState {
 			case Input.KEY_RIGHT:
 				this.key_right = false;
 		};
-	};
-	public int getID () {
-		return World.ID;
 	};
 };

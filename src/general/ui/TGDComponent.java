@@ -24,7 +24,10 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	protected int borderWidth;
 	protected int cornerRadius;
-	protected float paddingTop=5, paddingBottom=5, paddingRight=5, paddingLeft=5;
+	protected float paddingTop;
+	protected float paddingBottom;
+	protected float paddingRight;
+	protected float paddingLeft;
 
 	protected boolean mousePressed;
 	protected boolean mouseEntered;
@@ -39,6 +42,10 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	public TGDComponent(GameContainer container,float x, float y, float width, float height) {
 		super(x, y, width, height);
+		paddingTop=5;
+		paddingBottom=5;
+		paddingRight=5;
+		paddingLeft=5;
 		initDefaultUI();
 		timeInit=System.currentTimeMillis();
 

@@ -1,24 +1,27 @@
 package hub;
 
-import general.Main;
+import general.AppGame;
 
 public class SpiralTrack {
 
+	private WorldPlateau plateau;
 	public final int length;
 	private Case [] cases;
-	private int dx , dy ;
+	private int dx;
+	private int dy;
 
-	public SpiralTrack (int length) {
+	public SpiralTrack (WorldPlateau plateau, int length) {
 		assert length >= 0;
+		this.plateau = plateau;
 		this.length = length;
 		this.cases = new Case [length];
 		// Décalage pour centrer la spirale
-		dx = (Main.width - WorldPlateau.getGridWidth()) / 2;
-		dy = (Main.height - WorldPlateau.getGridHeight()) / 2;
+		dx = (AppGame.width - this.plateau.getGridWidth()) / 2;
+		dy = (AppGame.height - this.plateau.getGridHeight()) / 2;
 
 		for (int i = 0; i < length; i++) {
 			int [] coord = getCoordinates(i);
-			this.cases [i] = new Case (i,coord[0],coord[1],0); // TODO: Ajouter la génération procédurale des cases
+			this.cases [i] = new Case (plateau, i,coord[0],coord[1],0); // TODO: Ajouter la génération procédurale des cases
 		};
 
 
@@ -43,8 +46,8 @@ public class SpiralTrack {
 		c [n % 2] *= -1;
 
 		// Application des décalages pour rencentrer les cases :
-		c[0] = c[0] * WorldPlateau.getGridWidth() + dx;
-		c[1] = c[1] * WorldPlateau.getGridHeight() + dy;
+		c[0] = c[0] * this.plateau.getGridWidth() + dx;
+		c[1] = c[1] * this.plateau.getGridHeight() + dy;
 
 		return c;
 	}

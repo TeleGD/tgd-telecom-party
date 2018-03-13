@@ -12,13 +12,13 @@ public class ColorPicker extends TGDComponent {
 
 	private Color colorSelected ;
 
-	private int[] c = new int[]{0,0,0,255};
+	private int[] c;
 
 	private Button bouton ;
 
 	public ColorPicker(GameContainer container, float x, float y, float width, float height) {
 		super(container, x, y, width, height);
-
+		c = new int[]{0,0,0,255};
 		bouton = new Button(container,x,5*(height-(paddingBottom-paddingTop))/6,width,(height-(paddingBottom-paddingTop))/6);
 		bouton.setBackgroundColor(Color.white);
 		bouton.setTextColor(Color.black);
