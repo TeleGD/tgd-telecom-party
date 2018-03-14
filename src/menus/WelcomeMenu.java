@@ -1,6 +1,7 @@
 package menus;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,10 +12,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
-import general.ui.TGDComponent;
-import general.ui.TGDComponent.OnClickListener;
 
-public class WelcomeMenu extends Menu implements OnClickListener {
+public class WelcomeMenu extends Menu {
 
 	private int ID;
 
@@ -41,15 +40,12 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 	}
 
 	@Override
-	public void enter (GameContainer container, StateBasedGame game) {}
-
-	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {}
 
-
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
-		// context.drawImage (new Image ("img/accueil.png"), 0, 0);
+	public void render (GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
+		Color previousColor = context.getColor ();
+		Font previousFont = context.getFont ();
 
 		int width = container.getWidth ();
 		int height = container.getHeight ();
@@ -58,7 +54,7 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 
 		context.drawRect (width / 2 - 300, 25, 600, 37);
 
-		context.setFont (Menu.fontConfirmText);
+		context.setFont (Menu.hintFont);
 		int alpha = (int) ((System.currentTimeMillis () / blinkPeriod) % 1000);
 		if (alpha > 255) {
 			alpha = 500 - alpha;
@@ -67,27 +63,18 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 			alpha = 0;
 		};
 		context.setColor (new Color (255 - alpha, 255 - alpha, 255 - alpha));
-		context.drawString (this.confirmText, width / 2 - Menu.fontConfirmText.getWidth (this.confirmText) / 2, 35);
+		context.drawString (this.confirmText, width / 2 - Menu.hintFont.getWidth (this.confirmText) / 2, 35);
 		context.drawImage (this.background, width / 2 - this.background.getWidth () / 2, height / 2 - this.background.getHeight () / 2);
 
-		context.setColor (Color.white);
-	}
-
-	@Override
-	public void onOptionItemFocusedChanged (int position){
-		this.time = System.currentTimeMillis ();
-	}
-
-	@Override
-	public void onOptionItemSelected (int position) {
-		this.game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+		context.setColor (previousColor);
+		context.setFont (previousFont);
 	}
 
 	@Override
 	public void keyPressed (int key, char c) {
 		switch (key) {
 			case Input.KEY_ENTER:
-				onOptionItemSelected (0);
+				this.onOptionItemSelected (0);
 				break;
 			case Input.KEY_ESCAPE:
 				System.exit (0);
@@ -98,8 +85,8 @@ public class WelcomeMenu extends Menu implements OnClickListener {
 	}
 
 	@Override
-	public void onClick (TGDComponent component) {
-
+	public void onOptionItemSelected (int position) {
+		this.game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
 	}
 
 }

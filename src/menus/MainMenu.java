@@ -1,6 +1,7 @@
 package menus;
 
-import org.newdawn.slick.Color;
+import java.util.Arrays;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -26,20 +27,26 @@ public class MainMenu extends Menu {
 	@Override
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		super.init (container, game);
-
-		this.setTitrePrincipal ("INSERER TITRE ICI");
-		this.setTitreSecondaire ("SOUS TITRE");
-
-		this.setItems (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU], AppGame.TITLES [AppGame.MENUS_GAMES_MENU], "Quitter");
-
-		this.setEnableClignote (false);
-		this.setCouleurClignote (Color.red);
-		this.setTempsClignote (400);
+		// this.setTitle ("INSERER TITRE ICI");
+		// this.setSubtitle ("INSERER SOUS-TITRE ICI");
+		this.setMenu (Arrays.asList (new String [] {
+			AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU],
+			AppGame.TITLES [AppGame.MENUS_GAMES_MENU],
+			"Quitter"
+		}));
+		// this.setHint ("PRESS ENTER);
+		// this.enableBlink ();
 	}
 
 	@Override
-	public void onOptionItemFocusedChanged (int position) {
-		this.time = System.currentTimeMillis ();
+	public void keyPressed (int key, char c) {
+		switch (key) {
+			case Input.KEY_ESCAPE:
+				System.exit (0);
+				break;
+			default:
+				super.keyPressed (key, c);
+		};
 	}
 
 	@Override
@@ -53,17 +60,6 @@ public class MainMenu extends Menu {
 				break;
 			case 2:
 				System.exit (0);
-		};
-	}
-
-	@Override
-	public void keyPressed (int key, char c) {
-		switch (key) {
-			case Input.KEY_ESCAPE:
-				System.exit (0);
-				break;
-			default:
-				super.keyPressed (key, c);
 		};
 	}
 

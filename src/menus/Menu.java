@@ -1,7 +1,7 @@
 package menus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -16,268 +16,257 @@ import general.utils.FontUtils;
 
 /**
  *
- * Pour faire un menu c'est simple,
- * il suffit de faire une classe qui herite de celle la et de
- * reseiner via les setters, les params TitrePrincipal, titreSecondaire
- * et les items. Et C'est tout
+ * Pour faire un menu c'est simple, il suffit de faire une classe qui herite de
+ * celle-la et de personnaliser via les setters setTitle, setSubtitle setMenu et
+ * setHint.
+ * Et c'est tout.
  * Vous recevrez l'index de l'item selectionné dans la méthode
  * onOptionItemSelected.
  *
-		super.setTitrePrincipal("TELE-ARCADE DESIGN");
-		super.setTitreSecondaire("Menu Principal");
-		super.setItems("Jouer","Editeur", "Quitter");
-
-		super.setEnableClignote(true);
-		super.setCouleurClignote(Color.red);
-		super.setTempsClignote(400);
+		super.setTitle ("TELE-ARCADE DESIGN");
+		super.setSubtitle ("Menu Principal");
+		super.setMenu ("Jouer", "Editeur", "Quitter");
+		super.enableBlink ();
  *
- *on peut add/remove item maintenant
- *ajouter autant d'item qu'on veut
  *
- *@author Jérôme
+ *@author Jérôme, Tristan
  */
 
 public abstract class Menu extends BasicGameState {
 
-	static private Font fontTitrePrincipal = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.BOLD, 40, false);
-	static private Font fontTitreSecondaire = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 24, true);
-	static private Font fontItem = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 14, true);
-	static protected Font fontConfirmText = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.PLAIN, 20, false); // TODO: private ?
+	static private Color foregroundColor = Color.white;
+	static private Color backgroundColor = Color.black;
+	static private Color highlightColor = Color.red;
 
-	private int itemHeight;
+	static private Font titleFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.BOLD, 40, false);
+	static private Font subtitleFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 24, true);
+	static private Font menuFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 14, true);
+	static protected Font hintFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.PLAIN, 20, false); // TODO: private ?
+
+	private String title;
+	private String subtitle;
+	private List <String> menu = new ArrayList <String> ();
+	private String hint;
+
+	private int titleWidth;
+	private int subtitleWidth;
+	private int menuWidth;
+	private int hintWidth;
+
+	// private int titleHeight;
+	// private int subtitleHeight;
+	// private int menuHeight;
+	// private int hintHeight;
+
+	private int boxWidth;
+	private int boxHeight;
+
+	private boolean blinkEnabled;
+	private int blinkPeriod;
+	private int blinkCountdown;
+
+	private int menuHeight;
+	private int startMenuX;
 	private int startMenuY;
 	private int endMenuY;
 	private int visibleItemsMax;
-
-	protected String titrePrincipal;
-	protected String titreSecondaire;
-	protected String bottomText;
-	protected ArrayList <String> items = new ArrayList <String> ();
-
-	protected long tempsClignote;
-	protected Color couleurClignote;
-	protected boolean enableClignote;
-
-	protected GameContainer container;
-	protected StateBasedGame game;
-	protected long time; // TODO: private or remove ?
-
-	private int indexItemPlusGrand;
 	private int selection;
-	private int decalage;
+	private int scrollY;
+
+	protected StateBasedGame game;
 
 	public Menu () {}
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
-		this.itemHeight = 30;
+		this.setTitle ("INSERER TITRE ICI");
+		this.setSubtitle ("INSERER SOUS-TITRE ICI");
+		this.setMenu (new ArrayList <String> ());
+		this.setHint ("PRESS ENTER");
+		this.boxWidth = 600;
+		this.boxHeight = 37;
+		this.blinkEnabled = false;
+		this.blinkPeriod = 800;
+		this.blinkCountdown = this.blinkPeriod;
+
+		this.menuHeight = 30;
+		this.startMenuX = (container.getWidth () - this.boxWidth) / 2;
 		this.startMenuY = container.getHeight () / 2 - 130;
 		this.endMenuY = container.getHeight () - 200;
-		this.visibleItemsMax = (this.endMenuY - this.startMenuY) / this.itemHeight - 3;
-		this.titrePrincipal = "INSERER TITRE ICI";
-		this.titreSecondaire = "INSERER SOUS-TITRE ICI";
-		this.bottomText = "PRESS ENTER";
-		this.items = new ArrayList <String> ();
-		this.tempsClignote = 400;
-		this.couleurClignote = Color.red;
-		this.enableClignote = false;
-		this.indexItemPlusGrand = 0;
+		this.visibleItemsMax = (this.endMenuY - this.startMenuY) / this.menuHeight - 3;
 		this.selection = 0;
-		this.decalage = 0;
+		this.scrollY = 0;
 
-		this.container = container;
 		this.game = game;
-		this.time = System.currentTimeMillis ();
 		container.setShowFPS (false);
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {}
+	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if (this.blinkEnabled) {
+			this.blinkCountdown = (this.blinkCountdown + this.blinkPeriod - delta) % this.blinkPeriod;
+		};
+	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
-		int width = arg0.getWidth ();
-
-		g.setBackground(Color.black);
-
-		renderTitrePrincipal(arg0,arg1,g);
-		renderTitreSecondaire(arg0,arg1,g);
-		renderMenusItems(arg0,arg1,g);
-		renderSelectionItem(arg0,arg1,g,selection);
-
-		g.setColor(Color.white);
-		g.drawRect(width/2-300, this.startMenuY, 600,37);
-
-		g.drawRect(width/2-300, this.endMenuY, 600,37);
-
-		g.setFont(fontConfirmText);
-		g.drawString(bottomText, width/2-fontConfirmText.getWidth(bottomText)/2, 530);
+	public void render (GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
+		this.renderBackground (container, game, context);
+		this.renderTitle (container, game, context);
+		this.renderSubtitle (container, game, context);
+		this.renderMenu (container, game, context);
+		this.renderHint (container, game, context);
 	}
 
-	public void renderSelectionItem(GameContainer arg0, StateBasedGame arg1, Graphics g,int position) {
-		if(items==null)return;
-		int width = arg0.getWidth ();
-		if(enableClignote){
-			if((System.currentTimeMillis()-time)%(2*tempsClignote)<=tempsClignote)g.setColor(Color.white);
-			else g.setColor(couleurClignote);
-		}else{
-			g.setColor(couleurClignote);
-		}
-		g.drawString(">>", width/2-fontItem.getWidth(items.get(indexItemPlusGrand))/2-35, getYMenu() + this.itemHeight * (position-decalage));
-		g.drawString("<<", width/2+fontItem.getWidth(items.get(indexItemPlusGrand))/2+25, getYMenu() + this.itemHeight * (position-decalage));
+	private void renderBackground (GameContainer container, StateBasedGame game, Graphics context) {
+		context.setBackground (Menu.backgroundColor);
 	}
 
-	public void renderTitrePrincipal(GameContainer arg0, StateBasedGame arg1, Graphics g) {
-		int width = arg0.getWidth ();
-		g.setColor(Color.red);
-		g.setFont(fontTitrePrincipal);
-		g.drawString(titrePrincipal,(width-fontTitrePrincipal.getWidth(titrePrincipal))/2 , 120);
-		g.setColor(Color.white);
-		g.setFont(fontTitrePrincipal);
-		g.drawString(titrePrincipal,(width-fontTitrePrincipal.getWidth(titrePrincipal))/2+4 , 122);
+	private void renderTitle (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = (container.getWidth () - this.titleWidth) / 2;
+		int y = 120;
+		context.setColor (Menu.highlightColor);
+		context.setFont (Menu.titleFont);
+		context.drawString (this.title, x - 2, y - 2);
+		context.setColor (Menu.foregroundColor);
+		context.drawString (this.title, x + 2, y + 2);
 	}
 
-	public void renderTitreSecondaire(GameContainer arg0, StateBasedGame arg1, Graphics g) {
-		int width = arg0.getWidth ();
-		g.setFont(fontTitreSecondaire);
-		g.drawString(titreSecondaire, width/2-fontTitreSecondaire.getWidth(titreSecondaire)/2, 232);
+	private void renderSubtitle (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = (container.getWidth () - this.subtitleWidth) / 2;
+		int y = 232;
+		context.drawRect (this.startMenuX, this.startMenuY, this.boxWidth, this.boxHeight);
+		context.setFont (Menu.subtitleFont);
+		context.setColor (Menu.foregroundColor);
+		context.drawString (this.subtitle, x, y);
 	}
 
-	public void renderMenusItems(GameContainer arg0, StateBasedGame arg1, Graphics g) {
-		if(items==null)return;
-		int width = arg0.getWidth ();
-
-		g.setColor(Color.white);
-
-		for (int i = decalage; i < Math.min(items.size(),decalage+this.visibleItemsMax); i++) {
-			g.setFont(fontItem);
-			g.drawString(this.items.get(i), width/2-fontItem.getWidth(items.get(indexItemPlusGrand))/2, getYMenu() + this.itemHeight * (i-decalage));
-		}
+	private void renderMenu (GameContainer container, StateBasedGame game, Graphics context) {
+		int itemMin = this.scrollY;
+		int itemMax = Math.min (this.menu.size (), this.scrollY + this.visibleItemsMax);
+		int x = (container.getWidth () - this.menuWidth) / 2;
+		int y = (this.endMenuY + this.startMenuY + this.boxHeight - this.menuHeight * Math.min (this.menu.size (), this.visibleItemsMax)) / 2;
+		int dx = -35;
+		context.setColor (Menu.foregroundColor);
+		context.setFont (Menu.menuFont);
+		for (int i = itemMin; i < itemMax; i++) {
+			int dy = this.menuHeight * (i - this.scrollY);
+			context.drawString (this.menu.get (i), x, y + dy);
+			if (i == this.selection) {
+				boolean blinkEnabled = this.blinkEnabled && this.blinkCountdown <= this.blinkPeriod / 2;
+				if (!blinkEnabled) {
+					context.setColor (Menu.highlightColor);
+				};
+				context.drawString (">>", x + dx, y + dy);
+				context.drawString ("<<", x + this.menuWidth - dx, y + dy);
+				if (!blinkEnabled) {
+					context.setColor (Menu.foregroundColor);
+				};
+			};
+		};
 	}
 
-	private int getYMenu() {
-		return this.startMenuY+37+(this.endMenuY-this.startMenuY-37)/2-this.itemHeight*Math.min(this.visibleItemsMax,items.size())/2;
+	private void renderHint (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = (container.getWidth () - this.hintWidth) / 2;
+		int y = 530;
+		context.drawRect (this.startMenuX, this.endMenuY, this.boxWidth, this.boxHeight);
+		context.setFont (Menu.hintFont);
+		context.setColor (Menu.foregroundColor);
+		context.drawString (this.hint, x, y);
+	}
+
+	public void setTitle (String title) {
+		this.title = title;
+		this.titleWidth = Menu.titleFont.getWidth (title);
+		// this.titleHeight = Menu.titleFont.getHeight (title);
+	}
+
+	public String getTitle () {
+		return this.title;
+	}
+
+	public void setSubtitle (String subtitle) {
+		this.subtitle = subtitle;
+		this.subtitleWidth = Menu.subtitleFont.getWidth (subtitle);
+		// this.subtitleHeight = Menu.subtitleFont.getHeight (subtitle);
+	}
+
+	public String getSubtitle () {
+		return this.subtitle;
+	}
+
+	public void setMenu (List <String> menu) {
+		this.menu.clear ();
+		this.menu.addAll (menu);
+		int menuWidth = 0;
+		for (String item: this.menu) {
+			int width = Menu.menuFont.getWidth (item);
+			if (width > menuWidth) {
+				menuWidth = width;
+			};
+		};
+		this.menuWidth = menuWidth;
+		// this.menuHeight = Menu.menuFont.getHeight (hint);
+	}
+
+	public List <String> getMenu () {
+		List <String> menu = new ArrayList <String> ();
+		menu.addAll (this.menu);
+		return menu;
+	}
+
+	public void setHint (String hint) {
+		this.hint = hint;
+		this.hintWidth = Menu.hintFont.getWidth (hint);
+		// this.hintHeight = Menu.hintFont.getHeight (hint);
+	}
+
+	public String getHint () {
+		return this.hint;
+	}
+
+	public void enableBlink () {
+		this.blinkEnabled = true;
+	}
+
+	public void disableBlink () {
+		this.blinkEnabled = true;
+	}
+
+	public boolean isBlinkEnabled () {
+		return this.blinkEnabled;
 	}
 
 	@Override
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
-		//time=System.currentTimeMillis();
 		switch (key) {
-		//case Input.KEY_NUMPAD2:
 		case Input.KEY_DOWN:
-			if (selection < items.size() - 1)
+			if (selection < menu.size() - 1)
 				selection++;
 			else
 				selection = 0;
 			if(selection>=this.visibleItemsMax){
-				decalage=selection-this.visibleItemsMax+1;
-			}else decalage=0;
-			onOptionItemFocusedChanged(selection);
+				this.scrollY=selection-this.visibleItemsMax+1;
+			}else this.scrollY=0;
 			break;
-		//case Input.KEY_NUMPAD8:
 		case Input.KEY_UP:
 			if (selection > 0)
 				selection--;
 			else
-				selection = items.size() - 1;
+				selection = menu.size() - 1;
 			if(selection>=this.visibleItemsMax){
-				decalage=selection-this.visibleItemsMax+1;
-			}else decalage=0;
-			onOptionItemFocusedChanged(selection);
+				this.scrollY=selection-this.visibleItemsMax+1;
+			}else this.scrollY=0;
 			break;
 		case Input.KEY_ENTER:
 			onOptionItemSelected(selection);
 			break;
 
 		case Input.KEY_ESCAPE:
-			//exit();
 			break;
 		}
 	}
 
-	public abstract void onOptionItemFocusedChanged(int position);
-
-	public abstract void onOptionItemSelected(int position);
-
-	public String getTitrePrincipal() {
-		return titrePrincipal;
-	}
-
-	public void setTitrePrincipal(String titrePrincipal) {
-		this.titrePrincipal = titrePrincipal;
-	}
-
-	public String getTitreSecondaire() {
-		return titreSecondaire;
-	}
-
-	public void setTitreSecondaire(String titreSecondaire) {
-		this.titreSecondaire = titreSecondaire;
-	}
-
-	public ArrayList<String> getItems() {
-		return items;
-	}
-
-	public void setItems(String... itemsLoc) {
-		this.items = new ArrayList<String>(Arrays.asList(itemsLoc));
-		calculerPlusGrandItem();
-	}
-
-	private void calculerPlusGrandItem() {
-		indexItemPlusGrand=0;
-		for(int i=0;i<items.size();i++){
-			if(items.get(indexItemPlusGrand).length()<items.get(i).length()){
-				indexItemPlusGrand=i;
-			}
-		}
-	}
-
-	public void setFontTitrePrincipal(String name, int type, int size, boolean isSystemFont) {
-		fontTitrePrincipal=FontUtils.loadFont(name,type,size,isSystemFont);
-	}
-
-	public void setFontTitreSecondaire(String name, int type, int size, boolean isSystemFont) {
-		fontTitreSecondaire=FontUtils.loadFont(name,type,size,isSystemFont);
-	}
-
-	public void setFontItem(String name, int type, int size, boolean isSystemFont) {
-		fontItem=FontUtils.loadFont(name,type,size,isSystemFont);
-	}
-
-	public void setEnableClignote(boolean b) {
-		enableClignote=b;
-	}
-
-	public void setTempsClignote(long timeEnMillisecond){
-		this.tempsClignote=timeEnMillisecond;
-	}
-
-	public void setCouleurClignote(Color coul){
-		this.couleurClignote=coul;
-	}
-
-	public void addItem(String titre) {
-		items.add(titre);
-		calculerPlusGrandItem();
-	}
-
-	public void removeItemAtIndex(int index) {
-		items.remove(index);
-		calculerPlusGrandItem();
-	}
-
-	public void removeAllItems() {
-		items.removeAll(items);
-	}
-
-	public void setBottomText(String text){
-		this.bottomText=text;
-	}
-
-	public String getBottomText(){
-		return bottomText;
-	}
+	public abstract void onOptionItemSelected (int position);
 
 }
