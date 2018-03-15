@@ -45,7 +45,7 @@ public abstract class Menu extends BasicGameState {
 
 	private String title;
 	private String subtitle;
-	private List <String> menu = new ArrayList <String> ();
+	private List <MenuItem> menu;
 	private String hint;
 
 	private int titleWidth;
@@ -81,7 +81,7 @@ public abstract class Menu extends BasicGameState {
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		this.setTitle ("INSERER TITRE ICI");
 		this.setSubtitle ("INSERER SOUS-TITRE ICI");
-		this.setMenu (new ArrayList <String> ());
+		this.setMenu (new ArrayList <MenuItem> ());
 		this.setHint ("PRESS ENTER");
 		this.boxWidth = 600;
 		this.boxHeight = 37;
@@ -102,9 +102,50 @@ public abstract class Menu extends BasicGameState {
 	}
 
 	@Override
+	public void enter (GameContainer container, StateBasedGame game) {
+		container.getInput ().clearKeyPressedRecord ();
+	}
+
+	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (this.blinkEnabled) {
 			this.blinkCountdown = (this.blinkCountdown + this.blinkPeriod - delta) % this.blinkPeriod;
+		};
+		Input input = container.getInput ();
+		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
+			int size = this.menu.size ();
+			if (size == 0) {
+				System.exit (0);
+			} else {
+				this.menu.get (size - 1).itemSelected ();
+			};
+		} else if (input.isKeyPressed (Input.KEY_ENTER)) {
+			this.menu.get (this.selection).itemSelected ();
+		} else {
+			if (input.isKeyPressed (Input.KEY_DOWN)) {
+				if (this.selection < menu.size () - 1) {
+					this.selection++;
+				} else {
+					this.selection = 0;
+				};
+				if (this.selection >= this.visibleItemsMax) {
+					this.scrollY = this.selection - this.visibleItemsMax + 1;
+				} else {
+					this.scrollY = 0;
+				};
+			};
+			if (input.isKeyPressed (Input.KEY_UP)) {
+				if (this.selection > 0) {
+					this.selection--;
+				} else {
+					this.selection = menu.size () - 1;
+				};
+				if (this.selection >= this.visibleItemsMax) {
+					this.scrollY = this.selection - this.visibleItemsMax + 1;
+				} else {
+					this.scrollY = 0;
+				};
+			};
 		};
 	}
 
@@ -150,7 +191,7 @@ public abstract class Menu extends BasicGameState {
 		context.setFont (Menu.menuFont);
 		for (int i = itemMin; i < itemMax; i++) {
 			int dy = this.menuHeight * (i - this.scrollY);
-			context.drawString (this.menu.get (i), x, y + dy);
+			context.drawString (this.menu.get (i).getContent (), x, y + dy);
 			if (i == this.selection) {
 				boolean blinkEnabled = this.blinkEnabled && this.blinkCountdown <= this.blinkPeriod / 2;
 				if (!blinkEnabled) {
@@ -194,22 +235,21 @@ public abstract class Menu extends BasicGameState {
 		return this.subtitle;
 	}
 
-	public void setMenu (List <String> menu) {
-		this.menu.clear ();
+	public void setMenu (List <MenuItem> menu) {
+		this.menu = new ArrayList <MenuItem> ();
 		this.menu.addAll (menu);
-		int menuWidth = 0;
-		for (String item: this.menu) {
-			int width = Menu.menuFont.getWidth (item);
-			if (width > menuWidth) {
-				menuWidth = width;
+		this.menuWidth = 0;
+		for (MenuItem item: this.menu) {
+			int width = Menu.menuFont.getWidth (item.getContent ());
+			if (width > this.menuWidth) {
+				this.menuWidth = width;
 			};
 		};
-		this.menuWidth = menuWidth;
 		// this.menuHeight = Menu.menuFont.getHeight (hint);
 	}
 
-	public List <String> getMenu () {
-		List <String> menu = new ArrayList <String> ();
+	public List <MenuItem> getMenu () {
+		List <MenuItem> menu = new ArrayList <MenuItem> ();
 		menu.addAll (this.menu);
 		return menu;
 	}
@@ -235,38 +275,5 @@ public abstract class Menu extends BasicGameState {
 	public boolean isBlinkEnabled () {
 		return this.blinkEnabled;
 	}
-
-	@Override
-	public void keyPressed(int key, char c) {
-		super.keyPressed(key, c);
-		switch (key) {
-		case Input.KEY_DOWN:
-			if (selection < menu.size() - 1)
-				selection++;
-			else
-				selection = 0;
-			if(selection>=this.visibleItemsMax){
-				this.scrollY=selection-this.visibleItemsMax+1;
-			}else this.scrollY=0;
-			break;
-		case Input.KEY_UP:
-			if (selection > 0)
-				selection--;
-			else
-				selection = menu.size() - 1;
-			if(selection>=this.visibleItemsMax){
-				this.scrollY=selection-this.visibleItemsMax+1;
-			}else this.scrollY=0;
-			break;
-		case Input.KEY_ENTER:
-			onOptionItemSelected(selection);
-			break;
-
-		case Input.KEY_ESCAPE:
-			break;
-		}
-	}
-
-	public abstract void onOptionItemSelected (int position);
 
 }

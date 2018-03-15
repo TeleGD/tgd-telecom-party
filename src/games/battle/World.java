@@ -43,7 +43,7 @@ public class World extends BasicGameState {
 	};
 	public void enter (GameContainer container, StateBasedGame game) {
 		// this.init (container, game);
-		container.getInput ().clearControlPressedRecord ();
+		container.getInput ().clearKeyPressedRecord ();
 	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput ();

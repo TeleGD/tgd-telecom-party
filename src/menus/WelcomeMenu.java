@@ -1,11 +1,12 @@
 package menus;
 
+import java.util.Arrays;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -33,14 +34,17 @@ public class WelcomeMenu extends Menu {
 	@Override
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		super.init (container, game);
-
+		this.setMenu (Arrays.asList (new MenuItem [] {
+			new MenuItem (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU]) {
+				public void itemSelected () {
+					game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+				};
+			}
+		}));
 		this.confirmText = "PRESS ENTER";
 		this.background = new Image ("images/logo.png");
 		this.blinkPeriod = 10;
 	}
-
-	@Override
-	public void update (GameContainer container, StateBasedGame game, int delta) {}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
@@ -68,25 +72,6 @@ public class WelcomeMenu extends Menu {
 
 		context.setColor (previousColor);
 		context.setFont (previousFont);
-	}
-
-	@Override
-	public void keyPressed (int key, char c) {
-		switch (key) {
-			case Input.KEY_ENTER:
-				this.onOptionItemSelected (0);
-				break;
-			case Input.KEY_ESCAPE:
-				System.exit (0);
-				break;
-			default:
-				super.keyPressed (key, c);
-		};
-	}
-
-	@Override
-	public void onOptionItemSelected (int position) {
-		this.game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
 	}
 
 }
