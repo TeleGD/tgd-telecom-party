@@ -1,5 +1,8 @@
 package hub;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,7 +28,6 @@ public class WorldPlateau extends BasicGameState {
 	private int gridWidth;
 	private int gridHeight;
 	private int gridGap;
-	private int playerHeight, playerWidth;
 	private int turnNumber;
 
 	private boolean menu;
@@ -35,7 +37,7 @@ public class WorldPlateau extends BasicGameState {
 
 	// private int [] cheminEntiers = {0, 0, 0, 0, 0, 0, 0, 0, 1};
 	private int nbJoueur;
-	private JoueurPlateau [] listeJoueurs;
+	private List<JoueurPlateau> listeJoueurs;
 	private boolean enterPress;
 
 	public WorldPlateau (int ID) {
@@ -58,16 +60,9 @@ public class WorldPlateau extends BasicGameState {
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
-		this.playerHeight = gridHeight - 10;
-		this.playerWidth = gridWidth - 10;
 
 		this.turnNumber = 0; // numéro du tour
-		this.listeJoueurs = new JoueurPlateau [2]; // 1 joueurs max pour l'instant
 
-		// TEST JOUEUR
-		//TODO Initialisation des joueurs en accord avec ce qui a été selectionné à l'aide des boutons
-		this.listeJoueurs [0] = new JoueurPlateau (this, 0, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
-		this.listeJoueurs [1] = new JoueurPlateau (this, 1, "NOM", "images/player/pion.png", this.playerHeight, this.playerWidth);
 
 		// TODO Auto-generated method stub
 		this.menu = true;
@@ -103,6 +98,8 @@ public class WorldPlateau extends BasicGameState {
 			@Override
 			public void onClick (TGDComponent component) {
 				that.menu = false;
+				//TMP : Tant que les joueurs doivent être créés ici :
+				initListeJoueurs(nbJoueur);
 			}
 
 		});
@@ -119,7 +116,7 @@ public class WorldPlateau extends BasicGameState {
 
 		} else { // Si le jeu est lancé : on est sur le plateau
 			if (enterPress) {
-				listeJoueurs[turnNumber % nbJoueur].playRound(); // Lance le tour du joueur à qui c'est le tour
+				listeJoueurs.get(turnNumber % nbJoueur).playRound(); // Lance le tour du joueur à qui c'est le tour
 				enterPress = false;
 				turnNumber ++;
 			}
@@ -145,6 +142,17 @@ public class WorldPlateau extends BasicGameState {
 			for (JoueurPlateau p: this.listeJoueurs) {
 				p.render (container, game, context);
 			}
+		}
+	}
+	
+	// TMP :
+	public void initListeJoueurs(int nbJoueur) {
+		listeJoueurs = new ArrayList<>(); // initialisation de listeJoueur
+
+		// TEST JOUEUR
+		//TODO Initialisation des joueurs en accord avec ce qui a été selectionné à l'aide des boutons
+		for (int i=0 ; i < nbJoueur ; i++) {
+			listeJoueurs.add(new JoueurPlateau (this, i, "NOM", "images/player/pion.png"));
 		}
 	}
 

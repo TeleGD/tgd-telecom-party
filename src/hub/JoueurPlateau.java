@@ -21,7 +21,7 @@ public class JoueurPlateau {
 	private float x;
 	private float y;
 
-	public JoueurPlateau(WorldPlateau plateau, int num, String name, String nameSprite, int height, int width) {
+	public JoueurPlateau(WorldPlateau plateau, int num, String name, String nameSprite) {
 		this.plateau = plateau;
 		place=0;
 		playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
@@ -29,7 +29,7 @@ public class JoueurPlateau {
 		this.name = name;
 		try {
 			sprite = new Image(nameSprite);
-			sprite = sprite.getScaledCopy(height , width);
+			sprite = sprite.getScaledCopy( (int) (plateau.getGridHeight()*0.9), (int) (plateau.getGridWidth()*0.9) );
 		} catch (SlickException e) {
 			// nous donne la trace de l'erreur si on ne peut charger l'image correctement
 			e.printStackTrace();
