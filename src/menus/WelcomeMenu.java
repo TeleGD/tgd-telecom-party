@@ -14,6 +14,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
 
+import menus.ui.Menu;
+import menus.ui.MenuItem;
+
 public class WelcomeMenu extends Menu {
 
 	private int ID;
@@ -21,6 +24,8 @@ public class WelcomeMenu extends Menu {
 	private String confirmText;
 	private Image background;
 	private int blinkPeriod;
+
+	protected StateBasedGame game;
 
 	public WelcomeMenu (int ID) {
 		this.ID = ID;
@@ -32,7 +37,7 @@ public class WelcomeMenu extends Menu {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) throws SlickException {
+	public void init (GameContainer container, StateBasedGame game) {
 		super.init (container, game);
 		this.setMenu (Arrays.asList (new MenuItem [] {
 			new MenuItem (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU]) {
@@ -42,12 +47,17 @@ public class WelcomeMenu extends Menu {
 			}
 		}));
 		this.confirmText = "PRESS ENTER";
-		this.background = new Image ("images/logo.png");
+		try {
+			this.background = new Image ("images/logo.png");
+		} catch (SlickException exception) {
+			this.background = null;
+		};
 		this.blinkPeriod = 10;
+		this.game = game;
 	}
 
 	@Override
-	public void render (GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		Color previousColor = context.getColor ();
 		Font previousFont = context.getFont ();
 

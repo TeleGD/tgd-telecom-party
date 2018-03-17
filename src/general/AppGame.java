@@ -36,6 +36,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new hub.WorldPlateau (AppGame.HUB_WORLD_PLATEAU));
 		this.addState (new games.battle.World (AppGame.GAMES_BATTLE_WORLD));
 		this.addState (new games.aztecPyramids.World (AppGame.GAMES_AZTEC_PYRAMIDS_WORLD));
+		container.setShowFPS (false);
 	}
 
 }
