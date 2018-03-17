@@ -19,6 +19,8 @@ public abstract class Menu extends Page {
 
 	private List <MenuItem> menu;
 
+	private boolean menuVisibility;
+
 	protected int menuBoxWidth;
 	protected int menuBoxHeight;
 	protected int menuBoxX;
@@ -31,29 +33,30 @@ public abstract class Menu extends Page {
 
 	private int menuScrollY;
 	private int menuScrollHeight;
+	private int itemHeight;
 	private int selectedItem;
 
-	private int itemHeight;
-	private boolean blinkEnabled;
-	private int blinkPeriod;
-	private int blinkCountdown;
+	private boolean menuBlink;
+	private int menuBlinkPeriod;
+	private int menuBlinkCountdown;
 
 	public Menu () {}
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
 		super.init (container, game);
-
-		this.itemHeight = Menu.menuLineHeight;
-
-		this.blinkEnabled = false;
-		this.blinkPeriod = 800;
-		this.blinkCountdown = this.blinkPeriod;
-
 		this.menuBoxX = this.contentX;
 		this.menuBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
 		this.menuBoxWidth = this.contentWidth;
 		this.menuBoxHeight = this.hintBoxY - this.menuBoxY - Page.gap;
+
+		this.itemHeight = Menu.menuLineHeight;
+
+		this.menuVisibility = true;
+
+		this.menuBlink = false;
+		this.menuBlinkPeriod = 1000;
+		this.menuBlinkCountdown = 0;
 
 		this.setMenu (new ArrayList <MenuItem> ());
 	}
@@ -66,9 +69,6 @@ public abstract class Menu extends Page {
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
-		if (this.blinkEnabled) {
-			this.blinkCountdown = (this.blinkCountdown + this.blinkPeriod - delta) % this.blinkPeriod;
-		};
 		Input input = container.getInput ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
 			int size = this.menu.size ();
@@ -103,6 +103,9 @@ public abstract class Menu extends Page {
 				};
 			};
 		};
+		if (this.menuBlink) {
+			this.menuBlinkCountdown = (this.menuBlinkCountdown + this.menuBlinkPeriod - delta) % this.menuBlinkPeriod;
+		};
 	}
 
 	@Override
@@ -112,21 +115,23 @@ public abstract class Menu extends Page {
 	}
 
 	private void renderMenu (GameContainer container, StateBasedGame game, Graphics context) {
-		int dx = -35;
-		context.setColor (Page.foregroundColor);
-		context.setFont (Menu.menuFont);
-		for (int i = this.menuScrollY, l = i + this.menuScrollHeight; i < l; i++) {
-			int dy = this.itemHeight * (i - this.menuScrollY);
-			context.drawString (this.menu.get (i).getContent (), this.menuX, this.menuY + dy);
-			if (i == this.selectedItem) {
-				boolean blinkEnabled = this.blinkEnabled && this.blinkCountdown <= this.blinkPeriod / 2;
-				if (!blinkEnabled) {
-					context.setColor (Page.highlightColor);
-				};
-				context.drawString (">>", this.menuX + dx, this.menuY + dy);
-				context.drawString ("<<", this.menuX + this.menuWidth - dx, this.menuY + dy);
-				if (!blinkEnabled) {
-					context.setColor (Page.foregroundColor);
+		if (this.menuVisibility) {
+			int dx = -35;
+			context.setColor (Page.foregroundColor);
+			context.setFont (Menu.menuFont);
+			for (int i = this.menuScrollY, l = i + this.menuScrollHeight; i < l; i++) {
+				int dy = this.itemHeight * (i - this.menuScrollY);
+				context.drawString (this.menu.get (i).getContent (), this.menuX, this.menuY + dy);
+				if (i == this.selectedItem) {
+					boolean menuBlink = this.menuBlink && this.menuBlinkCountdown <= this.menuBlinkPeriod / 2;
+					if (!menuBlink) {
+						context.setColor (Page.highlightColor);
+					};
+					context.drawString (">>", this.menuX + dx, this.menuY + dy);
+					context.drawString ("<<", this.menuX + this.menuWidth - dx, this.menuY + dy);
+					if (!menuBlink) {
+						context.setColor (Page.foregroundColor);
+					};
 				};
 			};
 		};
@@ -154,18 +159,6 @@ public abstract class Menu extends Page {
 		List <MenuItem> menu = new ArrayList <MenuItem> ();
 		menu.addAll (this.menu);
 		return menu;
-	}
-
-	public void enableBlink () {
-		this.blinkEnabled = true;
-	}
-
-	public void disableBlink () {
-		this.blinkEnabled = true;
-	}
-
-	public boolean isBlinkEnabled () {
-		return this.blinkEnabled;
 	}
 
 }

@@ -17,7 +17,7 @@ public abstract class Page extends BasicGameState {
 
 	static private Font titleFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.BOLD, 40, false);
 	static private Font subtitleFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 24, true);
-	static protected Font hintFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.PLAIN, 20, false); // TODO: private ?
+	static private Font hintFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.PLAIN, 20, false);
 
 	static private int titleLineHeight = 50;
 	static private int subtitleLineHeight = 30;
@@ -28,6 +28,10 @@ public abstract class Page extends BasicGameState {
 	private String title;
 	private String subtitle;
 	private String hint;
+
+	protected boolean titleVisibility;
+	protected boolean subtitleVisibility;
+	protected boolean hintVisibility;
 
 	protected int contentWidth;
 	protected int contentHeight;
@@ -64,15 +68,14 @@ public abstract class Page extends BasicGameState {
 	private int hintX;
 	private int hintY;
 
+	protected boolean hintBlink;
+	private int hintBlinkPeriod;
+	private int hintBlinkCountdown;
+
 	public Page () {}
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
-		this.contentWidth = 600;
-		this.contentHeight = 400;
-		this.contentX = (container.getWidth () - this.contentWidth) / 2;
-		this.contentY = (container.getHeight () - this.contentHeight) / 2;
-
 		this.titleBoxWidth = this.contentWidth;
 		this.titleBoxHeight = Page.titleLineHeight;
 		this.titleBoxX = this.contentX;
@@ -88,13 +91,25 @@ public abstract class Page extends BasicGameState {
 		this.hintBoxX = this.contentX;
 		this.hintBoxY = this.contentY + this.contentHeight - this.hintBoxHeight;
 
+		this.titleVisibility = true;
+		this.subtitleVisibility = true;
+		this.hintVisibility = true;
+
+		this.hintBlink = false;
+		this.hintBlinkPeriod = 4000;
+		this.hintBlinkCountdown = 0;
+
 		this.setTitle ("");
 		this.setSubtitle ("");
 		this.setHint ("");
 	}
 
 	@Override
-	public void update (GameContainer container, StateBasedGame game, int delta) {}
+	public void update (GameContainer container, StateBasedGame game, int delta) {
+		if (this.hintBlink) {
+			this.hintBlinkCountdown = (this.hintBlinkCountdown + this.hintBlinkPeriod - delta) % this.hintBlinkPeriod;
+		};
+	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
@@ -109,25 +124,44 @@ public abstract class Page extends BasicGameState {
 	}
 
 	private void renderTitle (GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor (Page.highlightColor);
-		context.setFont (Page.titleFont);
-		context.drawString (this.title, this.titleX - 2, this.titleY - 2);
-		context.setColor (Page.foregroundColor);
-		context.drawString (this.title, this.titleX + 2, this.titleY + 2);
+		if (this.titleVisibility) {
+			context.setColor (Page.highlightColor);
+			context.setFont (Page.titleFont);
+			context.drawString (this.title, this.titleX - 2, this.titleY - 2);
+			context.setColor (Page.foregroundColor);
+			context.drawString (this.title, this.titleX + 2, this.titleY + 2);
+		};
 	}
 
 	private void renderSubtitle (GameContainer container, StateBasedGame game, Graphics context) {
-		context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
-		context.setFont (Page.subtitleFont);
-		context.setColor (Page.foregroundColor);
-		context.drawString (this.subtitle, this.subtitleX, this.subtitleY);
+		if (this.subtitleVisibility) {
+			context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
+			context.setFont (Page.subtitleFont);
+			context.setColor (Page.foregroundColor);
+			context.drawString (this.subtitle, this.subtitleX, this.subtitleY);
+		};
 	}
 
 	private void renderHint (GameContainer container, StateBasedGame game, Graphics context) {
-		context.drawRect (this.hintBoxX, this.hintBoxY, this.hintBoxWidth, this.hintBoxHeight);
-		context.setFont (Page.hintFont);
-		context.setColor (Page.foregroundColor);
-		context.drawString (this.hint, this.hintX, this.hintY);
+		if (this.hintVisibility) {
+			context.drawRect (this.hintBoxX, this.hintBoxY, this.hintBoxWidth, this.hintBoxHeight);
+			context.setFont (Page.hintFont);
+			if (this.hintBlink) {
+				int r = Page.foregroundColor.getRed ();
+				int g = Page.foregroundColor.getGreen ();
+				int b = Page.foregroundColor.getBlue ();
+				int a = 1024 * this.hintBlinkCountdown / this.hintBlinkPeriod - 512;
+				if (a < 0) {
+					a *= -1;
+				};
+				a -= 128;
+				a = Math.max (Math.min (a, 255), 0);
+				context.setColor (new Color (r, g, b, a));
+			} else {
+				context.setColor (Page.foregroundColor);
+			};
+			context.drawString (this.hint, this.hintX, this.hintY);
+		};
 	}
 
 	public void setTitle (String title) {
@@ -164,6 +198,13 @@ public abstract class Page extends BasicGameState {
 
 	public String getHint () {
 		return this.hint;
+	}
+
+	public void initSize (GameContainer container, StateBasedGame game, int width, int height) {
+		this.contentWidth = width;
+		this.contentHeight = height;
+		this.contentX = (container.getWidth () - this.contentWidth) / 2;
+		this.contentY = (container.getHeight () - this.contentHeight) / 2;
 	}
 
 }

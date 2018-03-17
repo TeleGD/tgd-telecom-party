@@ -1,31 +1,39 @@
 package menus;
 
-import java.util.Arrays;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.EmptyImageData;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
 
-import menus.ui.Menu;
-import menus.ui.MenuItem;
+import menus.ui.Page;
 
-public class WelcomeMenu extends Menu {
+public class WelcomeMenu extends Page {
 
 	private int ID;
 
-	private String confirmText;
-	private Image background;
-	private int blinkPeriod;
+	private Image logo;
 
-	protected StateBasedGame game;
+	private boolean logoVisibility;
+
+	protected int logoBoxWidth;
+	protected int logoBoxHeight;
+	protected int logoBoxX;
+	protected int logoBoxY;
+
+	private int logoWidth;
+	private int logoHeight;
+	private int logoX;
+	private int logoY;
+
+	private int naturalWidth;
+	private int naturalHeight;
 
 	public WelcomeMenu (int ID) {
 		this.ID = ID;
@@ -38,50 +46,82 @@ public class WelcomeMenu extends Menu {
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
+		super.initSize (container, game, 600, container.getHeight () - Page.gap * 2);
 		super.init (container, game);
-		this.setMenu (Arrays.asList (new MenuItem [] {
-			new MenuItem (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU]) {
-				public void itemSelected () {
-					game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
-				};
-			}
-		}));
-		this.confirmText = "PRESS ENTER";
+
+		this.logoBoxX = this.contentX;
+		this.logoBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
+		this.logoBoxWidth = this.contentWidth;
+		this.logoBoxHeight = this.hintBoxY - this.logoBoxY - Page.gap;
+
+		this.logoVisibility = true;
+
+		// this.titleVisibility = false;
+		// this.subtitleVisibility = false;
+		this.hintBlink = true;
+
+		this.setTitle ("TeleGame Design");
+		this.setSubtitle ("Projet_2018 #NoName");
+		this.setHint ("PRESS ENTER");
+		Image logo;
 		try {
-			this.background = new Image ("images/logo.png");
+			logo = new Image ("images/logo.png");
 		} catch (SlickException exception) {
-			this.background = null;
+			logo = new Image (new EmptyImageData (0, 0));
 		};
-		this.blinkPeriod = 10;
-		this.game = game;
+		this.setLogo (logo);
+	}
+
+	@Override
+	public void update (GameContainer container, StateBasedGame game, int  delta) {
+		super.update (container, game, delta);
+		Input input = container.getInput ();
+		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
+			System.exit (0);
+		} else if (input.isKeyPressed (Input.KEY_ENTER)) {
+			game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+		};
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		Color previousColor = context.getColor ();
-		Font previousFont = context.getFont ();
+		super.render (container, game, context);
+		this.renderLogo (container, game, context);
+	}
 
-		int width = container.getWidth ();
-		int height = container.getHeight ();
-
-		context.setColor (Color.white);
-
-		context.drawRect (width / 2 - 300, 25, 600, 37);
-
-		context.setFont (Menu.hintFont);
-		int alpha = (int) ((System.currentTimeMillis () / blinkPeriod) % 1000);
-		if (alpha > 255) {
-			alpha = 500 - alpha;
+	private void renderLogo (GameContainer container, StateBasedGame game, Graphics context) {
+		if (this.logoVisibility) {
+			context.drawImage (
+				this.logo,
+				this.logoX,
+				this.logoY,
+				this.logoX + this.logoWidth,
+				this.logoY + this.logoHeight,
+				0,
+				0,
+				this.naturalWidth,
+				this.naturalHeight
+			);
 		};
-		if (alpha > 500) {
-			alpha = 0;
-		};
-		context.setColor (new Color (255 - alpha, 255 - alpha, 255 - alpha));
-		context.drawString (this.confirmText, width / 2 - Menu.hintFont.getWidth (this.confirmText) / 2, 35);
-		context.drawImage (this.background, width / 2 - this.background.getWidth () / 2, height / 2 - this.background.getHeight () / 2);
+	}
 
-		context.setColor (previousColor);
-		context.setFont (previousFont);
+	public void setLogo (Image logo) {
+		this.logo = logo.copy ();
+		this.naturalWidth = logo.getWidth ();
+		this.naturalHeight = logo.getHeight ();
+		this.logoWidth = Math.min (this.logoBoxWidth, this.naturalWidth);
+		this.logoHeight = Math.min (this.logoBoxHeight, this.naturalHeight);
+		if (this.logoWidth * this.naturalHeight < this.naturalWidth * this.logoHeight) {
+			this.logoHeight = this.naturalHeight * this.logoWidth / this.naturalWidth;
+		} else {
+			this.logoWidth = this.naturalWidth * this.logoHeight / this.naturalHeight;
+		};
+		this.logoX = this.logoBoxX + (this.logoBoxWidth - this.logoWidth) / 2;
+		this.logoY = this.logoBoxY + (this.logoBoxHeight - this.logoHeight) / 2;
+	}
+
+	public Image getLogo () {
+		return logo.copy ();
 	}
 
 }

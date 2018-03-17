@@ -27,6 +27,7 @@ public class GamesMenu extends Menu {
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
+		super.initSize (container, game, 600, 400);
 		super.init (container, game);
 		this.setTitle ("INSERER TITRE ICI");
 		this.setSubtitle ("INSERER SOUS-TITRE ICI");
@@ -48,7 +49,6 @@ public class GamesMenu extends Menu {
 			}
 		}));
 		this.setHint ("PRESS ENTER");
-		// this.enableBlink ();
 	}
 
 }
