@@ -41,6 +41,7 @@ public class Case {
 		// sprite=new Image("images/case" + id + ".jpg");
 		this.x = x;
 		this.y = y;
+		this.id = id;
 
 		width = this.plateau.getGridWidth() - this.plateau.getGridGap() / 2;
 		height = this.plateau.getGridHeight() - this.plateau.getGridGap() / 2;
