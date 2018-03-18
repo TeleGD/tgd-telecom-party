@@ -150,7 +150,7 @@ public class WorldPlateau extends BasicGameState {
 			}
 		}
 	}
-	
+
 	// TMP :
 	public void initListeJoueurs(List<SkeletonPlayer> listSkeletonPlayers) {
 		listeJoueurs = new ArrayList<>(); // initialisation de listeJoueur

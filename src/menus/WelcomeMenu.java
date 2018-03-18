@@ -32,8 +32,8 @@ public class WelcomeMenu extends Page {
 	private int logoX;
 	private int logoY;
 
-	private int naturalWidth;
-	private int naturalHeight;
+	private int logoNaturalWidth;
+	private int logoNaturalHeight;
 
 	public WelcomeMenu (int ID) {
 		this.ID = ID;
@@ -46,22 +46,23 @@ public class WelcomeMenu extends Page {
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
-		super.initSize (container, game, 600, container.getHeight () - Page.gap * 2);
+		super.initSize (container, game, 600, 400);
 		super.init (container, game);
 
+		this.hintBoxX = this.contentX;
+		this.hintBoxY = this.contentY;
+
 		this.logoBoxX = this.contentX;
-		this.logoBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
+		this.logoBoxY = this.hintBoxY + this.hintBoxHeight + Page.gap;
 		this.logoBoxWidth = this.contentWidth;
-		this.logoBoxHeight = this.hintBoxY - this.logoBoxY - Page.gap;
+		this.logoBoxHeight = this.contentY + this.contentHeight - this.logoBoxY;
 
 		this.logoVisibility = true;
 
-		// this.titleVisibility = false;
-		// this.subtitleVisibility = false;
+		this.titleVisibility = false;
+		this.subtitleVisibility = false;
 		this.hintBlink = true;
 
-		this.setTitle ("TeleGame Design");
-		this.setSubtitle ("Projet_2018 #NoName");
 		this.setHint ("PRESS ENTER");
 		Image logo;
 		try {
@@ -99,22 +100,22 @@ public class WelcomeMenu extends Page {
 				this.logoY + this.logoHeight,
 				0,
 				0,
-				this.naturalWidth,
-				this.naturalHeight
+				this.logoNaturalWidth,
+				this.logoNaturalHeight
 			);
 		};
 	}
 
 	public void setLogo (Image logo) {
 		this.logo = logo.copy ();
-		this.naturalWidth = logo.getWidth ();
-		this.naturalHeight = logo.getHeight ();
-		this.logoWidth = Math.min (this.logoBoxWidth, this.naturalWidth);
-		this.logoHeight = Math.min (this.logoBoxHeight, this.naturalHeight);
-		if (this.logoWidth * this.naturalHeight < this.naturalWidth * this.logoHeight) {
-			this.logoHeight = this.naturalHeight * this.logoWidth / this.naturalWidth;
+		this.logoNaturalWidth = logo.getWidth ();
+		this.logoNaturalHeight = logo.getHeight ();
+		this.logoWidth = Math.min (this.logoBoxWidth, this.logoNaturalWidth);
+		this.logoHeight = Math.min (this.logoBoxHeight, this.logoNaturalHeight);
+		if (this.logoWidth * this.logoNaturalHeight < this.logoNaturalWidth * this.logoHeight) {
+			this.logoHeight = this.logoNaturalHeight * this.logoWidth / this.logoNaturalWidth;
 		} else {
-			this.logoWidth = this.naturalWidth * this.logoHeight / this.naturalHeight;
+			this.logoWidth = this.logoNaturalWidth * this.logoHeight / this.logoNaturalHeight;
 		};
 		this.logoX = this.logoBoxX + (this.logoBoxWidth - this.logoWidth) / 2;
 		this.logoY = this.logoBoxY + (this.logoBoxHeight - this.logoHeight) / 2;

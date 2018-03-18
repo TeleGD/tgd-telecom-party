@@ -125,8 +125,8 @@ public abstract class Page extends BasicGameState {
 
 	private void renderTitle (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.titleVisibility) {
-			context.setColor (Page.highlightColor);
 			context.setFont (Page.titleFont);
+			context.setColor (Page.highlightColor);
 			context.drawString (this.title, this.titleX - 2, this.titleY - 2);
 			context.setColor (Page.foregroundColor);
 			context.drawString (this.title, this.titleX + 2, this.titleY + 2);
@@ -135,17 +135,18 @@ public abstract class Page extends BasicGameState {
 
 	private void renderSubtitle (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.subtitleVisibility) {
-			context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
 			context.setFont (Page.subtitleFont);
 			context.setColor (Page.foregroundColor);
+			context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
 			context.drawString (this.subtitle, this.subtitleX, this.subtitleY);
 		};
 	}
 
 	private void renderHint (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.hintVisibility) {
-			context.drawRect (this.hintBoxX, this.hintBoxY, this.hintBoxWidth, this.hintBoxHeight);
 			context.setFont (Page.hintFont);
+			context.setColor (Page.foregroundColor);
+			context.drawRect (this.hintBoxX, this.hintBoxY, this.hintBoxWidth, this.hintBoxHeight);
 			if (this.hintBlink) {
 				int r = Page.foregroundColor.getRed ();
 				int g = Page.foregroundColor.getGreen ();
@@ -157,8 +158,6 @@ public abstract class Page extends BasicGameState {
 				a -= 128;
 				a = Math.max (Math.min (a, 255), 0);
 				context.setColor (new Color (r, g, b, a));
-			} else {
-				context.setColor (Page.foregroundColor);
 			};
 			context.drawString (this.hint, this.hintX, this.hintY);
 		};

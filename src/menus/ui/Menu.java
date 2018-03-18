@@ -117,8 +117,8 @@ public abstract class Menu extends Page {
 	private void renderMenu (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.menuVisibility) {
 			int dx = -35;
-			context.setColor (Page.foregroundColor);
 			context.setFont (Menu.menuFont);
+			context.setColor (Page.foregroundColor);
 			for (int i = this.menuScrollY, l = i + this.menuScrollHeight; i < l; i++) {
 				int dy = this.itemHeight * (i - this.menuScrollY);
 				context.drawString (this.menu.get (i).getContent (), this.menuX, this.menuY + dy);
