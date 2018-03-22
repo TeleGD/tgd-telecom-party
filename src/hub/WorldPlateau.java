@@ -58,7 +58,7 @@ public class WorldPlateau extends BasicGameState {
 
 		this.game = game;
 
-		this.track = new SpiralTrack (this, 128);
+		this.track = new SpiralTrack (this, 70);
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
