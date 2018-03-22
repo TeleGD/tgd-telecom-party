@@ -12,7 +12,7 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_BATTLE_WORLD = 4;
 	public static final int GAMES_AZTEC_PYRAMIDS_WORLD = 5;
 
-	public static final String [] TITLES = {
+	public static final String [] TITLES = new String [] {
 		"Accueil",
 		"Menu principal",
 		"Mini-jeux",

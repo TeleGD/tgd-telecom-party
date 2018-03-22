@@ -14,12 +14,13 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
-import general.SkeletonPlayer;
+import general.Player;
+import general.PlayersHandler;
 import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 
-public class WorldPlateau extends BasicGameState {
+public class WorldPlateau extends BasicGameState implements PlayersHandler {
 
 	private int ID;
 
@@ -101,11 +102,11 @@ public class WorldPlateau extends BasicGameState {
 				that.menu = false;
 				//TODO : Retirer les lignes suivantes quand la List<SkeletonPlayer> sera passé à cette classe
 				//TMP : Tant que les joueurs doivent être créés ici :
-				ArrayList<SkeletonPlayer> listeTemporaire = new ArrayList<>();
+				ArrayList<Player> listeTemporaire = new ArrayList<>();
 				for (int i=0 ; i < nbJoueur ; i++) {
-					listeTemporaire.add(new SkeletonPlayer("PINK", "NOM"));
+					listeTemporaire.add(new Player(Player.PINK, i, "NOM"));
 				}
-				initListeJoueurs(listeTemporaire);
+				that.setPlayers(listeTemporaire);
 			}
 
 		});
@@ -152,11 +153,11 @@ public class WorldPlateau extends BasicGameState {
 	}
 
 	// TMP :
-	public void initListeJoueurs(List<SkeletonPlayer> listSkeletonPlayers) {
+	public void setPlayers (List <Player> listPlayers) {
 		listeJoueurs = new ArrayList<>(); // initialisation de listeJoueur
 
 		int i = 0;
-		for (SkeletonPlayer p : listSkeletonPlayers) {
+		for (Player p : listPlayers) {
 			listeJoueurs.add(new JoueurPlateau (this, i, p.getName(), "images/player/pion.png"));
 			i++;
 		}
