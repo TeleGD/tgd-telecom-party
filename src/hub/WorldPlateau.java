@@ -71,18 +71,22 @@ public class WorldPlateau extends BasicGameState {
 		this.nbJoueur = 2;
 
 		this.plus = new Button ("+", container, 700, 50, 20, 20);
+		this.plus.setBackgroundColorEntered(Color.green);
+		this.plus.setBackgroundColorPressed(new Color(0,150,0));
 		this.plus.setOnClickListener (new OnClickListener () {
 
 			@Override
 			public void onClick (TGDComponent component) {
-				if (that.nbJoueur < 4) {
-					that.nbJoueur++;
+				if (nbJoueur < 4) {
+					nbJoueur++;
 				};
 			}
 
 		});
 
 		this.moins = new Button ("-", container, 730, 50, 20, 20);
+		this.moins.setBackgroundColorEntered(Color.red);
+		this.moins.setBackgroundColorPressed(new Color(150,0,0));
 		this.moins.setOnClickListener (new OnClickListener () {
 
 			@Override
