@@ -3,6 +3,7 @@ package hub;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.Color;
 //import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -135,6 +136,7 @@ public class WorldPlateau extends BasicGameState {
 	@Override
 	public void render (GameContainer container,StateBasedGame game, Graphics context) throws SlickException {
 		if (this.menu) {
+			context.setColor(Color.white);
 			context.drawString ("nombre de joueurs : " + nbJoueur, 500, 50);
 			this.plus.render (container, game, context);
 			this.moins.render (container, game, context);
