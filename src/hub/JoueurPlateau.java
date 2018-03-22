@@ -24,7 +24,7 @@ public class JoueurPlateau {
 	public JoueurPlateau(WorldPlateau plateau, int num, String name, String nameSprite) {
 		this.plateau = plateau;
 		place=0;
-		playerDice = new Dice(4, new int[] {1,2,3,4},1); // Initialise le dé du joueur : 4 faces
+		playerDice = new Dice(6, new int[] {1,2,3,4,5,6},1); // Initialise le dé du joueur : 4 faces
 		this.number=num;
 		this.name = name;
 		try {

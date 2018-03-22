@@ -3,6 +3,7 @@ package hub;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.Color;
 //import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -58,7 +59,7 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 
 		this.game = game;
 
-		this.track = new SpiralTrack (this, 128);
+		this.track = new SpiralTrack (this, 70);
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
@@ -71,18 +72,22 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 		this.nbJoueur = 2;
 
 		this.plus = new Button ("+", container, 700, 50, 20, 20);
+		this.plus.setBackgroundColorEntered(Color.green);
+		this.plus.setBackgroundColorPressed(new Color(0,150,0));
 		this.plus.setOnClickListener (new OnClickListener () {
 
 			@Override
 			public void onClick (TGDComponent component) {
-				if (that.nbJoueur < 4) {
-					that.nbJoueur++;
+				if (nbJoueur < 4) {
+					nbJoueur++;
 				};
 			}
 
 		});
 
 		this.moins = new Button ("-", container, 730, 50, 20, 20);
+		this.moins.setBackgroundColorEntered(Color.red);
+		this.moins.setBackgroundColorPressed(new Color(150,0,0));
 		this.moins.setOnClickListener (new OnClickListener () {
 
 			@Override
@@ -136,6 +141,7 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 	@Override
 	public void render (GameContainer container,StateBasedGame game, Graphics context) throws SlickException {
 		if (this.menu) {
+			context.setColor(Color.white);
 			context.drawString ("nombre de joueurs : " + nbJoueur, 500, 50);
 			this.plus.render (container, game, context);
 			this.moins.render (container, game, context);
