@@ -34,7 +34,8 @@ public class MainMenu extends Menu {
 		this.setMenu (Arrays.asList (new MenuItem [] {
 			new MenuItem (AppGame.TITLES [AppGame.HUB_WORLD_PLATEAU]) {
 				public void itemSelected () {
-					game.enterState (AppGame.HUB_WORLD_PLATEAU, new FadeOutTransition (), new FadeInTransition ());
+					((PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU)).setGameID (AppGame.HUB_WORLD_PLATEAU);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};
 			},
 			new MenuItem (AppGame.TITLES [AppGame.MENUS_GAMES_MENU]) {

@@ -15,17 +15,19 @@ public class JoueurPlateau {
 	private WorldPlateau plateau;
 	private Dice playerDice;
 	private int place;
-	private int number; // place : nb de cases depuis le début (début = 0) ; number : numéro du joueur
+	private int colorID;
+	private int controllerID; // place : nb de cases depuis le début (début = 0) ; controllerID : numéro du joueur
 	private String name;
 	private Image sprite;
 	private float x;
 	private float y;
 
-	public JoueurPlateau(WorldPlateau plateau, int num, String name, String nameSprite) {
+	public JoueurPlateau(WorldPlateau plateau, int colorID, int controllerID, String name, String nameSprite) {
 		this.plateau = plateau;
 		place=0;
 		playerDice = new Dice(6, new int[] {1,2,3,4,5,6},1); // Initialise le dé du joueur : 4 faces
-		this.number=num;
+		this.colorID = colorID;
+		this.controllerID = controllerID;
 		this.name = name;
 		try {
 			sprite = new Image(nameSprite);
@@ -71,7 +73,7 @@ public class JoueurPlateau {
 
 		playerDice.roll();
 		//TODO : affiche résultat du dé
-		System.out.println("Joueur " + number + "Avance de " + playerDice.getValue());
+		System.out.println("Joueur " + controllerID + "Avance de " + playerDice.getValue());
 		avance(playerDice.getValue());
 
 		//TODO : gérer l'étape 2 et 3
