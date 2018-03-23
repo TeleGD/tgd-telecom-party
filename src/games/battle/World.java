@@ -1,5 +1,5 @@
 package games.battle;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -9,8 +9,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import general.AppGame;
-public class World extends BasicGameState {
+public class World extends BasicGameState implements general.PlayersHandler {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
@@ -35,11 +34,6 @@ public class World extends BasicGameState {
 		this.backgroundColor = new Color (255, 255, 255, 0);
 		this.fillColor = new Color (51, 153, 102);
 		this.strokeColor = new Color (0, 102, 51);
-		// this.players = new ArrayList <MenuItem> ();
-		this.players = Arrays.asList (new Player [] {
-			new Player (0, radius)
-		});
-		// container.getInput ().initControllers ();
 	};
 	public void enter (GameContainer container, StateBasedGame game) {
 		// this.init (container, game);
@@ -48,14 +42,13 @@ public class World extends BasicGameState {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
-			game.enterState (AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
-			for (int i = 0, l = this.players.size (); i < l; i++) {
-				boolean keyGape = input.isButtonPressed (0, i);
-				boolean keyJump = input.isButtonPressed (1, i) || input.isButtonPressed (2, i) || input.isButtonPressed (3, i);
-				// float axisY = input.getAxisValue (i, 0);
-				float axisX = input.getAxisValue (i, 1);
-				Player player = this.players.get (i);
+			for (Player player: this.players) {
+				boolean keyGape = input.isButtonPressed (0, player.controllerID);
+				boolean keyJump = input.isButtonPressed (1, player.controllerID) || input.isButtonPressed (2, player.controllerID) || input.isButtonPressed (3, player.controllerID);
+				// float axisY = input.getAxisValue (controllerID, 0);
+				float axisX = input.getAxisValue (player.controllerID, 1);
 				player.jumpDuration -= delta;
 				player.gape = !keyGape;
 				player.jump = keyJump;
@@ -81,8 +74,14 @@ public class World extends BasicGameState {
 		context.fillRect (0, height / 2, width, height / 2);
 		context.setColor (this.strokeColor);
 		context.drawLine (0, height / 2, width, height / 2);
-		for (int i = 0, l = this.players.size (); i < l; i++) {
-			this.players.get (i).render (container, game, context);
+		for (Player player: this.players) {
+			player.render (container, game, context);
 		};
 	};
+	public void setPlayers (List <general.Player> players) {
+		this.players = new ArrayList <Player> ();
+		for (general.Player player : players) {
+			this.players.add (new Player (player));
+		};
+	}
 };

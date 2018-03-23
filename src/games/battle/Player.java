@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 public class Player {
+	private static final int RADIUS = 32;
 	public float radius;
 	public float x;
 	public float y;
@@ -11,31 +12,25 @@ public class Player {
 	public boolean gape;
 	public boolean jump;
 	public int jumpDuration;
-	private Color fillColor;
-	private Color strokeColor;
-	public Player (int id, int radius) {
-		this.radius = radius;
+	public final Color fillColor;
+	public final Color strokeColor;
+	public final int controllerID;
+	public final String name;
+	public Player (general.Player player) {
+		int colorID = player.getColorID ();
+		int controllerID = player.getControllerID ();
+		String name = player.getName ();
+		this.radius = Player.RADIUS;
 		this.x = 0;
 		this.y = 0;
 		this.direction = 0;
 		this.gape = true;
 		this.jump = false;
 		this.jumpDuration = 0;
-		switch (id) {
-			case 0:
-				this.fillColor = new Color (255, 204, 51);
-				this.strokeColor = new Color (204, 153, 0);
-				break;
-			case 1:
-				this.fillColor = new Color (255, 204, 204);
-				this.strokeColor = new Color (255, 153, 153);
-				break;
-			case 2:
-				this.fillColor = new Color (153, 204, 255);
-				this.strokeColor = new Color (102, 153, 204);
-			default:
-				throw new RuntimeException ("Mauvais identifiant de joueur");
-		};
+		this.fillColor = general.Player.FILL_COLORS [colorID];
+		this.strokeColor = general.Player.STROKE_COLORS [colorID];
+		this.controllerID = controllerID;
+		this.name = name;
 	};
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		float x;

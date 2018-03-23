@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
 
@@ -34,7 +32,10 @@ public class GamesMenu extends Menu {
 		this.setMenu (Arrays.asList (new MenuItem [] {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_BATTLE_WORLD]) {
 				public void itemSelected () {
-					game.enterState (AppGame.GAMES_BATTLE_WORLD, new FadeOutTransition (), new FadeInTransition ());
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
+					playersMenu.setNextID (AppGame.GAMES_BATTLE_WORLD);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU);
 				};
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_AZTEC_PYRAMIDS_WORLD]) {

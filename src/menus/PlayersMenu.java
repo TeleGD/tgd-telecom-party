@@ -29,6 +29,8 @@ public class PlayersMenu extends Page {
 	// static private int playersLineHeight = 30;
 
 	private int ID;
+	private int previousID;
+	private int nextID;
 
 	private List <Player> players;
 
@@ -39,7 +41,6 @@ public class PlayersMenu extends Page {
 	protected int playersBoxX;
 	protected int playersBoxY;
 
-	private int gameID;
 	private int playersColumnWidth;
 	private List <Integer> availableColorIDs;
 	private List <Integer> playersControls;
@@ -58,13 +59,17 @@ public class PlayersMenu extends Page {
 		super.initSize (container, game, 600, 400);
 		super.init (container, game);
 
+		this.previousID = -1;
+		this.nextID = -1;
+
+		this.players = new ArrayList <Player> ();
+
 		this.playersBoxX = this.contentX;
 		this.playersBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
 		this.playersBoxWidth = this.contentWidth;
 		this.playersBoxHeight = this.hintBoxY - this.playersBoxY - Page.gap;
 
 		this.playersColumnWidth = (this.playersBoxWidth + Page.gap) / 4 - Page.gap;
-		this.players = new ArrayList <Player> ();
 		this.availableColorIDs = new ArrayList <Integer> ();
 		for (int i = 0, l = Player.COLOR_NAMES.length; i < l; i++) {
 			this.availableColorIDs.add (i);
@@ -85,11 +90,19 @@ public class PlayersMenu extends Page {
 	public void update (GameContainer container, StateBasedGame game, int  delta) {
 		super.update (container, game, delta);
 		Input input = container.getInput ();
-		/*if (input.isKeyPressed (Input.KEY_ESCAPE)) {
-			System.exit (0);
-		} else */if ((input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (PlayersMenu.BUTTON_ENTER, Input.ANY_CONTROLLER)) && this.players.size () > 2) {
-			((PlayersHandler) game.getState (this.gameID)).setPlayers (this.players);
-			game.enterState (this.gameID, new FadeOutTransition (), new FadeInTransition ());
+		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
+			if (this.previousID == -1) {
+				System.exit (0);
+			} else {
+				game.enterState (this.previousID);
+			};
+		} else if ((input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (PlayersMenu.BUTTON_ENTER, Input.ANY_CONTROLLER))/* && this.players.size () > 2*/) {
+			if (this.nextID == -1) {
+				System.exit (0);
+			} else {
+				((PlayersHandler) game.getState (this.nextID)).setPlayers (this.players);
+				game.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
+			};
 		} else {
 			for (int i = 0, l = input.getControllerCount (); i < l; i++) {
 				boolean buttonAdd = input.isButtonPressed (PlayersMenu.BUTTON_ADD, i);
@@ -180,12 +193,20 @@ public class PlayersMenu extends Page {
 		};
 	}
 
-	public void setGameID (int ID) {
-		this.gameID = ID;
+	public void setPreviousID (int ID) {
+		this.previousID = ID;
 	}
 
-	public int getGameID () {
-		return this.gameID;
+	public int getPreviousID () {
+		return this.previousID;
+	}
+
+	public void setNextID (int ID) {
+		this.nextID = ID;
+	}
+
+	public int getNextID () {
+		return this.nextID;
 	}
 
 }

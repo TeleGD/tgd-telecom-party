@@ -56,7 +56,7 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 		// WorldPlateau that;
 		// that = this;
 		//
-		// this.game = game;
+		this.game = game;
 
 		this.track = new SpiralTrack (this, 70);
 		gridWidth = 64;
@@ -158,6 +158,7 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 		// }
 	}
 
+	@Override
 	public void setPlayers (List <Player> players) {
 		this.listeJoueurs = new ArrayList <JoueurPlateau> (); // initialisation de listeJoueur
 		for (Player player : players) {
