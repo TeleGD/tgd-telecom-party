@@ -43,6 +43,11 @@ public class GamesMenu extends Menu {
 					game.enterState (AppGame.GAMES_AZTEC_PYRAMIDS_WORLD);
 				};
 			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_PONG_MULTI_WORLD]) {
+				public void itemSelected () {
+					game.enterState (AppGame.GAMES_PONG_MULTI_WORLD);
+				};
+			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					game.enterState (AppGame.MENUS_MAIN_MENU);

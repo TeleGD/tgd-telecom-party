@@ -12,6 +12,7 @@ public class AppGame extends StateBasedGame {
 	public static final int HUB_WORLD_PLATEAU = 4;
 	public static final int GAMES_BATTLE_WORLD = 5;
 	public static final int GAMES_AZTEC_PYRAMIDS_WORLD = 6;
+	public static final int GAMES_PONG_MULTI_WORLD = 7;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -20,7 +21,8 @@ public class AppGame extends StateBasedGame {
 		"Mini-jeux",
 		"Jeu de plateau",
 		"Bataille PacMan",
-		"Pyramides aztecs"
+		"Pyramides aztecs",
+		"Pong multijoueur"
 	};
 
 	public static int width = 1280;
@@ -39,6 +41,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new hub.WorldPlateau (AppGame.HUB_WORLD_PLATEAU));
 		this.addState (new games.battle.World (AppGame.GAMES_BATTLE_WORLD));
 		this.addState (new games.aztecPyramids.World (AppGame.GAMES_AZTEC_PYRAMIDS_WORLD));
+		this.addState (new games.pong.World (AppGame.GAMES_PONG_MULTI_WORLD));
 		container.setShowFPS (false);
 	}
 
