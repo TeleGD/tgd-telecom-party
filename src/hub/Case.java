@@ -40,7 +40,7 @@ public class Case {
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		
+
 		switch (type) {
 		case 0 :
 			backgroundColor = Color.gray;
@@ -70,8 +70,8 @@ public class Case {
 			backgroundColor = Color.blue;
 			break;
 		}
-		this.textColor = new Color(backgroundColor.getRed()/3,backgroundColor.getGreen()/3,backgroundColor.getBlue()/3);
-
+		// this.textColor = new Color(backgroundColor.getRed()/3,backgroundColor.getGreen()/3,backgroundColor.getBlue()/3);
+		this.textColor = Color.white;
 		width = this.plateau.getGridWidth() - this.plateau.getGridGap() / 2;
 		height = this.plateau.getGridHeight() - this.plateau.getGridGap() / 2;
 		radius = this.plateau.getGridGap() / 2;

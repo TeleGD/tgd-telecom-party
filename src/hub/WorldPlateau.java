@@ -58,10 +58,10 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 		//
 		this.game = game;
 
-		this.track = new SpiralTrack (this, 70);
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
+		this.track = new SpiralTrack (this, 70);
 
 		this.turnNumber = 0; // numéro du tour
 
