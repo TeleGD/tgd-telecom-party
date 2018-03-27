@@ -145,6 +145,14 @@ public class Player {
 		return barPosFixe;
 	}
 	
+	public int getLongueurBarre() {
+		return longueurBarre;
+	}
+	
+	public int getHauteurBarre() {
+		return hauteurBarre;
+	}
+	
 	public int getVies() {
 		return vies;
 	}

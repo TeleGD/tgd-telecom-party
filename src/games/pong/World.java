@@ -1,6 +1,5 @@
 package games.pong;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -19,7 +18,7 @@ public class World extends BasicGameState {
 	int milieu[];
 	int taille;
 	
-	private ArrayList<Player> players;
+	ArrayList<Player> players;
 	private ArrayList<Ball> balls;
 	
 	private Image background;
@@ -52,11 +51,17 @@ public class World extends BasicGameState {
 		players.add(new Wall(this, 1));
 		players.add(new Wall(this, 2));
 		players.add(new Wall(this, 3));
-		players.add(new Player(this, 0, Color.blue));
-		players.add(new Player(this, 1, Color.red));
-		players.add(new Player(this, 2, Color.green));
-		players.add(new Player(this, 3, Color.yellow));
+//		players.add(new Player(this, 0, Color.blue));
+//		players.add(new Player(this, 1, Color.red));
+//		players.add(new Player(this, 2, Color.green));
+//		players.add(new Player(this, 3, Color.yellow));
 		balls.add(new Ball(this));
+		balls.add(new Ball(this));
+		balls.add(new Ball(this));
+		balls.add(new Ball(this));
+		balls.add(new Ball(this));
+		balls.add(new Ball(this));
+		
 	}
 
 
