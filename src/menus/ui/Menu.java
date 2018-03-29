@@ -12,8 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import general.AppGame;
 import general.utils.FontUtils;
 
-import menus.PlayersMenu;
-
 public abstract class Menu extends Page {
 
 	static private Font menuFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 14, true);
@@ -73,8 +71,8 @@ public abstract class Menu extends Page {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
 		Input input = container.getInput ();
-		PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
-		int gameMasterID = playersMenu.players.get (0).getControllerID ();
+		AppGame appGame = (AppGame) game;
+		int gameMasterID = appGame.players.get (0).getControllerID ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_B, gameMasterID)) {
 			int size = this.menu.size ();
 			if (size == 0) {

@@ -1,5 +1,8 @@
 package general;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -52,8 +55,18 @@ public class AppGame extends StateBasedGame {
 	public static int width = 1280;
 	public static int height = 720;
 
+	public List <Player> players;
+	public List <Integer> playersControls;
+	public List <Integer> availableColorIDs;
+
 	public AppGame (String name) {
 		super (name);
+		this.players = new ArrayList <Player> ();
+		this.playersControls = new ArrayList <Integer> ();
+		this.availableColorIDs = new ArrayList <Integer> ();
+		for (int i = 0, l = Player.COLOR_NAMES.length; i < l; i++) {
+			this.availableColorIDs.add (i);
+		};
 	}
 
 	@Override

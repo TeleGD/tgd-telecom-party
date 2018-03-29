@@ -47,10 +47,10 @@ public class MainMenu extends Menu {
 			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
-					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
-					for (int i = playersMenu.players.size () - 1; i >= 0; i--) {
-						playersMenu.availableColorIDs.add (0, playersMenu.players.remove (i).getColorID ());
-						playersMenu.playersControls.remove (i);
+					AppGame appGame = (AppGame) game;
+					for (int i = appGame.players.size () - 1; i >= 0; i--) {
+						appGame.availableColorIDs.add (0, appGame.players.remove (i).getColorID ());
+						appGame.playersControls.remove (i);
 					};
 					game.enterState (AppGame.MENUS_WELCOME_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};

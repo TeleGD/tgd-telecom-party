@@ -10,7 +10,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.AppGame;
-import menus.PlayersMenu;
 public class World extends BasicGameState implements general.PlayersHandler {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
@@ -43,8 +42,8 @@ public class World extends BasicGameState implements general.PlayersHandler {
 	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput ();
-		PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
-		int gameMasterID = playersMenu.players.get (0).getControllerID ();
+		AppGame appGame = (AppGame) game;
+		int gameMasterID = appGame.players.get (0).getControllerID ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID)) {
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
