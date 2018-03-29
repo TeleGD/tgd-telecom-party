@@ -81,7 +81,7 @@ public class Case {
 		g.setColor (backgroundColor);
 		g.fillRoundRect ((float) x , (float) y, width, height, radius);
 		g.setColor (textColor);
-		g.drawString ("[" + id + "]", x, y);
+		g.drawString ("[" + id + "]" + "t:" + type, x, y);
 	}
 
 	public int getType() {
