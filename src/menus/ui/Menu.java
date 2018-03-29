@@ -9,7 +9,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.AppGame;
 import general.utils.FontUtils;
+
+import menus.PlayersMenu;
 
 public abstract class Menu extends Page {
 
@@ -70,17 +73,19 @@ public abstract class Menu extends Page {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
 		Input input = container.getInput ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
+		PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+		int gameMasterID = playersMenu.players.get (0).getControllerID ();
+		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_B, gameMasterID)) {
 			int size = this.menu.size ();
 			if (size == 0) {
 				System.exit (0);
 			} else {
 				this.menu.get (size - 1).itemSelected ();
 			};
-		} else if (input.isKeyPressed (Input.KEY_ENTER)) {
+		} else if (input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (AppGame.BUTTON_A, gameMasterID)) {
 			this.menu.get (this.selectedItem).itemSelected ();
 		} else {
-			if (input.isKeyPressed (Input.KEY_DOWN)) {
+			if (input.isKeyPressed (Input.KEY_DOWN) || input.isControllerDown (gameMasterID)) {
 				if (this.selectedItem < menu.size () - 1) {
 					this.selectedItem++;
 					if (this.selectedItem == this.menuScrollY + this.menuScrollHeight) {
@@ -91,7 +96,7 @@ public abstract class Menu extends Page {
    					this.menuScrollY = 0;
 				};
 			};
-			if (input.isKeyPressed (Input.KEY_UP)) {
+			if (input.isKeyPressed (Input.KEY_UP) || input.isControllerUp (gameMasterID)) {
 				if (this.selectedItem > 0) {
 					this.selectedItem--;
 					if (this.selectedItem == this.menuScrollY - 1) {

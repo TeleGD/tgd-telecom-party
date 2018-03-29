@@ -11,7 +11,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
+import general.Player;
 
+import menus.PlayersMenu;
 import menus.ui.Page;
 
 public class WelcomeMenu extends Page {
@@ -79,8 +81,26 @@ public class WelcomeMenu extends Page {
 		Input input = container.getInput ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
 			System.exit (0);
-		} else if (input.isKeyPressed (Input.KEY_ENTER)) {
-			game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+		} else {
+			int gameMasterID = Input.ANY_CONTROLLER;
+			if (input.isKeyPressed (Input.KEY_ENTER)) {
+				gameMasterID = 0;
+			} else {
+				for (int i = 0, l = input.getControllerCount (); i < l; i++) {
+					if (input.isButtonPressed (AppGame.BUTTON_A, i)) {
+						gameMasterID = i;
+						break;
+					};
+				};
+			};
+			if (gameMasterID != Input.ANY_CONTROLLER) {
+				PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+				int colorID = playersMenu.availableColorIDs.remove (0);
+				String name = "Joueur " + Player.COLOR_NAMES [colorID]; // TODO: set user name
+				playersMenu.players.add (0, new Player (colorID, gameMasterID, name));
+				playersMenu.playersControls.add (0, 1 << AppGame.BUTTON_A);
+				game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+			};
 		};
 	}
 

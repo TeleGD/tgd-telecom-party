@@ -9,6 +9,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import general.AppGame;
+import menus.PlayersMenu;
 public class World extends BasicGameState implements general.PlayersHandler {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
@@ -41,14 +43,16 @@ public class World extends BasicGameState implements general.PlayersHandler {
 	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
+		PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+		int gameMasterID = playersMenu.players.get (0).getControllerID ();
+		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID)) {
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			for (Player player: this.players) {
-				boolean keyGape = input.isButtonPressed (0, player.controllerID);
-				boolean keyJump = input.isButtonPressed (1, player.controllerID) || input.isButtonPressed (2, player.controllerID) || input.isButtonPressed (3, player.controllerID);
+				boolean keyGape = input.isButtonPressed (AppGame.BUTTON_A, player.controllerID);
+				boolean keyJump = input.isButtonPressed (AppGame.BUTTON_B, player.controllerID) || input.isButtonPressed (AppGame.BUTTON_Y, player.controllerID) || input.isButtonPressed (AppGame.BUTTON_X, player.controllerID);
 				// float axisY = input.getAxisValue (controllerID, 0);
-				float axisX = input.getAxisValue (player.controllerID, 1);
+				float axisX = input.getAxisValue (player.controllerID, AppGame.AXIS_XL);
 				player.jumpDuration -= delta;
 				player.gape = !keyGape;
 				player.jump = keyJump;
@@ -83,5 +87,5 @@ public class World extends BasicGameState implements general.PlayersHandler {
 		for (general.Player player : players) {
 			this.players.add (new Player (player));
 		};
-	}
+	};
 };

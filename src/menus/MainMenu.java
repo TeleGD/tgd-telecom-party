@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
 
@@ -43,9 +45,14 @@ public class MainMenu extends Menu {
 					game.enterState (AppGame.MENUS_GAMES_MENU);
 				};
 			},
-			new MenuItem ("Quitter") {
+			new MenuItem ("Retour") {
 				public void itemSelected () {
-					System.exit (0);
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					for (int i = playersMenu.players.size () - 1; i >= 0; i--) {
+						playersMenu.availableColorIDs.add (0, playersMenu.players.remove (i).getColorID ());
+						playersMenu.playersControls.remove (i);
+					};
+					game.enterState (AppGame.MENUS_WELCOME_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};
 			}
 		}));
