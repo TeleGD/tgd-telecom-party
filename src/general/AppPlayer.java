@@ -2,7 +2,7 @@ package general;
 
 import org.newdawn.slick.Color;
 
-public class Player {
+public class AppPlayer {
 
 	static public final int GOLD = 0;
 	static public final int PINK = 1;
@@ -42,7 +42,7 @@ public class Player {
 	private int controllerID;
 	private String name;
 
-	public Player (int colorID, int controllerID, String name) {
+	public AppPlayer (int colorID, int controllerID, String name) {
 		this.colorID = colorID;
 		this.controllerID = controllerID;
 		this.name = name;

@@ -48,9 +48,9 @@ public class MainMenu extends Menu {
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					AppGame appGame = (AppGame) game;
-					for (int i = appGame.players.size () - 1; i >= 0; i--) {
-						appGame.availableColorIDs.add (0, appGame.players.remove (i).getColorID ());
-						appGame.playersControls.remove (i);
+					for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
+						appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
+						appGame.appPlayersControls.remove (i);
 					};
 					game.enterState (AppGame.MENUS_WELCOME_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};

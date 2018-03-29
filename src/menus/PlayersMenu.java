@@ -9,7 +9,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
-import general.Player;
+import general.AppPlayer;
 import general.PlayersHandler;
 import general.utils.FontUtils;
 
@@ -73,55 +73,55 @@ public class PlayersMenu extends Page {
 		super.update (container, game, delta);
 		Input input = container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.players.get (0).getControllerID ();
+		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
 			if (this.previousID == -1) {
 				System.exit (0);
 			} else {
 				game.enterState (this.previousID);
 			};
-		} else if ((input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID))/* && appGame.players.size () > 2*/) {
+		} else if ((input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID))/* && appGame.appPlayers.size () > 2*/) {
 			if (this.nextID == -1) {
 				System.exit (0);
 			} else {
-				((PlayersHandler) game.getState (this.nextID)).setPlayers (appGame.players);
+				((PlayersHandler) game.getState (this.nextID)).setPlayers (appGame.appPlayers);
 				game.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
 			};
 		} else {
 			for (int i = 0, l = input.getControllerCount (); i < l; i++) {
 				boolean buttonAdd = input.isButtonPressed (AppGame.BUTTON_A, i);
-				boolean playerFound = false;
-				for (int j = appGame.players.size () - 1; j >= 0; j--) {
-					Player player = appGame.players.get (j);
-					if (player.getControllerID () == i) {
-						playerFound = true;
-						if (buttonAdd == (appGame.playersControls.get (j) >> AppGame.BUTTON_A == 0)) {
-							appGame.playersControls.set (j, appGame.playersControls.get (j) ^ (1 << AppGame.BUTTON_A));
+				boolean appPlayerFound = false;
+				for (int j = appGame.appPlayers.size () - 1; j >= 0; j--) {
+					AppPlayer appPlayer = appGame.appPlayers.get (j);
+					if (appPlayer.getControllerID () == i) {
+						appPlayerFound = true;
+						if (buttonAdd == (appGame.appPlayersControls.get (j) >> AppGame.BUTTON_A == 0)) {
+							appGame.appPlayersControls.set (j, appGame.appPlayersControls.get (j) ^ (1 << AppGame.BUTTON_A));
 							if (buttonAdd) {
-								appGame.availableColorIDs.add (player.getColorID ());
+								appGame.availableColorIDs.add (appPlayer.getColorID ());
 								int colorID = appGame.availableColorIDs.remove (0);
-								String name = "Joueur " + Player.COLOR_NAMES [colorID]; // TODO: set user name
-								player.setColorID (colorID);
-								player.setName (name);
+								String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
+								appPlayer.setColorID (colorID);
+								appPlayer.setName (name);
 							};
 						};
 						break;
 					};
 				};
-				if (!playerFound && buttonAdd && appGame.players.size () < 4) {
+				if (!appPlayerFound && buttonAdd && appGame.appPlayers.size () < 4) {
 					int colorID = appGame.availableColorIDs.remove (0);
-					String name = "Joueur " + Player.COLOR_NAMES [colorID]; // TODO: set user name
-					appGame.players.add (new Player (colorID, i, name));
-					appGame.playersControls.add (1 << AppGame.BUTTON_A);
-					if (appGame.players.size () == 2) {
+					String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
+					appGame.appPlayers.add (new AppPlayer (colorID, i, name));
+					appGame.appPlayersControls.add (1 << AppGame.BUTTON_A);
+					if (appGame.appPlayers.size () == 2) {
 						this.hintVisibility = true;
 					};
 				};
 			};
-			for (int i = appGame.players.size () - 1; i >= 0; i--) {
-				boolean buttonRemove = input.isButtonPressed (AppGame.BUTTON_B, appGame.players.get (i).getControllerID ());
-				if (buttonRemove == (appGame.playersControls.get (i) >> AppGame.BUTTON_B == 0)) {
-					appGame.playersControls.set (i, appGame.playersControls.get (i) ^ (1 << AppGame.BUTTON_B));
+			for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
+				boolean buttonRemove = input.isButtonPressed (AppGame.BUTTON_B, appGame.appPlayers.get (i).getControllerID ());
+				if (buttonRemove == (appGame.appPlayersControls.get (i) >> AppGame.BUTTON_B == 0)) {
+					appGame.appPlayersControls.set (i, appGame.appPlayersControls.get (i) ^ (1 << AppGame.BUTTON_B));
 					if (buttonRemove) {
 						if (i == gameMasterID) {
 							if (this.previousID == -1) {
@@ -130,9 +130,9 @@ public class PlayersMenu extends Page {
 								game.enterState (this.previousID);
 							};
 						} else {
-							appGame.availableColorIDs.add (0, appGame.players.remove (i).getColorID ());
-							appGame.playersControls.remove (i);
-							if (appGame.players.size () == 1) {
+							appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
+							appGame.appPlayersControls.remove (i);
+							if (appGame.appPlayers.size () == 1) {
 								this.hintVisibility = false;
 							};
 						};
@@ -154,20 +154,20 @@ public class PlayersMenu extends Page {
 			int y = this.playersBoxY;
 			for (int i = 0; i < 4; i++) {
 				int x = this.playersBoxX + (this.playersColumnWidth + Page.gap) * i;
-				if (i < appGame.players.size ()) {
-					Player player = appGame.players.get (i);
-					int color = player.getColorID ();
-					String name = player.getName ();
+				if (i < appGame.appPlayers.size ()) {
+					AppPlayer appPlayer = appGame.appPlayers.get (i);
+					int color = appPlayer.getColorID ();
+					String name = appPlayer.getName ();
 					int playerWidth = PlayersMenu.playersFont.getWidth (name);
 					int playerHeight = PlayersMenu.playersFont.getHeight (name);
 					int playerX = x + (this.playersColumnWidth - playerWidth) / 2;
 					int playerY = y + (this.playersBoxHeight - playerHeight) / 2;
 					context.setFont (PlayersMenu.playersFont);
-					context.setColor (Player.STROKE_COLORS [color]);
+					context.setColor (AppPlayer.STROKE_COLORS [color]);
 					context.fillRect (x - 4, y - 4, this.playersColumnWidth, this.playersBoxHeight);
-					context.setColor (Player.FILL_COLORS [color]);
+					context.setColor (AppPlayer.FILL_COLORS [color]);
 					context.fillRect (x + 4, y + 4, this.playersColumnWidth, this.playersBoxHeight);
-					context.setColor (Player.STROKE_COLORS [color]);
+					context.setColor (AppPlayer.STROKE_COLORS [color]);
 					context.drawString (name, playerX + 4, playerY + 4);
 				} else {
 					int playerWidth = Page.titleFont.getWidth ("+");

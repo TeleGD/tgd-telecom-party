@@ -14,7 +14,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
-import general.Player;
+import general.AppPlayer;
 import general.PlayersHandler;
 // import general.ui.Button;
 // import general.ui.TGDComponent;
@@ -159,10 +159,10 @@ public class WorldPlateau extends BasicGameState implements PlayersHandler {
 	}
 
 	@Override
-	public void setPlayers (List <Player> players) {
+	public void setPlayers (List <AppPlayer> appPlayers) {
 		this.listeJoueurs = new ArrayList <JoueurPlateau> (); // initialisation de listeJoueur
-		for (Player player : players) {
-			this.listeJoueurs.add (new JoueurPlateau (this, player.getColorID (), player.getControllerID (), player.getName (), "images/player/pion.png"));
+		for (AppPlayer appPlayer: appPlayers) {
+			this.listeJoueurs.add (new JoueurPlateau (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/player/pion.png"));
 		};
 	}
 

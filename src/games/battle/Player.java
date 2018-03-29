@@ -3,6 +3,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
+import general.AppPlayer;
 public class Player {
 	private static final int RADIUS = 32;
 	public float radius;
@@ -16,10 +17,10 @@ public class Player {
 	public final Color strokeColor;
 	public final int controllerID;
 	public final String name;
-	public Player (general.Player player) {
-		int colorID = player.getColorID ();
-		int controllerID = player.getControllerID ();
-		String name = player.getName ();
+	public Player (AppPlayer appPlayer) {
+		int colorID = appPlayer.getColorID ();
+		int controllerID = appPlayer.getControllerID ();
+		String name = appPlayer.getName ();
 		this.radius = Player.RADIUS;
 		this.x = 0;
 		this.y = 0;
@@ -27,8 +28,8 @@ public class Player {
 		this.gape = true;
 		this.jump = false;
 		this.jumpDuration = 0;
-		this.fillColor = general.Player.FILL_COLORS [colorID];
-		this.strokeColor = general.Player.STROKE_COLORS [colorID];
+		this.fillColor = AppPlayer.FILL_COLORS [colorID];
+		this.strokeColor = AppPlayer.STROKE_COLORS [colorID];
 		this.controllerID = controllerID;
 		this.name = name;
 	};

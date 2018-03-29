@@ -72,7 +72,7 @@ public abstract class Menu extends Page {
 		super.update (container, game, delta);
 		Input input = container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.players.get (0).getControllerID ();
+		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_B, gameMasterID)) {
 			int size = this.menu.size ();
 			if (size == 0) {

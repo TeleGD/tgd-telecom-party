@@ -55,16 +55,16 @@ public class AppGame extends StateBasedGame {
 	public static int width = 1280;
 	public static int height = 720;
 
-	public List <Player> players;
-	public List <Integer> playersControls;
+	public List <AppPlayer> appPlayers;
+	public List <Integer> appPlayersControls;
 	public List <Integer> availableColorIDs;
 
 	public AppGame (String name) {
 		super (name);
-		this.players = new ArrayList <Player> ();
-		this.playersControls = new ArrayList <Integer> ();
+		this.appPlayers = new ArrayList <AppPlayer> ();
+		this.appPlayersControls = new ArrayList <Integer> ();
 		this.availableColorIDs = new ArrayList <Integer> ();
-		for (int i = 0, l = Player.COLOR_NAMES.length; i < l; i++) {
+		for (int i = 0, l = AppPlayer.COLOR_NAMES.length; i < l; i++) {
 			this.availableColorIDs.add (i);
 		};
 	}

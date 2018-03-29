@@ -11,7 +11,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
-import general.Player;
+import general.AppPlayer;
 
 import menus.ui.Page;
 
@@ -95,9 +95,9 @@ public class WelcomeMenu extends Page {
 			if (gameMasterID != Input.ANY_CONTROLLER) {
 				AppGame appGame = (AppGame) game;
 				int colorID = appGame.availableColorIDs.remove (0);
-				String name = "Joueur " + Player.COLOR_NAMES [colorID]; // TODO: set user name
-				appGame.players.add (0, new Player (colorID, gameMasterID, name));
-				appGame.playersControls.add (0, 1 << AppGame.BUTTON_A);
+				String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
+				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name));
+				appGame.appPlayersControls.add (0, 1 << AppGame.BUTTON_A);
 				game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
 			};
 		};

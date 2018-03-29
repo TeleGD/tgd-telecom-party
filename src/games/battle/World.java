@@ -10,7 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.AppGame;
-public class World extends BasicGameState implements general.PlayersHandler {
+import general.AppPlayer;
+import general.PlayersHandler;
+public class World extends BasicGameState implements PlayersHandler {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
@@ -43,7 +45,7 @@ public class World extends BasicGameState implements general.PlayersHandler {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		Input input = container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.players.get (0).getControllerID ();
+		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID)) {
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
@@ -81,10 +83,10 @@ public class World extends BasicGameState implements general.PlayersHandler {
 			player.render (container, game, context);
 		};
 	};
-	public void setPlayers (List <general.Player> players) {
+	public void setPlayers (List <AppPlayer> appPlayers) {
 		this.players = new ArrayList <Player> ();
-		for (general.Player player : players) {
-			this.players.add (new Player (player));
+		for (AppPlayer appPlayer: appPlayers) {
+			this.players.add (new Player (appPlayer));
 		};
 	};
 };

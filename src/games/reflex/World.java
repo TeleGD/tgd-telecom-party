@@ -10,24 +10,27 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class World extends BasicGameState implements general.PlayersHandler{
-	
+import general.AppPlayer;
+import general.PlayersHandler;
+
+public class World extends BasicGameState implements PlayersHandler {
+
 	private int ID;
 	public final static int GOAL=20;
 	private ArrayList<Player> players;
-	
+
 	public World (int ID) {
 		this.ID = ID;
 	};
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void enter(GameContainer container, StateBasedGame game) {
-		
+
 	}
 
 	@Override
@@ -43,21 +46,21 @@ public class World extends BasicGameState implements general.PlayersHandler{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public int getID() {
 		return ID;
 	}
-	
-	public void setPlayers (List <general.Player> players) {
+
+	public void setPlayers (List <AppPlayer> appPlayers) {
 		this.players = new ArrayList <Player> ();
-		int n = players.size();
+		int n = appPlayers.size();
 		for (int i=0;i<n;i++) {
-			this.players.add(new Player(players.get(i),n,i));
+			this.players.add(new Player(appPlayers.get(i),n,i));
 		}
 	}
-	
+
 
 }
