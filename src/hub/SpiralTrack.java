@@ -1,5 +1,7 @@
 package hub;
 
+import java.util.Random;
+
 import general.AppGame;
 
 public class SpiralTrack {
@@ -21,7 +23,8 @@ public class SpiralTrack {
 
 		for (int i = 0; i < length; i++) {
 			int [] coord = getCoordinates(i);
-			this.cases [i] = new Case (plateau, i,coord[0],coord[1],0); // TODO: Ajouter la génération procédurale des cases
+			int[] typeCases = createTrack();
+			this.cases [i] = new Case (plateau, i,coord[0],coord[1],typeCases[i]);
 		};
 
 
@@ -50,6 +53,57 @@ public class SpiralTrack {
 		c[1] = c[1] * this.plateau.getGridHeight() + dy;
 
 		return c;
+	}
+	
+	public int[] createTrack() {
+		// Créer le tableau qui servira à attribuer à chaque case son type de manière prodédurale
+		int[] caseType = new int[length];
+		int halfSpiral = (int) Math.floor(length/2);
+		
+		int[] moitie1 = {14,4,5,2,2,2,1,2,2,0}; // moitie1[i] représente le nombre de case du type i de la première moitié de la spirale, nombre adapté pour une spirale de taille 70
+		int[] moitie2 = {21,1,0,2,1,1,1,2,0,4};
+		
+		for (int i=0 ; i < moitie1.length ; i++) {	// Adaptation du nombre de case pour le nombre de cases à attribuer
+			moitie1[i] = (int) Math.ceil(moitie1[i] * length/70);
+			moitie2[i] = (int) Math.ceil(moitie2[i] * length/70);
+		}
+		
+		caseType = placeCases(1, moitie1, caseType); // Attribution de la première moitié de la spirale
+		
+		caseType[halfSpiral] = 10; // La case du milieu est une case de type "consolidation"
+		
+		caseType = placeCases(halfSpiral +1, moitie2, caseType); // Attribution de la deuxième moitié de la spirale
+		
+		caseType[length -3] = 10; // Une autre conso en fin de spiral
+		caseType[length -2] = 11; // La R1 en avant dernière case
+		caseType[length -1] = 12; // Arrivée
+				
+		return caseType;
+	}
+	
+	public int[] placeCases(int debut, int[] moitie, int[] attributionType) {
+		// Effectue le tirage sans remise à partir de moitie et le met dans attributionType en commençant à le remplir à partir de la case début
+		
+		Random r = new Random();
+		int sum = 0;
+		for (int i = 0 ; i < moitie.length ; i++) {
+			sum += moitie[i];
+		}
+		
+		for (int i = debut; i < sum + debut ; i++) {
+			int typeAPlacer = r.nextInt(moitie.length);
+			
+			while(moitie[typeAPlacer] == 0) { // Boucle pour gérer la pénurie d'exemplaire du type qu'on souhaite ajouter
+				// En théorie c'est pas une boucle infinie !
+				typeAPlacer ++;
+				if (typeAPlacer >= moitie.length) { // Si on dépasse le nombre de types différents, alors on reprend au type n°0
+					typeAPlacer = 0;
+				}	
+			}
+			attributionType[i] = typeAPlacer; // On place notre exemplaire du typeAPlacer à la case i
+			moitie[typeAPlacer] --; // On retire un exemplaire au type qu'on vient de placer
+		}
+		return attributionType;
 	}
 
 }
