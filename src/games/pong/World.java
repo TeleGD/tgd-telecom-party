@@ -10,6 +10,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class World extends BasicGameState {
 
@@ -18,7 +20,7 @@ public class World extends BasicGameState {
 	int milieu[];
 	int taille;
 	
-	ArrayList<Player> players;
+	Player[] players;
 	private ArrayList<Ball> balls;
 	
 	private Image background;
@@ -37,7 +39,7 @@ public class World extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		players = new ArrayList<Player>();
+		players = new Player[4];
 		balls = new ArrayList<Ball>();
 		milieu = new int[2];
 		
@@ -47,21 +49,17 @@ public class World extends BasicGameState {
 		
 		background = new Image("images/Pong/backgroundDuck.png");
 		
-		players.add(new Wall(this, 0));
-		players.add(new Wall(this, 1));
-		players.add(new Wall(this, 2));
-		players.add(new Wall(this, 3));
-//		players.add(new Player(this, 0, Color.blue));
-//		players.add(new Player(this, 1, Color.red));
-//		players.add(new Player(this, 2, Color.green));
-//		players.add(new Player(this, 3, Color.yellow));
-		balls.add(new Ball(this));
-		balls.add(new Ball(this));
-		balls.add(new Ball(this));
-		balls.add(new Ball(this));
-		balls.add(new Ball(this));
-		balls.add(new Ball(this));
-		
+//		players.add(new Wall(this, 0));
+//		players.add(new Wall(this, 1));
+//		players.add(new Wall(this, 2));
+//		players.add(new Wall(this, 3));
+		players[0] = (new Player(this, 0, Color.blue));
+		players[1] = (new Player(this, 1, Color.red));
+		players[2] = (new Player(this, 2, Color.green));
+		players[3] = (new Player(this, 3, Color.yellow));
+		for (int i=0; i<20; i++) {
+			balls.add(new Ball(this));
+		}
 	}
 
 
