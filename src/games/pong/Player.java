@@ -137,6 +137,10 @@ public class Player {
 		}
 	}
 	
+	public void loseVie() {
+		this.vies--;
+	}
+	
 	public int getBarPosMove() {
 		return barPosMove;
 	}

@@ -19,6 +19,7 @@ public class Ball {
 	private int milieu[];
 	private int taille;
 	private Player[] players;
+	private int out;
 	
 	public Ball(World world) {
 		this.milieu=world.milieu;
@@ -33,7 +34,7 @@ public class Ball {
 		this.direction = new float[2];
 		
 		this.direction[0]=r.nextFloat();
-		this.direction[1]=1-this.direction[0];
+		this.direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
 		if (r.nextBoolean()) {
 			this.direction[0]=-this.direction[0];
 		} 
@@ -52,7 +53,9 @@ public class Ball {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		this.collide();
 		this.move();
-		// this.isOut();
+		if ((out=this.isOut())!=-1) {
+			System.out.println("Sortie pour le joueur "+out);
+		};
 	}
 	
 	public void move() {
@@ -73,11 +76,11 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[0]=-direction[0];
-			} else if (posY>p.getBarPosMove()-p.getHauteurBarre()/2 && posY<p.getBarPosMove()+p.getHauteurBarre()/2 && posX+radius/2>milieu[0]-taille/2+20-p.getLongueurBarre()/2){ 
+			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX+radius/2>milieu[0]-taille/2+20-p.getLongueurBarre()/2){ 
 				// Il y a rebond sur le joueur
 				direction[0]=-direction[0];
 			}
-		} else if (posX+radius/2<milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
+		} else if (posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
 			/*
 			 * A droite
 		 	 */
@@ -85,7 +88,7 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[0]=-direction[0];
-			} else if (posY>p.getBarPosMove()-p.getHauteurBarre()/2 && posY<p.getBarPosMove()+p.getHauteurBarre()/2 && posX-radius/2>milieu[0]+taille/2-20+p.getLongueurBarre()/2){ 
+			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX-radius/2<milieu[0]+taille/2-20+p.getLongueurBarre()/2){ 
 				// Il y a rebond sur le joueur
 				direction[0]=-direction[0];
 			}
@@ -97,11 +100,11 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[1]=-direction[1];
-			} else if (posX>p.getBarPosMove()-p.getLongueurBarre()/2 && posX<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]-taille/2+20-p.getHauteurBarre()/2){ 
+			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]-taille/2+20-p.getHauteurBarre()/2){ 
 				// Il y a rebond sur le joueur
 				direction[1]=-direction[1];
 			}
-		} else if (posY+radius/2<milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
+		} else if (posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
 			/*
 			 * En bas
 		 	 */
@@ -109,11 +112,26 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[1]=-direction[1];
-			} else if (posX>p.getBarPosMove()-p.getLongueurBarre()/2 && posX<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]+taille/2-20+p.getHauteurBarre()/2){ 
+			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2<milieu[1]+taille/2-20+p.getHauteurBarre()/2){ 
 				// Il y a rebond sur le joueur
 				direction[1]=-direction[1];
 			}
 		} 
 
+	}
+	
+	public int isOut() {
+		int p = -1;
+		
+		if (posX<milieu[0]-taille/2 && posY>milieu[1]-taille/2+20 && posY<milieu[1]+taille/2-20) {
+			p=0;
+		} else if (posX>milieu[0]+taille/2 && posY>milieu[1]-taille/2+20 && posY<milieu[1]+taille/2-20) {
+			p=1;
+		} else if (posY<milieu[1]-taille/2 && posX>milieu[0]-taille/2+20 && posX<milieu[0]+taille/2-20) {
+			p=2;
+		} else if (posY>milieu[1]+taille/2 && posX>milieu[0]-taille/2+20 && posX<milieu[0]+taille/2-20) {
+			p=3;
+		}
+		return p;
 	}
 }

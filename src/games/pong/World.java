@@ -57,7 +57,7 @@ public class World extends BasicGameState {
 		players[1] = (new Player(this, 1, Color.red));
 		players[2] = (new Player(this, 2, Color.green));
 		players[3] = (new Player(this, 3, Color.yellow));
-		for (int i=0; i<20; i++) {
+		for (int i=0; i<1; i++) {
 			balls.add(new Ball(this));
 		}
 	}
@@ -80,11 +80,23 @@ public class World extends BasicGameState {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for (Player p : players) {
-			p.update(container, game, delta);
+		
+		if (balls.size() == 0) {
+			balls.add(new Ball(this));
+		}
+		for (int i=0; i < players.length ; i++) {
+			players[i].update(container, game, delta);
+			if (players[i].getVies()<=0 && players[i].getId()>=0) {
+				players[i]=new Wall(this, i);
+			}
 		}
 		for (Ball b : balls) {
 			b.update(container, game, delta);
+			int out = b.isOut();
+			if (out != -1) {
+				balls.remove(b);
+				players[out].loseVie();
+			}
 		}
 	}
 
