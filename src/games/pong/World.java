@@ -92,10 +92,14 @@ public class World extends BasicGameState {
 		}
 		for (Ball b : balls) {
 			b.update(container, game, delta);
-			int out = b.isOut();
+		}
+		for (int i=0 ; i<balls.size() ; i++) {
+			int out = balls.get(i).isOut();
 			if (out != -1) {
-				balls.remove(b);
-				players[out].loseVie();
+				balls.remove(i);
+				if (out<4) {
+					players[out].loseVie();
+				}
 			}
 		}
 	}

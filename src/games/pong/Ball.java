@@ -121,7 +121,7 @@ public class Ball {
 	}
 	
 	public int isOut() {
-		int p = -1;
+		int p = 4;
 		
 		if (posX<milieu[0]-taille/2 && posY>milieu[1]-taille/2+20 && posY<milieu[1]+taille/2-20) {
 			p=0;
@@ -131,6 +131,8 @@ public class Ball {
 			p=2;
 		} else if (posY>milieu[1]+taille/2 && posX>milieu[0]-taille/2+20 && posX<milieu[0]+taille/2-20) {
 			p=3;
+		} else if (posX>milieu[0]-taille/2 && posX<milieu[0]+taille/2 && posY>milieu[1]-taille/2 && posY<milieu[1]+taille/2) {
+			p=-1;
 		}
 		return p;
 	}
