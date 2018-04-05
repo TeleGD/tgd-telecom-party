@@ -108,10 +108,10 @@ public class World extends BasicGameState implements Playable {
 	@Override
 	public void initPlayers (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
-		int n = appGame.appPlayers.size ();
+		nbJoueurs = appGame.appPlayers.size ();
 		this.players = new Player [4];
 		for (int i = 0; i < 4; i++) {
-			this.players [i] = i < n ? new Player (this, i, appGame.appPlayers.get (i)) : new Wall (this, i);
+			this.players [i] = i < nbJoueurs ? new Player (this, i, appGame.appPlayers.get (i)) : new Wall (this, i);
 		};
 		this.balls = new ArrayList <Ball> ();
 		for (int i = 0; i < 1; i++) {

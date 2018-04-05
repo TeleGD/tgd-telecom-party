@@ -17,7 +17,6 @@ public class Ball {
 	private int milieu[];
 	private int taille;
 	private Player[] players;
-	// private int out;
 
 	public Ball(World world) {
 		this.milieu=world.milieu;

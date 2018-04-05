@@ -115,12 +115,16 @@ public class Player {
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		context.setColor(couleur);
+		context.drawString(name+" : "+vies+" vies", 5, 5+id*15);
 		if (id==0 || id==1) {
 			context.fillRect(barPosFixe-longueurBarre/2, barPosMove-hauteurBarre/2, longueurBarre, hauteurBarre);
+			context.setColor(new Color(30,30,30));
+			context.drawRect(barPosFixe-longueurBarre/2, barPosMove-hauteurBarre/2, longueurBarre, hauteurBarre);
 		} else if (id==2 || id==3){
 			context.fillRect(barPosMove-longueurBarre/2, barPosFixe-hauteurBarre/2, longueurBarre, hauteurBarre);
+			context.setColor(new Color(30,30,30));
+			context.drawRect(barPosMove-longueurBarre/2, barPosFixe-hauteurBarre/2, longueurBarre, hauteurBarre);
 		}
-		context.drawString(name+" : "+vies+" vies", 5, 5+id*15);
 	}
 
 	public void move(int delta) {
