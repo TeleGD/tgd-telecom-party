@@ -1,6 +1,7 @@
 package games.pong;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -13,7 +14,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class World extends BasicGameState {
+import general.AppPlayer;
+import general.PlayersHandler;
+
+public class World extends BasicGameState implements PlayersHandler {
 
 	private int ID;
 	
@@ -22,7 +26,7 @@ public class World extends BasicGameState {
 	
 	Player[] players;
 	private ArrayList<Ball> balls;
-	
+	private int nbJoueurs;
 	private Image background;
 	
 	public World (int ID) {
@@ -33,30 +37,16 @@ public class World extends BasicGameState {
 	};
 	
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables 
-		
-		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
-	}
-
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		players = new Player[4];
-		balls = new ArrayList<Ball>();
 		milieu = new int[2];
-		
 		milieu[0]=container.getWidth()/2;
 		milieu[1]=container.getHeight()/2;
 		taille = Math.min(milieu[0]*2,milieu[1]*2);
-		
+	}
+
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		balls = new ArrayList<Ball>();		
 		background = new Image("images/Pong/backgroundDuck.png");
 		
-//		players.add(new Wall(this, 0));
-//		players.add(new Wall(this, 1));
-//		players.add(new Wall(this, 2));
-//		players.add(new Wall(this, 3));
-		players[0] = (new Player(this, 0, Color.blue));
-		players[1] = (new Player(this, 1, Color.red));
-		players[2] = (new Player(this, 2, Color.green));
-		players[3] = (new Player(this, 3, Color.yellow));
 		for (int i=0; i<1; i++) {
 			balls.add(new Ball(this));
 		}
@@ -88,7 +78,12 @@ public class World extends BasicGameState {
 			players[i].update(container, game, delta);
 			if (players[i].getVies()<=0 && players[i].getId()>=0) {
 				players[i]=new Wall(this, i);
+				nbJoueurs--;
 			}
+		}
+		if (nbJoueurs<1) {
+			System.out.println("Partie terminée");
+			System.exit(0);
 		}
 		for (Ball b : balls) {
 			b.update(container, game, delta);
@@ -116,6 +111,19 @@ public class World extends BasicGameState {
 
 	public static void reset() {
 		// TODO Auto-generated method stub
+	}
+	@Override
+	public void setPlayers(List<AppPlayer> appPlayers) {
+		this.players = new Player[4];
+		this.nbJoueurs=appPlayers.size();
+		for (int i=0; i<4; i++) {
+			if (i<appPlayers.size()) {
+				this.players[i] = new Player(this, i, appPlayers.get(i));
+			} else {
+				this.players[i] = new Wall(this, i);
+			}
+		}
+		
 	}
 
 }

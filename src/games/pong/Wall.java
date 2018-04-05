@@ -9,8 +9,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Wall extends Player {
 	
 	public Wall(World world, int id) {
-		super(world, id, new Color(250,250,250));
+		super(world, id);
 		this.id=-this.id-1;
+		this.couleur=new Color(30,30,30);
 	}
 	
 	

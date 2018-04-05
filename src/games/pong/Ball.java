@@ -52,20 +52,17 @@ public class Ball {
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		this.collide();
-		this.move();
-		if ((out=this.isOut())!=-1) {
-			System.out.println("Sortie pour le joueur "+out);
-		};
+		this.move(delta);
 	}
 	
-	public void move() {
-		posX=posX+speed*direction[0];
-		posY=posY+speed*direction[1];
+	public void move(int delta) {
+		posX=(float) (posX+speed*delta*0.1*direction[0]);
+		posY=(float) (posY+speed*delta*0.1*direction[1]);
 	}
 	
 	public void collide() {
 		
-		speed=(float) (speed+0.002);
+		speed=(float) (speed+0.0005);
 		
 		
 		if (posX-radius/2<milieu[0]-taille/2+20+players[0].getLongueurBarre()/2) {
@@ -78,7 +75,8 @@ public class Ball {
 				direction[0]=-direction[0];
 			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX+radius/2>milieu[0]-taille/2+20-p.getLongueurBarre()/2){ 
 				// Il y a rebond sur le joueur
-				direction[0]=-direction[0];
+				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
+				direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1]);
 			}
 		} else if (posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
 			/*
@@ -90,7 +88,8 @@ public class Ball {
 				direction[0]=-direction[0];
 			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX-radius/2<milieu[0]+taille/2-20+p.getLongueurBarre()/2){ 
 				// Il y a rebond sur le joueur
-				direction[0]=-direction[0];
+				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
+				direction[0]=(float) -Math.sqrt(1-this.direction[1]*this.direction[1]);
 			}
 		} else if (posY-radius/2<milieu[1]-taille/2+20+players[2].getHauteurBarre()/2) {
 			/*
@@ -102,7 +101,8 @@ public class Ball {
 				direction[1]=-direction[1];
 			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]-taille/2+20-p.getHauteurBarre()/2){ 
 				// Il y a rebond sur le joueur
-				direction[1]=-direction[1];
+				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
+				direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
 			}
 		} else if (posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
 			/*
@@ -114,7 +114,8 @@ public class Ball {
 				direction[1]=-direction[1];
 			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2<milieu[1]+taille/2-20+p.getHauteurBarre()/2){ 
 				// Il y a rebond sur le joueur
-				direction[1]=-direction[1];
+				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
+				direction[1]=(float) -Math.sqrt(1-this.direction[0]*this.direction[0]);
 			}
 		} 
 
