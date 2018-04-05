@@ -74,7 +74,6 @@ public class PlayersMenu extends Page {
 		Input input = container.getInput ();
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		System.out.println (gameMasterID);
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
 			if (this.previousID == -1) {
 				System.exit (0);

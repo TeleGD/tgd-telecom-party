@@ -1,6 +1,4 @@
 package games.battle;
-import java.util.ArrayList;
-import java.util.List;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,7 +8,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.AppGame;
-import general.AppPlayer;
 import general.Playable;
 public class World extends BasicGameState implements Playable {
 	static private float jump (float x, float h, float d) {
@@ -23,7 +20,7 @@ public class World extends BasicGameState implements Playable {
 	private Color backgroundColor;
 	private Color fillColor;
 	private Color strokeColor;
-	private List <Player> players;
+	private Player [] players;
 	public World (int ID) {
 		this.ID = ID;
 	};
@@ -39,7 +36,6 @@ public class World extends BasicGameState implements Playable {
 		this.strokeColor = new Color (0, 102, 51);
 	};
 	public void enter (GameContainer container, StateBasedGame game) {
-		// this.init (container, game);
 		container.getInput ().clearKeyPressedRecord ();
 	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
@@ -84,9 +80,11 @@ public class World extends BasicGameState implements Playable {
 		};
 	};
 	public void initPlayers (GameContainer container, StateBasedGame game) {
-		this.players = new ArrayList <Player> ();
-		for (AppPlayer appPlayer: ((AppGame) game).appPlayers) {
-			this.players.add (new Player (appPlayer));
+		AppGame appGame = (AppGame) game;
+		int n = appGame.appPlayers.size ();
+		this.players = new Player [n];
+		for (int i = 0; i < n; i++) {
+			this.players [i] = new Player (appGame.appPlayers.get (i));
 		};
 	};
 };
