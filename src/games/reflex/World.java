@@ -1,7 +1,6 @@
 package games.reflex;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -10,10 +9,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.AppPlayer;
-import general.PlayersHandler;
+import general.AppGame;
+import general.Playable;
 
-public class World extends BasicGameState implements PlayersHandler {
+public class World extends BasicGameState implements Playable {
 
 	private int ID;
 	public final static int GOAL=20;
@@ -54,13 +53,13 @@ public class World extends BasicGameState implements PlayersHandler {
 		return ID;
 	}
 
-	public void setPlayers (List <AppPlayer> appPlayers) {
+	@Override
+	public void initPlayers (GameContainer container, StateBasedGame game) {
 		this.players = new ArrayList <Player> ();
-		int n = appPlayers.size();
-		for (int i=0;i<n;i++) {
-			this.players.add(new Player(appPlayers.get(i),n,i));
-		}
+		int n = ((AppGame) game).appPlayers.size ();
+		for (int i = 0; i < n; i++) {
+			this.players.add (new Player (((AppGame) game).appPlayers.get (i), n, i));
+		};
 	}
-
 
 }

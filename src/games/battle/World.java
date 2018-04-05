@@ -11,8 +11,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.AppGame;
 import general.AppPlayer;
-import general.PlayersHandler;
-public class World extends BasicGameState implements PlayersHandler {
+import general.Playable;
+public class World extends BasicGameState implements Playable {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
@@ -83,9 +83,9 @@ public class World extends BasicGameState implements PlayersHandler {
 			player.render (container, game, context);
 		};
 	};
-	public void setPlayers (List <AppPlayer> appPlayers) {
+	public void initPlayers (GameContainer container, StateBasedGame game) {
 		this.players = new ArrayList <Player> ();
-		for (AppPlayer appPlayer: appPlayers) {
+		for (AppPlayer appPlayer: ((AppGame) game).appPlayers) {
 			this.players.add (new Player (appPlayer));
 		};
 	};

@@ -10,7 +10,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
 import general.AppPlayer;
-import general.PlayersHandler;
+import general.Playable;
 import general.utils.FontUtils;
 
 import menus.ui.Page;
@@ -74,6 +74,7 @@ public class PlayersMenu extends Page {
 		Input input = container.getInput ();
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
+		System.out.println (gameMasterID);
 		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
 			if (this.previousID == -1) {
 				System.exit (0);
@@ -84,7 +85,7 @@ public class PlayersMenu extends Page {
 			if (this.nextID == -1) {
 				System.exit (0);
 			} else {
-				((PlayersHandler) game.getState (this.nextID)).setPlayers (appGame.appPlayers);
+				((Playable) game.getState (this.nextID)).initPlayers (container, game);
 				game.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
 			};
 		} else {
@@ -119,11 +120,12 @@ public class PlayersMenu extends Page {
 				};
 			};
 			for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
-				boolean buttonRemove = input.isButtonPressed (AppGame.BUTTON_B, appGame.appPlayers.get (i).getControllerID ());
+				int controllerID = appGame.appPlayers.get (i).getControllerID ();
+				boolean buttonRemove = input.isButtonPressed (AppGame.BUTTON_B, controllerID);
 				if (buttonRemove == (appGame.appPlayersControls.get (i) >> AppGame.BUTTON_B == 0)) {
 					appGame.appPlayersControls.set (i, appGame.appPlayersControls.get (i) ^ (1 << AppGame.BUTTON_B));
 					if (buttonRemove) {
-						if (i == gameMasterID) {
+						if (controllerID == gameMasterID) {
 							if (this.previousID == -1) {
 								System.exit (0);
 							} else {
@@ -196,6 +198,7 @@ public class PlayersMenu extends Page {
 
 	public void setNextID (int ID) {
 		this.nextID = ID;
+		this.setSubtitle (AppGame.TITLES [ID]);
 	}
 
 	public int getNextID () {
