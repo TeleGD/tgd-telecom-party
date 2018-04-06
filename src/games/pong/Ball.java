@@ -17,6 +17,7 @@ public class Ball {
 	private int milieu[];
 	private int taille;
 	private Player[] players;
+	private int lastHit;
 
 	public Ball(World world) {
 		this.milieu=world.milieu;
@@ -26,7 +27,7 @@ public class Ball {
 		this.posY = world.milieu[1];
 		this.speed = 2;
 		this.radius = 10;
-
+		this.lastHit = -1;
 		Random r = new Random();
 		this.direction = new float[2];
 
@@ -74,6 +75,7 @@ public class Ball {
 				// Il y a rebond sur le joueur
 				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
 				direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1]);
+				lastHit=0;
 			}
 		} else if (posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
 			/*
@@ -87,6 +89,7 @@ public class Ball {
 				// Il y a rebond sur le joueur
 				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
 				direction[0]=(float) -Math.sqrt(1-this.direction[1]*this.direction[1]);
+				lastHit=1;
 			}
 		} else if (posY-radius/2<milieu[1]-taille/2+20+players[2].getHauteurBarre()/2) {
 			/*
@@ -100,6 +103,7 @@ public class Ball {
 				// Il y a rebond sur le joueur
 				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
 				direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
+				lastHit=2;
 			}
 		} else if (posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
 			/*
@@ -113,6 +117,7 @@ public class Ball {
 				// Il y a rebond sur le joueur
 				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
 				direction[1]=(float) -Math.sqrt(1-this.direction[0]*this.direction[0]);
+				lastHit=3;
 			}
 		}
 
@@ -133,5 +138,53 @@ public class Ball {
 			p=-1;
 		}
 		return p;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float[] getDirection() {
+		return direction;
+	}
+
+	public void setDirection(float[] direction) {
+		this.direction = direction;
+	}
+
+	public float getPosX() {
+		return posX;
+	}
+
+	public void setPosX(float posX) {
+		this.posX = posX;
+	}
+
+	public float getPosY() {
+		return posY;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+	
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	public int getLastHit() {
+		return lastHit;
 	}
 }

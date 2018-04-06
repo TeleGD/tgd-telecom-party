@@ -15,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import games.pong.bonus.Bonus;
 import general.AppGame;
 import general.Playable;
 
@@ -22,11 +23,12 @@ public class World extends BasicGameState implements Playable {
 
 	private int ID;
 
-	int milieu[];
-	int taille;
+	public int milieu[];
+	public int taille;
 
 	Player[] players;
 	private List<Ball> balls;
+	private List<Bonus> bonus;
 	private int nbJoueurs;
 	private Image background;
 
@@ -81,6 +83,9 @@ public class World extends BasicGameState implements Playable {
 			}
 			for (Ball b : balls) {
 				b.update(container, game, delta);
+				for (Bonus bo : bonus) {
+					bo.update(container, game, delta ,b);
+				}
 			}
 			for (int i=0 ; i<balls.size() ; i++) {
 				int out = balls.get(i).isOut();
@@ -91,6 +96,11 @@ public class World extends BasicGameState implements Playable {
 					}
 				}
 			}
+			for (int i=0 ; i<bonus.size() ; i++) {
+				if (bonus.get(i).isPicked()) {
+					bonus.remove(i);
+				}
+			}
 		}
 	}
 
@@ -99,6 +109,9 @@ public class World extends BasicGameState implements Playable {
 		context.drawImage(background,milieu[0]-taille/2,milieu[1]-taille/2,milieu[0]+taille/2,milieu[1]+taille/2,0,0,background.getWidth(),background.getHeight());
 		for (Player p : players) {
 			p.render(container, game, context);
+		}
+		for (Bonus b : bonus) {
+			b.render(container, game, context);
 		}
 		for (Ball b : balls) {
 			b.render(container, game, context);
@@ -117,6 +130,7 @@ public class World extends BasicGameState implements Playable {
 		for (int i = 0; i < 1; i++) {
 			balls.add (new Ball (this));
 		}
+		this.bonus = new ArrayList <Bonus> ();
 	}
 
 }
