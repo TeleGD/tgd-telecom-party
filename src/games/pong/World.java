@@ -2,6 +2,7 @@ package games.pong;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -15,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import games.pong.bonus.Bonus;
+import games.pong.bonus.*;
 import general.AppGame;
 import general.Playable;
 
@@ -31,7 +32,8 @@ public class World extends BasicGameState implements Playable {
 	private List<Bonus> bonus;
 	private int nbJoueurs;
 	private Image background;
-
+	private Random r;
+	
 	public World (int ID) {
 		this.ID = ID;
 	}
@@ -57,6 +59,7 @@ public class World extends BasicGameState implements Playable {
 	@Override
 	public void enter (GameContainer container, StateBasedGame game) {
 		container.getInput ().clearKeyPressedRecord ();
+		r = new Random();
 	}
 
 	@Override
@@ -70,6 +73,41 @@ public class World extends BasicGameState implements Playable {
 			if (balls.size() == 0) {
 				balls.add(new Ball(this));
 			}
+			if (bonus.size()<5 && r.nextInt(300)<1) {
+				int nb = r.nextInt(9);
+				switch (nb) {
+				case 0:
+					bonus.add(new BallRandomDirection(this));
+					break;
+				case 1:
+					bonus.add(new BallRandomPosition(this));
+					break;
+				case 2:
+					bonus.add(new BallSpeed(this));
+					break;
+				case 3:
+					bonus.add(new PlayerSizeDown(this));
+					break;
+				case 4:
+					bonus.add(new PlayerSizeUp(this));
+					break;
+				case 5:
+					bonus.add(new PlayerSpeedDown(this));
+					break;
+				case 6:
+					bonus.add(new PlayerSpeedUp(this));
+					break;
+				case 7:
+					bonus.add(new PlayerLifeDown(this));
+					break;
+				case 8:
+					bonus.add(new PlayerLifeUp(this));
+					break;
+				default:
+					break;
+				}
+			}
+			
 			for (int i=0; i < players.length ; i++) {
 				players[i].update(container, game, delta);
 				if (players[i].getVies()<=0 && players[i].getId()>=0) {

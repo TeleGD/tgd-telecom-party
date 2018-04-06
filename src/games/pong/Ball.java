@@ -18,6 +18,9 @@ public class Ball {
 	private int taille;
 	private Player[] players;
 	private int lastHit;
+	private int compteurNoPlayer;
+	private boolean inWall;
+	private Random r;
 
 	public Ball(World world) {
 		this.milieu=world.milieu;
@@ -28,7 +31,9 @@ public class Ball {
 		this.speed = 2;
 		this.radius = 10;
 		this.lastHit = -1;
-		Random r = new Random();
+		this.compteurNoPlayer=0;
+		this.inWall=false;
+		r = new Random();
 		this.direction = new float[2];
 
 		this.direction[0]=r.nextFloat();
@@ -59,11 +64,9 @@ public class Ball {
 	}
 
 	public void collide() {
-
-		speed=(float) (speed+0.0005);
-
-
-		if (posX-radius/2<milieu[0]-taille/2+20+players[0].getLongueurBarre()/2) {
+		if (!inWall && posX-radius/2<milieu[0]-taille/2+20+players[0].getLongueurBarre()/2) {
+			speed=(float) (speed+0.1);
+			inWall=true;
 			/*
 			 * A gauche
 		 	 */
@@ -71,13 +74,22 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[0]=-direction[0];
+				this.compteurNoPlayer++;
+				if (compteurNoPlayer>9) {
+					direction[1]=Math.signum(direction[1])*r.nextFloat()*0.5f+0.25f;
+					direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1])*Math.signum(direction[0]);
+					compteurNoPlayer=0;
+				}
 			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX+radius/2>milieu[0]-taille/2+20-p.getLongueurBarre()/2){
 				// Il y a rebond sur le joueur
 				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
 				direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1]);
 				lastHit=0;
+				this.compteurNoPlayer=0;
 			}
-		} else if (posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
+		} else if (!inWall && posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
+			speed=(float) (speed+0.1);
+			inWall = true;
 			/*
 			 * A droite
 		 	 */
@@ -85,13 +97,22 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[0]=-direction[0];
+				this.compteurNoPlayer++;
+				if (compteurNoPlayer>9) {
+					direction[1]=Math.signum(direction[1])*r.nextFloat()*0.5f+0.25f;
+					direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1])*Math.signum(direction[0]);
+					compteurNoPlayer=0;
+				}
 			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX-radius/2<milieu[0]+taille/2-20+p.getLongueurBarre()/2){
 				// Il y a rebond sur le joueur
 				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
 				direction[0]=(float) -Math.sqrt(1-this.direction[1]*this.direction[1]);
 				lastHit=1;
+				this.compteurNoPlayer=0;
 			}
-		} else if (posY-radius/2<milieu[1]-taille/2+20+players[2].getHauteurBarre()/2) {
+		} else if (!inWall && posY-radius/2<milieu[1]-taille/2+20+players[2].getHauteurBarre()/2) {
+			speed=(float) (speed+0.1);
+			inWall=true;
 			/*
 			 * En haut
 		 	 */
@@ -99,13 +120,22 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[1]=-direction[1];
+				this.compteurNoPlayer++;
+				if (compteurNoPlayer>9) {
+					direction[0]=Math.signum(direction[0])*r.nextFloat()*0.5f+0.25f;
+					direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0])*Math.signum(direction[1]);
+					compteurNoPlayer=0;
+				}
 			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]-taille/2+20-p.getHauteurBarre()/2){
 				// Il y a rebond sur le joueur
 				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
 				direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
 				lastHit=2;
+				this.compteurNoPlayer=0;
 			}
-		} else if (posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
+		} else if (!inWall && posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
+			speed=(float) (speed+0.1);
+			inWall=true;
 			/*
 			 * En bas
 		 	 */
@@ -113,12 +143,21 @@ public class Ball {
 			if (p.getId()<0) {
 				// Il y a un rebond sur un mur
 				direction[1]=-direction[1];
+				this.compteurNoPlayer++;
+				if (compteurNoPlayer>9) {
+					direction[0]=Math.signum(direction[0])*r.nextFloat()*0.5f+0.25f;
+					direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0])*Math.signum(direction[1]);
+					compteurNoPlayer=0;
+				}
 			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2<milieu[1]+taille/2-20+p.getHauteurBarre()/2){
 				// Il y a rebond sur le joueur
 				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
 				direction[1]=(float) -Math.sqrt(1-this.direction[0]*this.direction[0]);
 				lastHit=3;
+				this.compteurNoPlayer=0;
 			}
+		} else {
+			inWall=false;
 		}
 
 	}
@@ -186,5 +225,9 @@ public class Ball {
 
 	public int getLastHit() {
 		return lastHit;
+	}
+	
+	public int getCompteurNoPlayer() {
+		return compteurNoPlayer;
 	}
 }

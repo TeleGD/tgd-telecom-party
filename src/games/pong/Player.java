@@ -16,7 +16,7 @@ public class Player {
 	protected Color couleur;
 	protected int barPosFixe;
 	protected int barPosMove;
-	private int speed;
+	private double speed;
 	private String name;
 	private int longueurBarre;
 	private int hauteurBarre;
@@ -181,5 +181,25 @@ public class Player {
 
 	public int getId() {
 		return this.id;
+	}
+	
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double d) {
+		this.speed = d;
+	}
+
+	public void setVies(int vies) {
+		this.vies = vies;
+	}
+
+	public void setLongueurBarre(int longueurBarre) {
+		this.longueurBarre = longueurBarre;
+	}
+
+	public void setHauteurBarre(int hauteurBarre) {
+		this.hauteurBarre = hauteurBarre;
 	}
 }

@@ -21,8 +21,8 @@ public abstract class Bonus {
 	protected int milieu[];
 	protected int taille;
 	protected int radius;
-	protected Color couleur = Color.blue;
-	protected String name = "B";
+	protected Color couleur;
+	protected String name;
 	protected TrueTypeFont font;
 	protected boolean picked;
 	private Random r = new Random();
@@ -48,9 +48,11 @@ public abstract class Bonus {
 
 	public void update(GameContainer container, StateBasedGame game, int delta, Ball b) {
 		// TODO Auto-generated method stub
-		if (Math.pow((b.getPosX()-this.x),2)+Math.pow((b.getPosY()-this.y),2)<b.getRadius()+this.radius && b.getLastHit()!=-1) {
+		if (Math.sqrt(Math.pow((b.getPosX()-this.x),2)+Math.pow((b.getPosY()-this.y),2))<=b.getRadius()/2+this.radius/2 && !picked) {
 			this.modify(b);
-			this.modify(b.getPlayers()[b.getLastHit()]);
+			if (b.getLastHit()!=-1 ) {
+				this.modify(b.getPlayers()[b.getLastHit()]);
+			}
 			this.picked=true;
 		}
 	}
