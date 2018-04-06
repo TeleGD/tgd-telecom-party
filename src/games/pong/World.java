@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -16,11 +16,15 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import games.pong.bonus.*;
 import general.AppGame;
 import general.Playable;
+import general.utils.FontUtils;
+
+import games.pong.bonus.*;
 
 public class World extends BasicGameState implements Playable {
+
+	public static final Font bonusFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 
 	private int ID;
 
@@ -33,7 +37,7 @@ public class World extends BasicGameState implements Playable {
 	private int nbJoueurs;
 	private Image background;
 	private Random r;
-	
+
 	public World (int ID) {
 		this.ID = ID;
 	}
@@ -107,7 +111,7 @@ public class World extends BasicGameState implements Playable {
 					break;
 				}
 			}
-			
+
 			for (int i=0; i < players.length ; i++) {
 				players[i].update(container, game, delta);
 				if (players[i].getVies()<=0 && players[i].getId()>=0) {

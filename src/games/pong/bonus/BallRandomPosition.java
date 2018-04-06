@@ -15,7 +15,7 @@ public class BallRandomPosition extends Bonus {
 		this.name="r";
 		this.couleur=new Color(102,102,255);
 	}
-	
+
 	@Override
 	public void modify(Player player) {
 		// Pas d'effet sur le joueur

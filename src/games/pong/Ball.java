@@ -218,7 +218,7 @@ public class Ball {
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
-	
+
 	public Player[] getPlayers() {
 		return players;
 	}
@@ -226,7 +226,7 @@ public class Ball {
 	public int getLastHit() {
 		return lastHit;
 	}
-	
+
 	public int getCompteurNoPlayer() {
 		return compteurNoPlayer;
 	}

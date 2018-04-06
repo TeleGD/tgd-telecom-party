@@ -182,7 +182,7 @@ public class Player {
 	public int getId() {
 		return this.id;
 	}
-	
+
 	public double getSpeed() {
 		return speed;
 	}
