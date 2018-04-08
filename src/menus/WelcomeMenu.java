@@ -3,7 +3,6 @@ package menus;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.EmptyImageData;
 import org.newdawn.slick.state.StateBasedGame;
@@ -11,6 +10,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
+import general.AppInput;
 import general.AppPlayer;
 
 import menus.ui.Page;
@@ -70,37 +70,36 @@ public class WelcomeMenu extends Page {
 			logo = new Image ("images/logo.png");
 		} catch (SlickException exception) {
 			logo = new Image (new EmptyImageData (0, 0));
-		};
+		}
 		this.setLogo (logo);
 	}
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int  delta) {
 		super.update (container, game, delta);
-		Input input = container.getInput ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
-			System.exit (0);
+		AppInput appInput = (AppInput) container.getInput ();
+		AppGame appGame = (AppGame) game;
+		if (appInput.isKeyDown (AppInput.KEY_ESCAPE)) {
+			container.exit ();
 		} else {
-			int gameMasterID = Input.ANY_CONTROLLER;
-			if (input.isKeyPressed (Input.KEY_ENTER)) {
-				gameMasterID = 0;
+			int gameMasterID = AppInput.ANY_CONTROLLER;
+			if (appInput.isKeyDown (AppInput.KEY_ENTER)) {
+				gameMasterID = 0; /* Magic number */
 			} else {
-				for (int i = 0, l = input.getControllerCount (); i < l; i++) {
-					if (input.isButtonPressed (AppGame.BUTTON_A, i)) {
+				for (int i = appInput.getControllerCount () - 1; i >= 0; i--) {
+					if (appInput.isButtonPressed (AppInput.BUTTON_A, i)) {
 						gameMasterID = i;
 						break;
-					};
-				};
-			};
-			if (gameMasterID != Input.ANY_CONTROLLER) {
-				AppGame appGame = (AppGame) game;
+					}
+				}
+			}
+			if (gameMasterID != AppInput.ANY_CONTROLLER) {
 				int colorID = appGame.availableColorIDs.remove (0);
 				String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
-				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name));
-				appGame.appPlayersControls.add (0, 1 << AppGame.BUTTON_A);
-				game.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
-			};
-		};
+				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name, AppGame.BUTTON_A));
+				appGame.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+			}
+		}
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class WelcomeMenu extends Page {
 				this.logoNaturalWidth,
 				this.logoNaturalHeight
 			);
-		};
+		}
 	}
 
 	public void setLogo (Image logo) {
@@ -135,7 +134,7 @@ public class WelcomeMenu extends Page {
 			this.logoHeight = this.logoNaturalHeight * this.logoWidth / this.logoNaturalWidth;
 		} else {
 			this.logoWidth = this.logoNaturalWidth * this.logoHeight / this.logoNaturalHeight;
-		};
+		}
 		this.logoX = this.logoBoxX + (this.logoBoxWidth - this.logoWidth) / 2;
 		this.logoY = this.logoBoxY + (this.logoBoxHeight - this.logoHeight) / 2;
 	}

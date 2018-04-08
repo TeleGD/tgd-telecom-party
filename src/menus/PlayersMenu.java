@@ -3,12 +3,12 @@ package menus;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
+import general.AppInput;
 import general.AppPlayer;
 import general.Playable;
 import general.utils.FontUtils;
@@ -71,76 +71,92 @@ public class PlayersMenu extends Page {
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
-		Input input = container.getInput ();
+		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE)) {
-			if (this.previousID == -1) {
-				System.exit (0);
-			} else {
-				game.enterState (this.previousID);
-			};
-		} else if ((input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID))/* && appGame.appPlayers.size () > 2*/) {
-			if (this.nextID == -1) {
-				System.exit (0);
-			} else {
-				((Playable) game.getState (this.nextID)).initPlayers (container, game);
-				game.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
-			};
-		} else {
-			for (int i = 0, l = input.getControllerCount (); i < l; i++) {
-				boolean buttonAdd = input.isButtonPressed (AppGame.BUTTON_A, i);
-				boolean appPlayerFound = false;
-				for (int j = appGame.appPlayers.size () - 1; j >= 0; j--) {
-					AppPlayer appPlayer = appGame.appPlayers.get (j);
-					if (appPlayer.getControllerID () == i) {
-						appPlayerFound = true;
-						if (buttonAdd == (appGame.appPlayersControls.get (j) >> AppGame.BUTTON_A == 0)) {
-							appGame.appPlayersControls.set (j, appGame.appPlayersControls.get (j) ^ (1 << AppGame.BUTTON_A));
-							if (buttonAdd) {
-								appGame.availableColorIDs.add (appPlayer.getColorID ());
-								int colorID = appGame.availableColorIDs.remove (0);
-								String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
-								appPlayer.setColorID (colorID);
-								appPlayer.setName (name);
-							};
-						};
-						break;
-					};
-				};
-				if (!appPlayerFound && buttonAdd && appGame.appPlayers.size () < 4) {
+		loop: for (int i = 0, l = appInput.getControllerCount (); i < l; i++) {
+			boolean BUTTON_A = appInput.isButtonPressed (AppInput.BUTTON_A, i);
+			for (int j = appGame.appPlayers.size () - 1; j > 0; j--) {
+				AppPlayer appPlayer = appGame.appPlayers.get (j);
+				if (appPlayer.getControllerID () == i) {
+					int record = appPlayer.getButtonPressedRecord ();
+					if (BUTTON_A == ((record & AppInput.BUTTON_A) == 0)) {
+						appPlayer.setButtonPressedRecord (record ^ AppInput.BUTTON_A);
+					}
+					continue loop;
+				}
+			}
+			if (BUTTON_A && i != appGame.appPlayers.get (0).getControllerID () && appGame.appPlayers.size () < 4) {
+				int colorID = appGame.availableColorIDs.remove (0);
+				String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
+				appGame.appPlayers.add (new AppPlayer (colorID, i, name, AppInput.BUTTON_A));
+				if (appGame.appPlayers.size () == 2) {
+					this.hintVisibility = true;
+				}
+			}
+		}
+		for (int i = appGame.appPlayers.size () - 1; i > 0; i--) {
+			AppPlayer appPlayer = appGame.appPlayers.get (i);
+			boolean BUTTON_B = appInput.isButtonPressed (AppInput.BUTTON_B, appPlayer.getControllerID ());
+			int record = appPlayer.getButtonPressedRecord ();
+			if (BUTTON_B == ((record & AppInput.BUTTON_B) == 0)) {
+				appPlayer.setButtonPressedRecord (record ^ AppInput.BUTTON_B);
+				if (BUTTON_B) {
+					appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
+					if (appGame.appPlayers.size () == 1) {
+						this.hintVisibility = false;
+					}
+				}
+			}
+		}
+		for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
+			AppPlayer appPlayer = appGame.appPlayers.get (i);
+			int j = appPlayer.getControllerID ();
+			boolean BUTTON_L = appInput.isButtonPressed (AppInput.BUTTON_L, j);
+			boolean BUTTON_R = appInput.isButtonPressed (AppInput.BUTTON_R, j);
+			int record = appPlayer.getButtonPressedRecord ();
+			if (BUTTON_L == ((record & AppInput.BUTTON_L) == 0)) {
+				record ^= AppInput.BUTTON_L;
+				if (BUTTON_L) {
+					appGame.availableColorIDs.add (0, appPlayer.getColorID ());
+					int colorID = appGame.availableColorIDs.remove (appGame.availableColorIDs.size () - 1);
+					String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
+					appPlayer.setColorID (colorID);
+					appPlayer.setName (name);
+				}
+			}
+			if (BUTTON_R == ((record & AppInput.BUTTON_R) == 0)) {
+				record ^= AppInput.BUTTON_R;
+				if (BUTTON_R) {
+					appGame.availableColorIDs.add (appPlayer.getColorID ());
 					int colorID = appGame.availableColorIDs.remove (0);
 					String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
-					appGame.appPlayers.add (new AppPlayer (colorID, i, name));
-					appGame.appPlayersControls.add (1 << AppGame.BUTTON_A);
-					if (appGame.appPlayers.size () == 2) {
-						this.hintVisibility = true;
-					};
-				};
-			};
-			for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
-				int controllerID = appGame.appPlayers.get (i).getControllerID ();
-				boolean buttonRemove = input.isButtonPressed (AppGame.BUTTON_B, controllerID);
-				if (buttonRemove == (appGame.appPlayersControls.get (i) >> AppGame.BUTTON_B == 0)) {
-					appGame.appPlayersControls.set (i, appGame.appPlayersControls.get (i) ^ (1 << AppGame.BUTTON_B));
-					if (buttonRemove) {
-						if (controllerID == gameMasterID) {
-							if (this.previousID == -1) {
-								System.exit (0);
-							} else {
-								game.enterState (this.previousID);
-							};
-						} else {
-							appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
-							appGame.appPlayersControls.remove (i);
-							if (appGame.appPlayers.size () == 1) {
-								this.hintVisibility = false;
-							};
-						};
-					};
-				};
-			};
-		};
+					appPlayer.setColorID (colorID);
+					appPlayer.setName (name);
+				}
+			}
+			appPlayer.setButtonPressedRecord (record);
+		}
+		{
+			AppPlayer gameMaster = appGame.appPlayers.get (0);
+			int gameMasterID = gameMaster.getControllerID ();
+			boolean BUTTON_A = appInput.isKeyDown (AppInput.KEY_ENTER) || appInput.isButtonPressed (AppInput.BUTTON_A, gameMasterID);
+			boolean BUTTON_B = appInput.isKeyDown (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_B, gameMasterID);
+			int gameMasterRecord = gameMaster.getButtonPressedRecord ();
+			if (BUTTON_A == ((gameMasterRecord & AppInput.BUTTON_A) == 0)) {
+				gameMasterRecord ^= AppInput.BUTTON_A;
+				if (BUTTON_A && this.nextID != -1) {
+					((Playable) appGame.getState (this.nextID)).initPlayers (container, appGame);
+					appGame.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
+				}
+			}
+			if (BUTTON_B == ((gameMasterRecord & AppInput.BUTTON_B) == 0)) {
+				gameMasterRecord ^= AppInput.BUTTON_B;
+				if (BUTTON_B && this.previousID != -1) {
+					appGame.enterState (this.previousID);
+				}
+			}
+			gameMaster.setButtonPressedRecord (gameMasterRecord);
+		}
 	}
 
 	@Override
@@ -182,9 +198,9 @@ public class PlayersMenu extends Page {
 					context.drawString ("+", playerX - 2, playerY - 2);
 					context.setColor (Page.foregroundColor);
 					context.drawString ("+", playerX + 2, playerY + 2);
-				};
-			};
-		};
+				}
+			}
+		}
 	}
 
 	public void setPreviousID (int ID) {

@@ -36,12 +36,12 @@ public class GamesMenu extends Menu {
 					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
 					playersMenu.setNextID (AppGame.GAMES_BATTLE_WORLD);
 					game.enterState (AppGame.MENUS_PLAYERS_MENU);
-				};
+				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_AZTEC_PYRAMIDS_WORLD]) {
 				public void itemSelected () {
 					game.enterState (AppGame.GAMES_AZTEC_PYRAMIDS_WORLD);
-				};
+				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PONG_MULTI_WORLD]) {
 				public void itemSelected () {
@@ -49,17 +49,17 @@ public class GamesMenu extends Menu {
 					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
 					playersMenu.setNextID (AppGame.GAMES_PONG_MULTI_WORLD);
 					game.enterState (AppGame.MENUS_PLAYERS_MENU);
-				};
+				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_KOMTUVE_WORLD]) {
 				public void itemSelected () {
 					game.enterState (AppGame.GAMES_KOMTUVE_WORLD);
-				};
+				}
 			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					game.enterState (AppGame.MENUS_MAIN_MENU);
-				};
+				}
 			}
 		}));
 		this.setHint ("PRESS ENTER");

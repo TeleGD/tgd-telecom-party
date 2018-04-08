@@ -41,11 +41,13 @@ public class AppPlayer {
 	private int colorID;
 	private int controllerID;
 	private String name;
+	private int buttonPressedRecord;
 
-	public AppPlayer (int colorID, int controllerID, String name) {
-		this.colorID = colorID;
-		this.controllerID = controllerID;
-		this.name = name;
+	public AppPlayer (int colorID, int controllerID, String name, int buttonPressedRecord) {
+		this.setColorID (colorID);
+		this.setControllerID (controllerID);
+		this.setName (name);
+		this.setButtonPressedRecord (buttonPressedRecord);
 	}
 
 	public void setColorID (int colorID) {
@@ -70,6 +72,14 @@ public class AppPlayer {
 
 	public String getName () {
 		return this.name;
+	}
+
+	public void setButtonPressedRecord (int buttonPressedRecord) {
+		this.buttonPressedRecord = buttonPressedRecord;
+	}
+
+	public int getButtonPressedRecord () {
+		return this.buttonPressedRecord;
 	}
 
 }

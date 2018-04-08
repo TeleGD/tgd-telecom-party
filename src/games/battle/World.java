@@ -2,12 +2,13 @@ package games.battle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import general.AppGame;
+import general.AppInput;
+import general.AppPlayer;
 import general.Playable;
 public class World extends BasicGameState implements Playable {
 	static private float jump (float x, float h, float d) {
@@ -35,34 +36,39 @@ public class World extends BasicGameState implements Playable {
 		this.fillColor = new Color (51, 153, 102);
 		this.strokeColor = new Color (0, 102, 51);
 	};
-	public void enter (GameContainer container, StateBasedGame game) {
-		container.getInput ().clearKeyPressedRecord ();
-	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		Input input = container.getInput ();
+		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID)) {
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			for (Player player: this.players) {
-				boolean keyGape = input.isButtonPressed (AppGame.BUTTON_A, player.controllerID);
-				boolean keyJump = input.isButtonPressed (AppGame.BUTTON_B, player.controllerID) || input.isButtonPressed (AppGame.BUTTON_Y, player.controllerID) || input.isButtonPressed (AppGame.BUTTON_X, player.controllerID);
-				// float axisY = input.getAxisValue (controllerID, 0);
-				float axisX = input.getAxisValue (player.controllerID, AppGame.AXIS_XL);
-				player.jumpDuration -= delta;
-				player.gape = !keyGape;
-				player.jump = keyJump;
-				// player.x += Math.round (axisX * 5) / 5 * delta * .48;
-				player.x += axisX * delta * .48;
-				player.x = (player.x >= this.width / 2) ? player.x % this.width - this.width : player.x;
-				player.x = (player.x < -this.width / 2) ? player.x % this.width + this.width : player.x;
-				player.y = World.jump ((float) player.jumpDuration / 1000, (float) player.radius * 4, (float) .8);
-				player.direction = axisX > 0 ? 0 : (axisX < 0 ? 1 : player.direction);
-				if (player.jump && player.jumpDuration <= 0) {
-					player.jumpDuration = 800;
+		for (Player player: this.players) {
+			boolean keyGape = appInput.isButtonPressed (AppInput.BUTTON_A, player.controllerID);
+			boolean keyJump = appInput.isButtonPressed (AppInput.BUTTON_B | AppInput.BUTTON_Y | AppInput.BUTTON_X, player.controllerID);
+			// float axisY = appInput.getAxisValue (controllerID, 0);
+			float axisX = appInput.getAxisValue (player.controllerID, AppInput.AXIS_XL);
+			player.jumpDuration -= delta;
+			player.gape = !keyGape;
+			player.jump = keyJump;
+			// player.x += Math.round (axisX * 5) / 5 * delta * .48;
+			player.x += axisX * delta * .48;
+			player.x = (player.x >= this.width / 2) ? player.x % this.width - this.width : player.x;
+			player.x = (player.x < -this.width / 2) ? player.x % this.width + this.width : player.x;
+			player.y = World.jump ((float) player.jumpDuration / 1000, (float) player.radius * 4, (float) .8);
+			player.direction = axisX > 0 ? 0 : (axisX < 0 ? 1 : player.direction);
+			if (player.jump && player.jumpDuration <= 0) {
+				player.jumpDuration = 800;
+			};
+		};
+		{
+			AppPlayer gameMaster = appGame.appPlayers.get (0);
+			int gameMasterID = gameMaster.getControllerID ();
+			boolean BUTTON_PLUS = appInput.isKeyDown (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID);
+			int gameMasterRecord = gameMaster.getButtonPressedRecord ();
+			if (BUTTON_PLUS == ((gameMasterRecord & AppInput.BUTTON_PLUS) == 0)) {
+				gameMasterRecord ^= AppInput.BUTTON_PLUS;
+				if (BUTTON_PLUS) {
+					appGame.enterState (AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};
 			};
+			gameMaster.setButtonPressedRecord (gameMasterRecord);
 		};
 	};
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {

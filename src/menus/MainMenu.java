@@ -50,9 +50,8 @@ public class MainMenu extends Menu {
 					AppGame appGame = (AppGame) game;
 					for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
 						appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
-						appGame.appPlayersControls.remove (i);
 					};
-					game.enterState (AppGame.MENUS_WELCOME_MENU, new FadeOutTransition (), new FadeInTransition ());
+					appGame.enterState (AppGame.MENUS_WELCOME_MENU, new FadeOutTransition (), new FadeInTransition ());
 				};
 			}
 		}));

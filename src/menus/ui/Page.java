@@ -108,7 +108,7 @@ public abstract class Page extends BasicGameState {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		if (this.hintBlink) {
 			this.hintBlinkCountdown = (this.hintBlinkCountdown + this.hintBlinkPeriod - delta) % this.hintBlinkPeriod;
-		};
+		}
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public abstract class Page extends BasicGameState {
 			context.drawString (this.title, this.titleX - 2, this.titleY - 2);
 			context.setColor (Page.foregroundColor);
 			context.drawString (this.title, this.titleX + 2, this.titleY + 2);
-		};
+		}
 	}
 
 	private void renderSubtitle (GameContainer container, StateBasedGame game, Graphics context) {
@@ -139,7 +139,7 @@ public abstract class Page extends BasicGameState {
 			context.setColor (Page.foregroundColor);
 			context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
 			context.drawString (this.subtitle, this.subtitleX, this.subtitleY);
-		};
+		}
 	}
 
 	private void renderHint (GameContainer container, StateBasedGame game, Graphics context) {
@@ -154,13 +154,13 @@ public abstract class Page extends BasicGameState {
 				int a = 1024 * this.hintBlinkCountdown / this.hintBlinkPeriod - 512;
 				if (a < 0) {
 					a *= -1;
-				};
+				}
 				a -= 128;
 				a = Math.max (Math.min (a, 255), 0);
 				context.setColor (new Color (r, g, b, a));
-			};
+			}
 			context.drawString (this.hint, this.hintX, this.hintY);
-		};
+		}
 	}
 
 	public void setTitle (String title) {

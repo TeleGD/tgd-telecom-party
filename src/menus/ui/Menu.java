@@ -6,10 +6,11 @@ import java.util.List;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.AppGame;
+import general.AppInput;
+import general.AppPlayer;
 import general.utils.FontUtils;
 
 public abstract class Menu extends Page {
@@ -70,45 +71,69 @@ public abstract class Menu extends Page {
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
-		Input input = container.getInput ();
+		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_B, gameMasterID)) {
-			int size = this.menu.size ();
-			if (size == 0) {
-				System.exit (0);
-			} else {
-				this.menu.get (size - 1).itemSelected ();
-			};
-		} else if (input.isKeyPressed (Input.KEY_ENTER) || input.isButtonPressed (AppGame.BUTTON_A, gameMasterID)) {
-			this.menu.get (this.selectedItem).itemSelected ();
-		} else {
-			if (input.isKeyPressed (Input.KEY_DOWN) || input.isControllerDown (gameMasterID)) {
-				if (this.selectedItem < menu.size () - 1) {
-					this.selectedItem++;
-					if (this.selectedItem == this.menuScrollY + this.menuScrollHeight) {
-						this.menuScrollY++;
-					};
-				} else {
-					this.selectedItem = 0;
-   					this.menuScrollY = 0;
-				};
-			};
-			if (input.isKeyPressed (Input.KEY_UP) || input.isControllerUp (gameMasterID)) {
+		AppPlayer gameMaster = appGame.appPlayers.get (0);
+		int gameMasterID = gameMaster.getControllerID ();
+		boolean BUTTON_A = appInput.isKeyDown (AppInput.KEY_ENTER) || appInput.isButtonPressed (AppInput.BUTTON_A, gameMasterID);
+		boolean BUTTON_B = appInput.isKeyDown (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_B, gameMasterID);
+		boolean KEY_UP = appInput.isKeyDown (AppInput.KEY_UP) || appInput.isControllerUp (gameMasterID);
+		boolean KEY_DOWN = appInput.isKeyDown (AppInput.KEY_DOWN) || appInput.isControllerDown (gameMasterID);
+		boolean BUTTON_UP = KEY_UP && !KEY_DOWN;
+		boolean BUTTON_DOWN = KEY_DOWN && !KEY_UP;
+		int gameMasterRecord = gameMaster.getButtonPressedRecord ();
+		if (BUTTON_A == ((gameMasterRecord & AppInput.BUTTON_A) == 0)) {
+			gameMasterRecord ^= AppInput.BUTTON_A;
+			if (BUTTON_A) {
+				int size = this.menu.size ();
+				if (size != 0) {
+					this.menu.get (this.selectedItem).itemSelected ();
+				}
+			}
+		}
+		if (BUTTON_B == ((gameMasterRecord & AppInput.BUTTON_B) == 0)) {
+			gameMasterRecord ^= AppInput.BUTTON_B;
+			if (BUTTON_B) {
+				int size = this.menu.size ();
+				if (size != 0) {
+					this.menu.get (size - 1).itemSelected ();
+				}
+			}
+		}
+		int BIT_UP = 1 << (appInput.getButtonCount () + (AppInput.AXIS_YL << 1));
+		if (BUTTON_UP == ((gameMasterRecord & BIT_UP) == 0)) {
+			gameMasterRecord ^= BIT_UP;
+			if (BUTTON_UP) {
 				if (this.selectedItem > 0) {
 					this.selectedItem--;
 					if (this.selectedItem == this.menuScrollY - 1) {
 						this.menuScrollY--;
-					};
+					}
 				} else {
 					this.selectedItem = menu.size () - 1;
 					this.menuScrollY = menu.size () - this.menuScrollHeight;
-				};
-			};
-		};
+				}
+			}
+		}
+		int BIT_DOWN = 1 << (appInput.getButtonCount () + ((AppInput.AXIS_YL << 1) | 1));
+		if (BUTTON_DOWN == ((gameMasterRecord & BIT_DOWN) == 0)) {
+			gameMasterRecord ^= BIT_DOWN;
+			if (BUTTON_DOWN) {
+				if (this.selectedItem < menu.size () - 1) {
+					this.selectedItem++;
+					if (this.selectedItem == this.menuScrollY + this.menuScrollHeight) {
+						this.menuScrollY++;
+					}
+				} else {
+					this.selectedItem = 0;
+					this.menuScrollY = 0;
+				}
+			}
+		}
+		gameMaster.setButtonPressedRecord (gameMasterRecord);
 		if (this.menuBlink) {
 			this.menuBlinkCountdown = (this.menuBlinkCountdown + this.menuBlinkPeriod - delta) % this.menuBlinkPeriod;
-		};
+		}
 	}
 
 	@Override
@@ -134,10 +159,10 @@ public abstract class Menu extends Page {
 					context.drawString ("<<", this.menuX + this.menuWidth - dx, this.menuY + dy);
 					if (!menuBlink) {
 						context.setColor (Page.foregroundColor);
-					};
-				};
-			};
-		};
+					}
+				}
+			}
+		}
 	}
 
 	public void setMenu (List <MenuItem> menu) {
@@ -151,8 +176,8 @@ public abstract class Menu extends Page {
 			int width = Menu.menuFont.getWidth (item.getContent ());
 			if (width > this.menuWidth) {
 				this.menuWidth = width;
-			};
-		};
+			}
+		}
 		this.menuHeight = this.menuScrollHeight * this.itemHeight;
 		this.menuX = this.menuBoxX + (this.menuBoxWidth - this.menuWidth) / 2;
 		this.menuY = this.menuBoxY + (this.menuBoxHeight - this.menuHeight) / 2;
