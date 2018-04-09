@@ -43,6 +43,8 @@ public class World extends BasicGameState implements Playable{
 	public int width;
 	private int nbJoueursInit;
 	private boolean fin;
+
+	private int slowPlayer;
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -57,6 +59,7 @@ public class World extends BasicGameState implements Playable{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		width=container.getWidth();
 		height=container.getHeight();
+		slowPlayer=0;
 	}
 	
 	@Override
@@ -95,8 +98,12 @@ public class World extends BasicGameState implements Playable{
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			if (!fin) {
-				for (Player p : players) {
-					p.update(container,game,delta);
+				slowPlayer++;
+				if (slowPlayer>7) {
+					slowPlayer=0;
+					for (Player p : players) {
+						p.update(container,game,delta);
+					}
 				}
 				grid.update(container,game,delta);
 				
@@ -112,9 +119,10 @@ public class World extends BasicGameState implements Playable{
 				if (morts.size()>=nbJoueursInit) {
 					music.stop();
 					end.play();
-					players.get(0).addScore(200*morts.size());
-					morts.add(players.get(0));
 					Player tri[] = new Player[morts.size()];
+					for (int i=0; i<morts.size(); i++) {
+						tri[i] = morts.get(i);
+					}
 					for (int i=tri.length-1 ; i>0 ; i--) {
 						for (int j=0; j<i ; j++) {
 							if (tri[j+1].getScore()<tri[j].getScore()) {

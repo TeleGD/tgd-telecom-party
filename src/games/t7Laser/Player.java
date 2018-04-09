@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -64,7 +65,7 @@ public class Player{
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		AppInput input = (AppInput) container.getInput();
+		Input input = container.getInput();
 		moveLeft = input.isControllerLeft(controllerID);
 		moveRight = input.isControllerRight(controllerID);
 		moveUp = input.isControllerUp(controllerID);
