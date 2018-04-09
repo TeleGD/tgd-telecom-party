@@ -8,7 +8,6 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.EmptyImageData;
 import org.newdawn.slick.state.BasicGameState;
@@ -17,6 +16,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.AppGame;
+import general.AppInput;
 import general.Playable;
 import general.utils.FontUtils;
 
@@ -68,10 +68,10 @@ public class World extends BasicGameState implements Playable {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		Input input = container.getInput ();
+		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE) || input.isButtonPressed (AppGame.BUTTON_PLUS, gameMasterID)) {
+		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			if (balls.size() == 0) {

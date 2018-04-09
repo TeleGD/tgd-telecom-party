@@ -17,47 +17,7 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_AZTEC_PYRAMIDS_WORLD = 6;
 	public static final int GAMES_PONG_MULTI_WORLD = 7;
 	public static final int GAMES_KOMTUVE_WORLD = 8;
-
-	@Deprecated
-	public static final int BUTTON_A = 1;
-	@Deprecated
-	public static final int BUTTON_B = 2;
-	@Deprecated
-	public static final int BUTTON_X = 4;
-	@Deprecated
-	public static final int BUTTON_Y = 8;
-	@Deprecated
-	public static final int BUTTON_L = 16;
-	@Deprecated
-	public static final int BUTTON_R = 32;
-	@Deprecated
-	public static final int BUTTON_MINUS = 64;
-	@Deprecated
-	public static final int BUTTON_PLUS = 128;
-	@Deprecated
-	public static final int BUTTON_SL = 256;
-	@Deprecated
-	public static final int BUTTON_SR = 512;
-	// @Deprecated
-	// public static final int BUTTON_ZL = 1024;
-	// @Deprecated
-	// public static final int BUTTON_ZR = 2048;
-	// @Deprecated
-	// public static final int BUTTON_UP = 4096;
-	// @Deprecated
-	// public static final int BUTTON_DOWN = 80192;
-	// @Deprecated
-	// public static final int BUTTON_LEFT = 16384;
-	// @Deprecated
-	// public static final int BUTTON_RIGHT = 32768;
-	@Deprecated
-	public static final int AXIS_YL = 0;
-	@Deprecated
-	public static final int AXIS_XL = 1;
-	@Deprecated
-	public static final int AXIS_YR = 2;
-	@Deprecated
-	public static final int AXIS_XR = 3;
+	public static final int TESTER_WORLD = 9;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -68,7 +28,8 @@ public class AppGame extends StateBasedGame {
 		"Bataille PacMan",
 		"Pyramides aztecs",
 		"Pong multijoueur",
-		"Comme tu veux"
+		"Comme tu veux",
+		"Gamepad Tester"
 	};
 
 	@Deprecated
@@ -99,6 +60,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.aztecPyramids.World (AppGame.GAMES_AZTEC_PYRAMIDS_WORLD));
 		this.addState (new games.pong.World (AppGame.GAMES_PONG_MULTI_WORLD));
 		this.addState (new games.komtuve.World (AppGame.GAMES_KOMTUVE_WORLD));
+		this.addState (new tester.World (AppGame.TESTER_WORLD));
 		container.setShowFPS (false);
 	}
 

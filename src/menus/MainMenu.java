@@ -45,6 +45,14 @@ public class MainMenu extends Menu {
 					game.enterState (AppGame.MENUS_GAMES_MENU);
 				};
 			},
+			new MenuItem (AppGame.TITLES [AppGame.TESTER_WORLD]) {
+				public void itemSelected () {
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					playersMenu.setPreviousID (AppGame.MENUS_MAIN_MENU);
+					playersMenu.setNextID (AppGame.TESTER_WORLD);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU);
+				}
+			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					AppGame appGame = (AppGame) game;

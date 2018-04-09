@@ -100,7 +100,7 @@ public abstract class Menu extends Page {
 				}
 			}
 		}
-		int BIT_UP = 1 << (appInput.getButtonCount () + (AppInput.AXIS_YL << 1));
+		int BIT_UP = 1 << (appInput.getButtonCount (gameMasterID) + (AppInput.AXIS_YL << 1));
 		if (BUTTON_UP == ((gameMasterRecord & BIT_UP) == 0)) {
 			gameMasterRecord ^= BIT_UP;
 			if (BUTTON_UP) {
@@ -115,7 +115,7 @@ public abstract class Menu extends Page {
 				}
 			}
 		}
-		int BIT_DOWN = 1 << (appInput.getButtonCount () + ((AppInput.AXIS_YL << 1) | 1));
+		int BIT_DOWN = 1 << (appInput.getButtonCount (gameMasterID) + ((AppInput.AXIS_YL << 1) | 1));
 		if (BUTTON_DOWN == ((gameMasterRecord & BIT_DOWN) == 0)) {
 			gameMasterRecord ^= BIT_DOWN;
 			if (BUTTON_DOWN) {

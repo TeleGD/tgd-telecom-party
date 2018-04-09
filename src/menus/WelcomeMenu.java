@@ -96,7 +96,7 @@ public class WelcomeMenu extends Page {
 			if (gameMasterID != AppInput.ANY_CONTROLLER) {
 				int colorID = appGame.availableColorIDs.remove (0);
 				String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
-				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name, AppGame.BUTTON_A));
+				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name, AppInput.BUTTON_A));
 				appGame.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
 			}
 		}
