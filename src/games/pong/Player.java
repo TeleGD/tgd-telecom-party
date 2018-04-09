@@ -3,9 +3,9 @@ package games.pong;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.AppInput;
 import general.AppPlayer;
 
 public class Player {
@@ -102,7 +102,7 @@ public class Player {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		Input input = container.getInput();
+		AppInput input = (AppInput) container.getInput();
 		if (id==0 || id==1) {
 			toucheGauche= input.isControllerUp(controllerID);
 			toucheDroite= input.isControllerDown(controllerID);
