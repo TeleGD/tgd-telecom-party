@@ -56,6 +56,14 @@ public class GamesMenu extends Menu {
 					game.enterState (AppGame.GAMES_KOMTUVE_WORLD);
 				}
 			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_T7LASER_WORLD]) {
+				public void itemSelected () {
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
+					playersMenu.setNextID (AppGame.GAMES_T7LASER_WORLD);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU);
+				}
+			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					game.enterState (AppGame.MENUS_MAIN_MENU);

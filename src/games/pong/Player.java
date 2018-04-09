@@ -5,8 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.AppPlayer;
 import general.AppInput;
+import general.AppPlayer;
 
 public class Player {
 
