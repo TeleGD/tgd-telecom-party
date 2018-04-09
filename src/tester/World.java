@@ -26,14 +26,14 @@ public class World extends BasicGameState implements Playable {
 		AppGame appGame = (AppGame) game;
 		AppPlayer gameMaster = appGame.appPlayers.get (0);
 		int gameMasterID = gameMaster.getControllerID ();
-		for (int i = 0, l = appInput.getButtonCount (gameMasterID); i < l; i++) {
-			if (appInput.isButtonPressed (1 << i, gameMasterID)) {
-				System.out.println ("isButtonPressed: " + i);
-			}
-		}
 		for (int i = 0, l = appInput.getControlCount (gameMasterID); i < l; i++) {
 			if (appInput.isControlPressed (1 << i, gameMasterID)) {
 				System.out.println ("isControlPressed: " + i);
+			}
+		}
+		for (int i = 0, l = appInput.getButtonCount (gameMasterID); i < l; i++) {
+			if (appInput.isButtonPressed (1 << i, gameMasterID)) {
+				System.out.println ("isButtonPressed: " + i);
 			}
 		}
 		for (int i = 0, l = appInput.getAxisCount (gameMasterID); i < l; i++) {
@@ -42,7 +42,7 @@ public class World extends BasicGameState implements Playable {
 				System.out.println ("getAxisValue: " + i + " -> " + j);
 			}
 		}
-		appInput.clearControlPressedRecord ();
+		// appInput.clearControlPressedRecord ();
 	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {}

@@ -3,10 +3,10 @@ package games.pong;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.AppPlayer;
+import general.AppInput;
 
 public class Player {
 
@@ -102,13 +102,13 @@ public class Player {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		Input input = container.getInput();
-		if (id==0 || id==1) {
-			toucheGauche= input.isControllerUp(controllerID);
-			toucheDroite= input.isControllerDown(controllerID);
+		AppInput appInput = (AppInput) container.getInput ();
+		if (id == 0 || id == 1) {
+			toucheGauche= appInput.isControllerUp(controllerID);
+			toucheDroite= appInput.isControllerDown(controllerID);
 		} else if (id==2||id==3) {
-			toucheGauche= input.isControllerLeft(controllerID);
-			toucheDroite= input.isControllerRight(controllerID);
+			toucheGauche= appInput.isControllerLeft(controllerID);
+			toucheDroite= appInput.isControllerRight(controllerID);
 		}
 		this.move(delta);
 	}
@@ -128,7 +128,7 @@ public class Player {
 	}
 
 	public void move(int delta) {
-		if (toucheGauche && (id==2 | id==3)) {
+		if (toucheGauche && (id==2 || id==3)) {
 			if (barPosMove-longueurBarre/2-speed*delta*0.1 < milieu[0] - taille/2 + 20 ) {
 				barPosMove=milieu[0]-taille/2+20+longueurBarre/2;
 			} else {

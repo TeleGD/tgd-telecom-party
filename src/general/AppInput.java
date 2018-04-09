@@ -66,6 +66,26 @@ public class AppInput extends Input {
 	}
 
 	@Override
+	public boolean isControllerUp (int controller) {
+		return super.isControllerUp (controller) && !super.isControllerDown (controller);
+	}
+
+	@Override
+	public boolean isControllerDown (int controller) {
+		return super.isControllerDown (controller) && !super.isControllerUp (controller);
+	}
+
+	@Override
+	public boolean isControllerLeft (int controller) {
+		return super.isControllerLeft (controller) && !super.isControllerRight (controller);
+	}
+
+	@Override
+	public boolean isControllerRight (int controller) {
+		return super.isControllerRight (controller) && !super.isControllerLeft (controller);
+	}
+
+	@Override
 	public boolean isButtonPressed (int buttons, int controller) {
 		if (this.pollFlag) {
 			try {
@@ -93,22 +113,22 @@ public class AppInput extends Input {
 			} else if ((buttons & 1) != 0) {
 				switch (i) {
 					case 12:
-						if (super.isControllerUp (controller)) {
+						if (this.isControllerUp (controller)) {
 							return true;
 						}
 						break;
 					case 13:
-						if (super.isControllerDown (controller)) {
+						if (this.isControllerDown (controller)) {
 							return true;
 						}
 						break;
 					case 14:
-						if (super.isControllerLeft (controller)) {
+						if (this.isControllerLeft (controller)) {
 							return true;
 						}
 						break;
 					case 15:
-						if (super.isControllerRight (controller)) {
+						if (this.isControllerRight (controller)) {
 							return true;
 						}
 						break;
@@ -187,6 +207,7 @@ public class AppInput extends Input {
 		return AppInput.BUTTON_COUNT;
 	}
 
+	@Override
 	public String getAxisName (int axis, int controller) {
 		try {
 			if (axis < AppInput.AXIS_COUNT) {
@@ -196,6 +217,7 @@ public class AppInput extends Input {
 		return "";
 	}
 
+	@Override
 	public float getAxisValue (int axis, int controller) {
 		try {
 			if (axis < AppInput.AXIS_COUNT) {
@@ -205,10 +227,12 @@ public class AppInput extends Input {
 		return 0;
 	}
 
+	@Override
 	public int getAxisCount (int controller) {
 		return AppInput.AXIS_COUNT;
 	}
 
+	@Override
 	public void clearControlPressedRecord () {
 		super.clearControlPressedRecord ();
 		for (int i = 0, l = this.getControllerCount (); i < l; i++) {
