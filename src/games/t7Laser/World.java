@@ -54,18 +54,14 @@ public class World extends BasicGameState implements Playable{
 	}	
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		width=container.getWidth();
+		height=container.getHeight();
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		fin = false;
-		music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
-		end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
-		cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
-		music.loop();
-		
+		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps	
 		
 	}
 
@@ -113,7 +109,7 @@ public class World extends BasicGameState implements Playable{
 					}
 				}
 				
-				if (morts.size()==nbJoueursInit-1) {
+				if (morts.size()>=nbJoueursInit) {
 					music.stop();
 					end.play();
 					players.get(0).addScore(200*morts.size());
@@ -154,8 +150,13 @@ public class World extends BasicGameState implements Playable{
 	@Override
 	public void initPlayers(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
+		fin = false;
 		try {
 			grid = new Grid(this,4,4);
+			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
+			end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
+			cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
+			music.loop();
 		} catch (SlickException e1) {
 			e1.printStackTrace();
 		}
@@ -167,7 +168,7 @@ public class World extends BasicGameState implements Playable{
 		int h = grid.getRows ();
 		for (int i = 0; i < nbJoueursInit; i++) {
 		    try {
-				this.players.add (new Player (this, (-i >> 1 & 1) * w, (i & 1) * h, appGame.appPlayers.get (i)));
+				this.players.add (new Player (this, (-i >> 1 & 1) * w, (i & 1) * h, i, appGame.appPlayers.get(i)));
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}

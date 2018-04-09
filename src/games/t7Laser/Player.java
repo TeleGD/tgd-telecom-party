@@ -31,14 +31,15 @@ public class Player{
 	private Color couleur;
 	private String name;
 	
-	public Player(World world, int x, int y, AppPlayer appPlayer) throws SlickException{
+	public Player(World world, int x, int y, int i, AppPlayer appPlayer) throws SlickException{
 		//position initiale
 		controllerID = appPlayer.getControllerID ();
 		this.couleur= AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
 		this.name= appPlayer.getName();
+		this.w=world;
 		this.x = x;
 		this.y = y;
-		w.getGrid().getCell(x,y).setContains(w.getPlayers().indexOf(this));
+		w.getGrid().getCell(x,y).setContains(i);
 		this.score=0;
 		this.setImage(new Image(World.DIRECTORY_IMAGES+"Char_down.png"));
 		this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
@@ -46,7 +47,6 @@ public class Player{
 		this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
 		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
 	}
-	
 	
 	public Color getCouleur() {
 		return couleur;
