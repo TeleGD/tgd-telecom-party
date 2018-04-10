@@ -65,7 +65,7 @@ public class Player{
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		Input input = container.getInput();
+		AppInput input = (AppInput) container.getInput();
 		moveLeft = input.isControllerLeft(controllerID);
 		moveRight = input.isControllerRight(controllerID);
 		moveUp = input.isControllerUp(controllerID);

@@ -41,7 +41,7 @@ public class Grid {
 				grid[i][j] = new Cell(world, i,j,-1,false);
 		
 		laserList = new LinkedList<Laser>();
-		laserTimer = 1;
+		laserTimer = 100;
 		waveTimer = 200;
 		waveNumber = 0;
 		

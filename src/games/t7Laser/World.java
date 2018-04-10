@@ -99,7 +99,7 @@ public class World extends BasicGameState implements Playable{
 		} else {
 			if (!fin) {
 				slowPlayer++;
-				if (slowPlayer>7) {
+				if (slowPlayer>5) {
 					slowPlayer=0;
 					for (Player p : players) {
 						p.update(container,game,delta);
@@ -111,7 +111,7 @@ public class World extends BasicGameState implements Playable{
 					if (players.get(i).getLives()==0) {
 						players.get(i).addScore(200*morts.size());
 						morts.add(players.get(i));
-						// enlever le joueur du plateau
+						grid.getCell(players.get(i).getX(), players.get(i).getY()).setContains(-1);
 						players.remove(i);
 					}
 				}
