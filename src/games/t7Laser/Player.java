@@ -26,7 +26,7 @@ public class Player{
 	private int score;
 	private int lives = 1;
 	
-	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
+	private boolean moveLeft,moveRight,moveUp,moveDown=false;
 	private int controllerID;
 	private Color couleur;
 	private String name;

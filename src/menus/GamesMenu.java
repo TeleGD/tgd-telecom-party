@@ -27,8 +27,8 @@ public class GamesMenu extends Menu {
 	public void init (GameContainer container, StateBasedGame game) {
 		super.initSize (container, game, 600, 400);
 		super.init (container, game);
-		this.setTitle ("INSERER TITRE ICI");
-		this.setSubtitle ("INSERER SOUS-TITRE ICI");
+		this.setTitle ("MINI JEUX");
+		this.setSubtitle ("CHOISISSEZ UN MINI JEU");
 		this.setMenu (Arrays.asList (new MenuItem [] {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_BATTLE_WORLD]) {
 				public void itemSelected () {
@@ -61,6 +61,14 @@ public class GamesMenu extends Menu {
 					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
 					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
 					playersMenu.setNextID (AppGame.GAMES_T7LASER_WORLD);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU);
+				}
+			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_SNAKE_WORLD]) {
+				public void itemSelected () {
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
+					playersMenu.setNextID (AppGame.GAMES_SNAKE_WORLD);
 					game.enterState (AppGame.MENUS_PLAYERS_MENU);
 				}
 			},

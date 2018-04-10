@@ -121,7 +121,7 @@ public class World extends BasicGameState implements Playable {
 			}
 			if (nbJoueurs<1) {
 				System.out.println("Partie terminée");
-				System.exit(0);
+				game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 			}
 			for (Ball b : balls) {
 				b.update(container, game, delta);

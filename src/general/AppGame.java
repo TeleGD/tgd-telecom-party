@@ -18,7 +18,8 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_PONG_MULTI_WORLD = 7;
 	public static final int GAMES_KOMTUVE_WORLD = 8;
 	public static final int GAMES_T7LASER_WORLD =9;
-	public static final int TESTER_WORLD = 10;
+	public static final int GAMES_SNAKE_WORLD = 10;
+	public static final int TESTER_WORLD = 11;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -31,6 +32,7 @@ public class AppGame extends StateBasedGame {
 		"Pong multijoueur",
 		"Comme tu veux",
 		"T7Laser Remake",
+		"Snake",
 		"Gamepad Tester"
 	};
 
@@ -63,6 +65,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.pong.World (AppGame.GAMES_PONG_MULTI_WORLD));
 		this.addState (new games.komtuve.World (AppGame.GAMES_KOMTUVE_WORLD));
 		this.addState (new games.t7Laser.World (AppGame.GAMES_T7LASER_WORLD));
+		this.addState (new games.snake.World (AppGame.GAMES_SNAKE_WORLD));
 		this.addState (new tester.World (AppGame.TESTER_WORLD));
 		container.setShowFPS (false);
 	}
