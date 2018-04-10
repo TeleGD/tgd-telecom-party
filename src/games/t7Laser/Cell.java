@@ -114,7 +114,7 @@ public class Cell {
 			w.getPlayers().get(contains).addScore(77);
 			w.getGrid().getCell(x, y).setHasBonus(false);
 			w.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
-			w.cat.play();
+			World.cat.play();
 		}
 			
 	}

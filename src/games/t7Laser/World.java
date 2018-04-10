@@ -34,17 +34,27 @@ public class World extends BasicGameState implements Playable{
 	
 	private List<Player> players;
 	private List<Player> morts;
-	private Grid grid;
-	private Music music;
-	private Music end;
-	Sound cat;	
+	private static Grid grid;
+	private static Music music;
+	private static Music end;
+	static Sound cat;
+	
+	static {
+		try {
+			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
+			end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
+			cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private float renderScale = 1;
 	public int height;
 	public int width;
 	private int nbJoueursInit;
 	private boolean fin;
-
-	private int slowPlayer;
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -59,13 +69,12 @@ public class World extends BasicGameState implements Playable{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		width=container.getWidth();
 		height=container.getHeight();
-		slowPlayer=0;
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps	
-		
+		music.loop();
 	}
 
 	@Override
@@ -98,12 +107,8 @@ public class World extends BasicGameState implements Playable{
 			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			if (!fin) {
-				slowPlayer++;
-				if (slowPlayer>5) {
-					slowPlayer=0;
-					for (Player p : players) {
-						p.update(container,game,delta);
-					}
+				for (Player p : players) {
+					p.update(container,game,delta);
 				}
 				grid.update(container,game,delta);
 				
@@ -161,10 +166,6 @@ public class World extends BasicGameState implements Playable{
 		fin = false;
 		try {
 			grid = new Grid(this,4,4);
-			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
-			end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
-			cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
-			music.loop();
 		} catch (SlickException e1) {
 			e1.printStackTrace();
 		}
