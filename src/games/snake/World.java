@@ -1,11 +1,14 @@
 package games.snake;
 
 import general.AppGame;
+import general.AppInput;
 import general.Playable;
 import general.utils.FontUtils;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.Random;
 import java.util.ArrayList;
@@ -102,12 +105,12 @@ public class World extends BasicGameState implements Playable {
 
         if(jeuTermine){
             g.setColor(Color.black);
-            g.fillRoundRect(longueur/2-75,hauteur/2-50,150,100,20);
+            g.fillRoundRect(longueur/2-75-widthBandeau/2,hauteur/2-50,150,100,20);
             g.setColor(Color.white);
-            g.fillRoundRect(longueur/2-75+4,hauteur/2-50+4,150-8,92,20);
+            g.fillRoundRect(longueur/2-75+4-widthBandeau/2,hauteur/2-50+4,150-8,92,20);
             g.setColor(Color.black);
             g.setFont(font);
-            g.drawString("Perdu !", longueur/2-30,hauteur/2-30);
+            g.drawString("Fin du jeu", longueur/2-42-widthBandeau/2,hauteur/2-15);
         }
 
         for(int i=0;i<snakes.size();i++){
@@ -117,38 +120,46 @@ public class World extends BasicGameState implements Playable {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-    	if(!jeuTermine){
-    	   	jeuTermine = isFini();
-           	addBonus();
-           	for(int i=0;i<snakes.size();i++) {
-                Snake snake = snakes.get(i);
-
-                snake.GScore(1);
-                snake.update(container, game, delta);
-
-                for (int j = 0; j < bonus.size(); j++) {
-                	bonus.get(j).update(container, game, delta);
-                    if (!snakes.get(i).mort) {
-                        if (bonus.get(j).isInBonus(snakes.get(i).body.get(0))) {
-                            applyBonus(bonus.get(j), snakes.get(i));
-                            bonus.remove(j);
-                            j--;
-                        }
-                    }
-                }
-
-                for (int j = 0; j < snakes.size(); j++) {
-
-                    if (j != i) {
-                        if (!snakes.get(i).mort) {
-                            if (collide(snake.body.get(0), snakes.get(j),false)) {
-                                snake.meurt();
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    	AppInput appInput = (AppInput) container.getInput ();
+		AppGame appGame = (AppGame) game;
+		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
+		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
+			soundMusicBackground.stop();
+			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+		} else {
+	    	if(!jeuTermine){
+	    	   	jeuTermine = isFini();
+	           	addBonus();
+	           	for(int i=0;i<snakes.size();i++) {
+	                Snake snake = snakes.get(i);
+	
+	                snake.GScore(1);
+	                snake.update(container, game, delta);
+	
+	                for (int j = 0; j < bonus.size(); j++) {
+	                	bonus.get(j).update(container, game, delta);
+	                    if (!snakes.get(i).mort) {
+	                        if (bonus.get(j).isInBonus(snakes.get(i).body.get(0))) {
+	                            applyBonus(bonus.get(j), snakes.get(i));
+	                            bonus.remove(j);
+	                            j--;
+	                        }
+	                    }
+	                }
+	
+	                for (int j = 0; j < snakes.size(); j++) {
+	
+	                    if (j != i) {
+	                        if (!snakes.get(i).mort) {
+	                            if (collide(snake.body.get(0), snakes.get(j),false)) {
+	                                snake.meurt();
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	    	}
+	    }
     }
 
     private void applyBonus(Bonus bonus, Snake snake ) {
@@ -211,7 +222,7 @@ public class World extends BasicGameState implements Playable {
 		int nJoueur = appGame.appPlayers.size();
 		longueur = container.getWidth();
         hauteur = container.getHeight();
-        nbcasesh = longueur/10;
+        nbcasesh = hauteur/10;
         nbcasesl = longueur/10;
         widthBandeau = longueur-1000;
 		this.snakes = new ArrayList<Snake>();

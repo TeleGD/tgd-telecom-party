@@ -36,7 +36,7 @@ public class Snake {
 		this.couleur = AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
 		this.controllerID = appPlayer.getControllerID();
 		this.w=world;
-		this.dir = 0;
+		this.dir = 2;
 		this.body = new ArrayList<Point>();
 		this.nom = appPlayer.getName();
 		this.score = 0;
@@ -67,9 +67,8 @@ public class Snake {
 		if (body.size()!=0){
 			if ((moveRight && !inverse) || (moveLeft && inverse)) {
 				dir = (dir+1) % 4;
-			}
-			if ((moveRight && inverse) || (moveLeft && !inverse)) {
-	            dir = (dir-1) % 4;
+			} else if ((moveRight && inverse) || (moveLeft && !inverse)) {
+	            dir = (dir+3) % 4;
 	        }
 			
 			Point ajout = null;
@@ -195,7 +194,7 @@ public class Snake {
 		while(compteur >= 15){
 			move();
 			moveLeft=false;
-			moveRight=true;
+			moveRight=false;
 			compteur -=15;
 		}
 	}	
