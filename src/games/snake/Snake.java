@@ -36,7 +36,7 @@ public class Snake {
 		this.couleur = AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
 		this.controllerID = appPlayer.getControllerID();
 		this.w=world;
-		this.dir = 2;
+		this.dir = 0;
 		this.body = new ArrayList<Point>();
 		this.nom = appPlayer.getName();
 		this.score = 0;
@@ -46,7 +46,7 @@ public class Snake {
 		this.invincible = 0;
 		this.horizontal=w.longueur/w.nbcasesl;
 		this.vertical=w.hauteur/w.nbcasesh;
-		for (int i = 0;i<10;i++){
+		for (int i = 10;i>0;i--){
 			body.add(new Point(x_init,(w.nbcasesh-i)));
 		}
 	}

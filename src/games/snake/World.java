@@ -12,6 +12,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class World extends BasicGameState implements Playable {
 	
@@ -24,8 +25,8 @@ public class World extends BasicGameState implements Playable {
 
     private float widthBandeau;
     private ArrayList<Bonus> bonus;
-
     private ArrayList<Snake> snakes;
+    private ArrayList<Snake> morts;  
 
     private TrueTypeFont font = FontUtils.loadSystemFont("Arial", java.awt.Font.BOLD,20);
 
@@ -101,22 +102,26 @@ public class World extends BasicGameState implements Playable {
         g.fillRect(longueur-widthBandeau+6,60,widthBandeau,5);
         g.resetFont();
 
-
-
         if(jeuTermine){
             g.setColor(Color.black);
-            g.fillRoundRect(longueur/2-75-widthBandeau/2,hauteur/2-50,150,100,20);
+            g.fillRoundRect(longueur/2-75-widthBandeau/2,hauteur/2-50,
+            		150,100,20);
             g.setColor(Color.white);
             g.fillRoundRect(longueur/2-75+4-widthBandeau/2,hauteur/2-50+4,150-8,92,20);
             g.setColor(Color.black);
             g.setFont(font);
             g.drawString("Fin du jeu", longueur/2-42-widthBandeau/2,hauteur/2-15);
+            for(int i=0;i<morts.size();i++){
+                g.setColor(morts.get(i).couleur);
+                g.drawString(morts.get(i).nom+" : "+morts.get(i).score,longueur-widthBandeau+20,100+50*i+20);
+            }
+        } else {
+        	for(int i=0;i<snakes.size();i++){
+                g.setColor(snakes.get(i).couleur);
+                g.drawString(snakes.get(i).nom+" : "+snakes.get(i).score,longueur-widthBandeau+20,100+50*i+20);
+            }
         }
 
-        for(int i=0;i<snakes.size();i++){
-            g.setColor(snakes.get(i).couleur);
-            g.drawString(snakes.get(i).nom+" : "+snakes.get(i).score,longueur-widthBandeau+20,100+50*i+20);
-        }
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -158,6 +163,25 @@ public class World extends BasicGameState implements Playable {
 	                    }
 	                }
 	            }
+	    	}
+	    	if (jeuTermine && morts==null) {
+	    		for(int i=0;i<snakes.size();i++){
+	                if(!snakes.get(i).mort)snakes.get(i).GScore(200);
+	            }
+	    		Snake tri[] = new Snake[snakes.size()];
+				for (int i=0; i<snakes.size(); i++) {
+					tri[i] = snakes.get(i);
+				}
+				for (int i=tri.length-1 ; i>0 ; i--) {
+					for (int j=0; j<i ; j++) {
+						if (tri[j+1].score<tri[j].score) {
+							Snake tmp = tri[j+1];
+							tri[j+1] = tri[j];
+							tri[j]=tmp;
+						}
+					}
+				}
+				morts = new ArrayList<Snake>(Arrays.asList(tri));
 	    	}
 	    }
     }
