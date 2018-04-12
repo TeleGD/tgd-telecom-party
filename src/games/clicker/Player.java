@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Player {
+
 	private String name;
 	private Color color;
 	private int controllerId;
@@ -31,14 +32,26 @@ public class Player {
 		// TODO Auto-generated method stub
 		multi = 0;
 		AppInput appInput = (AppInput) container.getInput();
-		multi += appInput.isButtonPressed(AppInput.BUTTON_A,controllerId) ? 1:0;
-		multi += appInput.isButtonPressed(AppInput.BUTTON_B,controllerId) ? 1:0;
-		multi += appInput.isButtonPressed(AppInput.BUTTON_X,controllerId) ? 1:0;
-		multi += appInput.isButtonPressed(AppInput.BUTTON_Y,controllerId) ? 1:0;
-		if (multi >= 3){
+		multi += appInput.isControlPressed(AppInput.BUTTON_A,controllerId) ? 1:0;
+		multi += appInput.isControlPressed(AppInput.BUTTON_B,controllerId) ? 1:0;
+		multi += appInput.isControlPressed(AppInput.BUTTON_X,controllerId) ? 1:0;
+		multi += appInput.isControlPressed(AppInput.BUTTON_Y,controllerId) ? 1:0;
+		if (multi >= 3 ){
 			score -= 5;
 		} else if (multi == 1){
 			score += multi;
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public int getScore() {
+		return score;
 	}
 }
