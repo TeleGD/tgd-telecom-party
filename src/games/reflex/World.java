@@ -15,7 +15,7 @@ import general.Playable;
 public class World extends BasicGameState implements Playable {
 
 	private int ID;
-	public final static int GOAL=20;
+	protected final static int GOAL=20;
 	private ArrayList<Player> players;
 
 	public World (int ID) {
@@ -38,13 +38,15 @@ public class World extends BasicGameState implements Playable {
 			p.render(container, game, context);
 			context.setBackground(Color.lightGray);
 			context.setColor(Color.black);
-			context.drawRect(0, 550, 1280, 170);
+			context.fillRect(0, 550, 1280, 170);
 		}
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		// TODO Auto-generated method stub
+		for (Player p:players) {
+			p.update(container, game, delta);
+		}
 
 	}
 
