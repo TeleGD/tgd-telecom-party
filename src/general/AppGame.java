@@ -19,7 +19,8 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_KOMTUVE_WORLD = 8;
 	public static final int GAMES_T7LASER_WORLD =9;
 	public static final int GAMES_SNAKE_WORLD = 10;
-	public static final int TESTER_WORLD = 11;
+	public static final int GAMES_CLICKER_WORLD = 11;
+	public static final int TESTER_WORLD = 12;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -33,6 +34,7 @@ public class AppGame extends StateBasedGame {
 		"Comme tu veux",
 		"T7Laser Remake",
 		"Snake",
+		"Clicker",
 		"Gamepad Tester"
 	};
 
