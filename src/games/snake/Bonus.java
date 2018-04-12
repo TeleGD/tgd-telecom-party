@@ -136,7 +136,7 @@ public class Bonus {
 	}
 	
 	private String imagePath(){
-		String path = "images/Snake/";
+		String path = World.DIRECTORY_IMAGES;
 		switch(type){
 		case bGrandis:
 			path+="Grand";
