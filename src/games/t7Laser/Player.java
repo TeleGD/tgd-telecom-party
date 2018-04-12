@@ -34,7 +34,7 @@ public class Player{
 	public Player(World world, int x, int y, int i, AppPlayer appPlayer) throws SlickException{
 		//position initiale
 		controllerID = appPlayer.getControllerID ();
-		this.couleur= AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
+		this.couleur= AppPlayer.FILL_COLORS[appPlayer.getColorID()];
 		this.name= appPlayer.getName();
 		this.w=world;
 		this.x = x;

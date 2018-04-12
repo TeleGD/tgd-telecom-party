@@ -33,7 +33,7 @@ public class Snake {
 	
 	
 	public Snake(World world, int x_init, AppPlayer appPlayer) {
-		this.couleur = AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
+		this.couleur = AppPlayer.FILL_COLORS[appPlayer.getColorID()];
 		this.controllerID = appPlayer.getControllerID();
 		this.w=world;
 		this.dir = 0;
