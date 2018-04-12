@@ -111,7 +111,7 @@ public class World extends BasicGameState implements Playable {
             g.setColor(Color.black);
             g.setFont(font);
             g.drawString("Fin du jeu", longueur/2-42-widthBandeau/2,hauteur/2-15);
-            for(int i=0;i<morts.size();i++){
+            for(int i=morts.size()-1; i>=0 ;i--){
                 g.setColor(morts.get(i).couleur);
                 g.drawString(morts.get(i).nom+" : "+morts.get(i).score,longueur-widthBandeau+20,100+50*i+20);
             }
@@ -164,7 +164,7 @@ public class World extends BasicGameState implements Playable {
 	                }
 	            }
 	    	}
-	    	if (jeuTermine && morts==null) {
+	    	if (jeuTermine && morts.size()==0) {
 	    		for(int i=0;i<snakes.size();i++){
 	                if(!snakes.get(i).mort)snakes.get(i).GScore(200);
 	            }
@@ -250,6 +250,7 @@ public class World extends BasicGameState implements Playable {
         nbcasesl = longueur/10;
         widthBandeau = longueur-1000;
 		this.snakes = new ArrayList<Snake>();
+		this.morts = new ArrayList<Snake>();
 		for (int i=0 ; i<nJoueur ; i++) {
 			snakes.add(new Snake(this, (100-nJoueur)/(nJoueur+1) + i*((100-nJoueur)/(nJoueur+1)+1), appGame.appPlayers.get(i)));
 		}
