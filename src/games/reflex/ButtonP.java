@@ -39,11 +39,12 @@ public class ButtonP extends Button {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		g.setColor(color.brighter((float) 0.5));
-		g.fillOval(x, y, radius, radius);
+		g.setFont(World.BUTTON_FONT);
 		g.setColor(color);
+		g.fillOval(x, y, radius, radius);
+		g.setColor(color.darker((float) 0.5));
 		g.drawOval(x, y, radius, radius);
-		g.drawString(letter,x ,y);
+		g.drawString(letter,x+8 ,y+5);
 	}
 
 }
