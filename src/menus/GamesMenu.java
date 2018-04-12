@@ -80,6 +80,14 @@ public class GamesMenu extends Menu {
 					game.enterState (AppGame.MENUS_PLAYERS_MENU);
 				}
 			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_REFLEX_WORLD]) {
+				public void itemSelected () {
+					PlayersMenu playersMenu = (PlayersMenu) game.getState (AppGame.MENUS_PLAYERS_MENU);
+					playersMenu.setPreviousID (AppGame.MENUS_GAMES_MENU);
+					playersMenu.setNextID (AppGame.GAMES_REFLEX_WORLD);
+					game.enterState (AppGame.MENUS_PLAYERS_MENU);
+				}
+			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					game.enterState (AppGame.MENUS_MAIN_MENU);

@@ -10,6 +10,11 @@ import general.Playable;
 
 public class World extends BasicGameState implements Playable{
 
+
+	public World(int gamesClickerWorld) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub

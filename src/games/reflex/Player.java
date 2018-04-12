@@ -19,13 +19,15 @@ public class Player {
 	private Color color;
 	private Image image;
 	private Random rand;
+	private int controllerID;
 
 	public Player(AppPlayer appPlayer, int n, int i) {
 		state=0;
+		this.controllerID = appPlayer.getControllerID();
 		rand = new Random();
 		pos=1280*(2*i+1)/(2*n);
 		try {
-			image = new Image("image/reflex/p"+rand.nextInt(nbImages)+".png");
+			image = new Image("images/reflex/p"+rand.nextInt(nbImages)+".png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

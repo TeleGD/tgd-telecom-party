@@ -20,7 +20,8 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_T7LASER_WORLD =9;
 	public static final int GAMES_SNAKE_WORLD = 10;
 	public static final int GAMES_CLICKER_WORLD = 11;
-	public static final int TESTER_WORLD = 12;
+	public static final int GAMES_REFLEX_WORLD = 12;
+	public static final int TESTER_WORLD = 13;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -35,6 +36,7 @@ public class AppGame extends StateBasedGame {
 		"T7Laser Remake",
 		"Snake",
 		"Clicker",
+		"Reflex",
 		"Gamepad Tester"
 	};
 
@@ -68,6 +70,8 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.komtuve.World (AppGame.GAMES_KOMTUVE_WORLD));
 		this.addState (new games.t7Laser.World (AppGame.GAMES_T7LASER_WORLD));
 		this.addState (new games.snake.World (AppGame.GAMES_SNAKE_WORLD));
+		this.addState (new games.clicker.World (AppGame.GAMES_CLICKER_WORLD));
+		this.addState (new games.reflex.World (AppGame.GAMES_REFLEX_WORLD));
 		this.addState (new tester.World (AppGame.TESTER_WORLD));
 		container.setShowFPS (false);
 	}
