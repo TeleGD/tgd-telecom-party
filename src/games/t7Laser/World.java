@@ -90,7 +90,7 @@ public class World extends BasicGameState implements Playable{
 			}
 		} else {
 			g.setColor(Color.black);
-			for (int i=0; i<morts.size();i++) {
+			for (int i=morts.size()-1; i>=0;i--) {
 				g.setColor(morts.get(i).getCouleur());
 				String s = morts.get(i).getName()+" : "+morts.get(i).getScore();
 				g.drawString(s,width/2-Font.getWidth(s)/2,height/2-(Font.getHeight(s)+5)*(nbJoueursInit/2-i));
@@ -179,7 +179,7 @@ public class World extends BasicGameState implements Playable{
 		int h = grid.getRows ();
 		for (int i = 0; i < nbJoueursInit; i++) {
 		    try {
-				this.players.add (new Player (this, (-i >> 1 & 1) * w, (i & 1) * h, i, appGame.appPlayers.get(i)));
+				this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
