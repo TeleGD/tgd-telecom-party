@@ -52,13 +52,16 @@ public class World extends BasicGameState implements Playable{
 		} else {
 			if (nbJoueursInit > 2){
 				context.setColor(Color.white);
-				context.drawRect(marge,marge,width/2-2*marge,height/2-2*marge);
-				context.drawRect(marge+width/2,marge,width/2-2*marge,height/2-2*marge);
-				context.drawRect(marge,marge+height/2,width/2-2*marge,height/2-2*marge);
-				context.drawRect(marge+width/2,marge+height/2,width/2-2*marge,height/2-2*marge);
+				context.fillRect(0,0,width,height);
+				context.setColor(Color.black);
+				context.fillRect(marge,marge,width/2-2*marge,height/2-2*marge);
+				context.fillRect(marge+width/2,marge,width/2-2*marge,height/2-2*marge);
+				context.fillRect(marge,marge+height/2,width/2-2*marge,height/2-2*marge);
+				context.fillRect(marge+width/2,marge+height/2,width/2-2*marge,height/2-2*marge);
+				context.setColor(Color.white);
 				context.drawRect(width/2-width/6,height/2-height/6,width/3,height/3);
 				context.setColor(Color.black);
-				context.fillRect(width/2-width/6+1,height/2-height/6+1,width/3-2,height/3-2);
+				context.fillRect(width/2-width/6+1,height/2-height/6+1,width/3-1,height/3-1);
 				if (nbJoueursInit == 3){
 					//lucas.draw in bottom corner
 				}
@@ -71,11 +74,14 @@ public class World extends BasicGameState implements Playable{
 				}
 			} else {
 				context.setColor(Color.white);
-				context.drawRect(marge,marge,width/2-2*marge,height-2*marge);
-				context.drawRect(marge+width/2,marge,width/2-2*marge,height-2*marge);
+				context.fillRect(0,0,width,height);
+				context.setColor(Color.black);
+				context.fillRect(marge,marge,width/2-2*marge,height-2*marge);
+				context.fillRect(marge+width/2,marge,width/2-2*marge,height-2*marge);
+				context.setColor(Color.white);
 				context.drawRect(width/2-width/6,height/2-height/6,width/3,height/3);
 				context.setColor(Color.black);
-				context.fillRect(width/2-width/6+1,height/2-height/6+1,width/3-2,height/3-2);
+				context.fillRect(width/2-width/6+1,height/2-height/6+1,width/3-1,height/3-1);
 				for (int i = 0; i < nbJoueursInit; i++){
 					context.setColor(players.get(i).getColor());
 					String s = players.get(i).getName() + " : " + players.get(i).getScore();
