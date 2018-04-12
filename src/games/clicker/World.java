@@ -9,9 +9,10 @@ import general.Playable;
 
 public class World extends BasicGameState implements Playable{
 
-
-	public World(int gamesClickerWorld) {
-		// TODO Auto-generated constructor stub
+	private final int ID;
+	
+	public World(int id) {
+		this.ID=id;
 	}
 
 	@Override
@@ -40,8 +41,7 @@ public class World extends BasicGameState implements Playable{
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ID;
 	}
 
 }

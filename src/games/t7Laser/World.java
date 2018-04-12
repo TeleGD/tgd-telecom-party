@@ -26,7 +26,7 @@ public class World extends BasicGameState implements Playable{
 
 	private int ID;
 	
-	public final static String GAME_FOLDER_NAME="T7Laser";
+	public final static String GAME_FOLDER_NAME="t7Laser";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;

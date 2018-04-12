@@ -4,13 +4,21 @@ import general.AppGame;
 import general.AppInput;
 import general.Playable;
 import general.utils.FontUtils;
-import org.newdawn.slick.*;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.Random;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,8 +36,12 @@ public class World extends BasicGameState implements Playable {
     private ArrayList<Snake> snakes;
     private ArrayList<Snake> morts;  
 
-    private TrueTypeFont font = FontUtils.loadSystemFont("Arial", java.awt.Font.BOLD,20);
-
+    public final static String GAME_FOLDER_NAME="snake";
+	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public static final TrueTypeFont Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 20, true);
+	
 	private boolean jeuTermine;
 
     static Sound sonMouette;
@@ -44,15 +56,15 @@ public class World extends BasicGameState implements Playable {
     
     static {
     	try {
-	    	sonMouette = new Sound("musics/Snake/seagulls-chatting.ogg");
-	        sonSncf = new Sound("musics/Snake/0564.ogg");
-	        sonChute = new Sound("musics/Snake/0477.ogg");
-	        sonCheval = new Sound("musics/Snake/horse-whinnies.ogg");
-	        sonEclair = new Sound("musics/Snake/ChargedLightningAttack8-Bit.ogg");
-	        sonMagic = new Sound("musics/Snake/FreezeMagic.ogg");
-	        sonMartien = new Sound("musics/Snake/martian-gun.ogg");
-	        sonPerdu = new Sound("musics/Snake/perdu.ogg");
-	        soundMusicBackground=new Music("musics/Snake/hymne_russe.ogg");
+	    	sonMouette = new Sound(DIRECTORY_SOUNDS+"seagulls-chatting.ogg");
+	        sonSncf = new Sound(DIRECTORY_SOUNDS+"0564.ogg");
+	        sonChute = new Sound(DIRECTORY_SOUNDS+"0477.ogg");
+	        sonCheval = new Sound(DIRECTORY_SOUNDS+"horse-whinnies.ogg");
+	        sonEclair = new Sound(DIRECTORY_SOUNDS+"ChargedLightningAttack8-Bit.ogg");
+	        sonMagic = new Sound(DIRECTORY_SOUNDS+"FreezeMagic.ogg");
+	        sonMartien = new Sound(DIRECTORY_SOUNDS+"martian-gun.ogg");
+	        sonPerdu = new Sound(DIRECTORY_SOUNDS+"perdu.ogg");
+	        soundMusicBackground=new Music(DIRECTORY_SOUNDS+"hymne_russe.ogg");
     	} catch (SlickException e) {
     	}
     }
@@ -94,7 +106,7 @@ public class World extends BasicGameState implements Playable {
         g.setColor(new Color(200,200,200));
         g.fillRect(longueur-widthBandeau+6,0,widthBandeau,hauteur);
 
-        g.setFont(font);
+        g.setFont(Font);
         g.setColor(Color.black);
         g.drawString("SNAKE 3000 ! ",longueur-widthBandeau+20,20);
 
@@ -109,7 +121,7 @@ public class World extends BasicGameState implements Playable {
             g.setColor(Color.white);
             g.fillRoundRect(longueur/2-75+4-widthBandeau/2,hauteur/2-50+4,150-8,92,20);
             g.setColor(Color.black);
-            g.setFont(font);
+            g.setFont(Font);
             g.drawString("Fin du jeu", longueur/2-42-widthBandeau/2,hauteur/2-15);
             for(int i=morts.size()-1; i>=0 ;i--){
                 g.setColor(morts.get(i).couleur);
@@ -257,4 +269,5 @@ public class World extends BasicGameState implements Playable {
 		this.bonus = new ArrayList <Bonus> ();
 		this.jeuTermine=false;
 	}
+
 }

@@ -41,11 +41,11 @@ public class Player{
 		this.y = y;
 		w.getGrid().getCell(x,y).setContains(i);
 		this.score=0;
-		this.setImage(new Image(World.DIRECTORY_IMAGES+"Char_down.png"));
 		this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
 		this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
 		this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
 		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
+		this.setImage(this.down);
 	}
 	
 	public Color getCouleur() {

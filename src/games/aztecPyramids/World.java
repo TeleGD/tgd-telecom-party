@@ -1,5 +1,7 @@
 package games.aztecPyramids;
 
+import java.io.File;
+
 //import java.io.File;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,15 +14,34 @@ import org.newdawn.slick.state.StateBasedGame;
 public class World extends BasicGameState {
 
 	private int ID;
-
-	private Image aztecPyramid;
-	private Image aztecCalendar;
-	private Image aztecSnake;
-	private Image aztecHead1;
-	private Image aztecHead2;
-	private Image aztecHead3;
-	private Image aztecHead4;
-
+	
+	public final static String GAME_FOLDER_NAME="aztecPyramids";
+	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	
+	private static Image aztecPyramid;
+	private static Image aztecCalendar;
+	private static Image aztecSnake;
+	private static Image aztecHead1;
+	private static Image aztecHead2;
+	private static Image aztecHead3;
+	private static Image aztecHead4;
+	
+	static {
+		try {
+			aztecPyramid = new Image(DIRECTORY_IMAGES+"aztec.jpg");
+			aztecCalendar = new Image(DIRECTORY_IMAGES+"aztec-calendar.jpg");
+			aztecSnake = new Image(DIRECTORY_IMAGES+"snake.jpg");
+			aztecHead1 = new Image(DIRECTORY_IMAGES+"bluehead.png");
+			aztecHead2 = new Image(DIRECTORY_IMAGES+"pinkhead.png");
+			aztecHead3 = new Image(DIRECTORY_IMAGES+"yellowhead.png");
+			aztecHead4 = new Image(DIRECTORY_IMAGES+"greenhead.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public World (int ID) {
 		this.ID = ID;
 	}
@@ -38,13 +59,6 @@ public class World extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-			aztecPyramid = new Image("images/AztecPyramids/aztec.jpg");
-			aztecCalendar = new Image("images/AztecPyramids/aztec-calendar.jpg");
-			aztecSnake = new Image("images/AztecPyramids/snake.jpg");
-			aztecHead1 = new Image("images/AztecPyramids/bluehead.png");
-			aztecHead2 = new Image("images/AztecPyramids/pinkhead.png");
-			aztecHead3 = new Image("images/AztecPyramids/yellowhead.png");
-			aztecHead4 = new Image("images/AztecPyramids/greenhead.png");
 	}
 
 
