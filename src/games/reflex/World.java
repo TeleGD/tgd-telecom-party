@@ -3,6 +3,7 @@ package games.reflex;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -11,10 +12,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import general.AppGame;
 import general.Playable;
+import general.utils.FontUtils;
 
 public class World extends BasicGameState implements Playable {
 
 	private int ID;
+	public static final Font BUTTON_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 	protected final static int GOAL=20;
 	private ArrayList<Player> players;
 

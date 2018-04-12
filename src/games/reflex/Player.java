@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import general.AppInput;
 import general.AppPlayer;
 
 public class Player {
@@ -51,6 +52,15 @@ public class Player {
 		if (next) {
 			next = false;
 			bouton = new ButtonP(this, rand.nextInt(4));
+		} else {
+			AppInput appInput = (AppInput) container.getInput();
+			if (appInput.isControlPressed((int) Math.pow(2,bouton.getNumero()),controllerID)) {
+				state+=1;
+				next=true;
+			}
+			if (state==World.GOAL) {
+				//victoire
+			}
 		}
 		
 	}

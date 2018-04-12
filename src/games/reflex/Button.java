@@ -1,11 +1,16 @@
 package games.reflex;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.AppInput;
+import general.utils.FontUtils;
+
 public abstract class Button {
+	
 	protected int x,y;
 	protected Player player;
 	protected int numero;
@@ -20,4 +25,7 @@ public abstract class Button {
 	
 	public abstract void render(GameContainer container, StateBasedGame game, Graphics context);
 	
+	public int getNumero() {
+		return numero;
+	}
 }
