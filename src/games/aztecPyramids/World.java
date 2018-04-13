@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class World extends BasicGameState {
 
 	private int ID;
+	private int compteur;
 	
 	public final static String GAME_FOLDER_NAME="aztecPyramids";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -27,6 +28,10 @@ public class World extends BasicGameState {
 	private static Image aztecHead2;
 	private static Image aztecHead3;
 	private static Image aztecHead4;
+	
+	
+	
+	public Player tabPlay[];
 	
 	static {
 		try {
@@ -53,7 +58,7 @@ public class World extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-
+		this.tabPlay = new Player [] {new Player(this, Input.KEY_LEFT,Input.KEY_UP,Input.KEY_RIGHT),new Player(this, Input.KEY_A,Input.KEY_Z,Input.KEY_E)};
 	}
 
 	@Override
@@ -69,28 +74,86 @@ public class World extends BasicGameState {
 	}
 
 	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		compteur += delta;
+		
+		
+		if (compteur == 5000) {
+			for (int j=0;j<this.tabPlay.length;j++){
+				this.tabPlay[j].keyEnabled();
+			}
+		}
+		if (compteur == 16500) {
+			for (int j=0;j<this.tabPlay.length;j++){
+				this.tabPlay[j].keyDisabled();
+			}
+		}
+		
+		
+		if (compteur >= 20000) {
+			for (int j=0;j<this.tabPlay.length;j++){
+				this.tabPlay[j].valueChange();
+				this.tabPlay[j].afterChange();
+				for (int i=0;i<this.tabPlay.length;i++){
+					this.tabPlay[i].isEqual(this.tabPlay[i],this.tabPlay[j]);
+			}
+				this.tabPlay[j].climb();
+				compteur =0;
+		}
+		}
+	}
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(aztecPyramid,0,0);
 		g.drawImage(aztecCalendar,1080,0);
 		g.drawImage(aztecSnake,1080,610);
 		g.drawString("AZTEC PYRAMID",1120,220);
 		g.drawString("Score :",1150,250);
-		g.drawImage(aztecHead1,500,400);
+		g.drawImage(aztecHead1,500,600-this.tabPlay[0].getFloor()*50);
+		g.drawString(Integer.toString(this.tabPlay[0].getValue()),1150,450);
+		g.drawString(Integer.toString(compteur),1150,350);
+		if (compteur >= 3000 && compteur <= 3500) {
+			g.drawString("3",500,250);
+		}
+		if (compteur >= 3500 && compteur <= 4000) {
+			g.drawString("2",500,250);
+		}
+		if (compteur >= 4000 && compteur <= 4500) {
+			g.drawString("1",500,250);
+		}
+		if (compteur >= 4500 && compteur <= 5000) {
+			g.drawString("Choisissez",500,250);
+		}
+		if (compteur >= 14000 && compteur <= 14500) {
+			g.drawString("3",500,250);
+		}
+		if (compteur >= 14500 && compteur <= 15000) {
+			g.drawString("2",500,250);
+		}
+		if (compteur >= 15500 && compteur <= 16000) {
+			g.drawString("1",500,250);
+		}
+		if (compteur >= 16000 && compteur <= 16500) {
+			g.drawString("Terminé",500,250);
+		}
+		
 	}
 
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
-	}
-
+	
 	@Override
 	public void keyReleased(int key, char c) {
 	}
 
 	@Override
 	public void keyPressed(int key, char c) {
-		if(key==Input.KEY_SPACE)
+		if(key==Input.KEY_SPACE){
 			System.exit(0);
+			}
+		for (int j=0;j<this.tabPlay.length;j++){
+			this.tabPlay[j].keyPressed(key,c);
+		}
+		
+		
 	}
 
 }
