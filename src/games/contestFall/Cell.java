@@ -3,8 +3,6 @@ package games.contestFall;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Cell {
@@ -20,15 +18,18 @@ public class Cell {
 	private int srcx2;
 	private int srcy;
 	private int srcy2;
-	private int taille = 40;
+	private int taille;
 	private float tailleSegImg;
+	private boolean hasPlayer;
+	private boolean hasAmmo;
 	
 	public Cell(World w, boolean notExist, int X, int Y, int size) {
 		this.state=notExist?0:5;
 		this.posX=X;
 		this.posY=Y;
-		int startX = w.startX+(w.taille-size*taille)/2;
-		int startY = w.startY+(w.taille-size*taille)/2;
+		this.taille=w.taille/(size);
+		int startX = w.startX;
+		int startY = w.startY;
 		this.x=startX+taille*posX;
 		this.y=startY+taille*posY;
 		this.x2=startX+taille*(posX+1);
@@ -38,6 +39,8 @@ public class Cell {
 		this.srcy=(int) (tailleSegImg*posY);
 		this.srcx2=(int) (tailleSegImg*(posX+1));
 		this.srcy2=(int) (tailleSegImg*(posY+1));
+		this.hasPlayer=false;
+		this.hasAmmo=false;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
@@ -49,16 +52,40 @@ public class Cell {
 				float l = World.casse[state-1].getWidth();
 				context.drawImage(World.casse[state-1],x,y,x2,y2,0,0,l,l);
 			}
+			if (hasAmmo) {
+				float l = World.ammo.getWidth();
+				context.drawImage(World.ammo,x+taille/10,y+taille/10,x2-taille/10,y2-taille/10,0,0,l,l,Color.black);
+			}
 		}
 	}
 	
 	public void degrade(int damages) {
-		this.state=(state-(damages+1)<=0)?0:state-(damages+1);
+		state-=damages;
+		if (state<=0) {
+			state=0;
+			hasAmmo=false;
+			hasPlayer=false;
+		}
 	}
 
 	public int getState() {
 		return state;
 	}
 	
+	public boolean hasPlayer() {
+		return hasPlayer;
+	}
+	
+	public boolean hasAmmo() {
+		return hasAmmo;
+	}
+
+	public void removeAmmo() {
+		hasAmmo=false;		
+	}
+
+	public void addAmmo() {
+		hasAmmo=true;
+	}
 	
 }

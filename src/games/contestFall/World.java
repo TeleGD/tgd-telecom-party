@@ -22,12 +22,13 @@ public class World extends BasicGameState implements Playable {
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static TrueTypeFont Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 20, true);
-	
+
 	public static Image fondPlateforme;
 	public static Image fond;
 	public static Image[] casse = new Image[4];
+	public static Image ammo;
 	
-	private Platform platform;
+	Platform platform;
 	int startX;
 	int startY;
 	int taille;
@@ -40,6 +41,7 @@ public class World extends BasicGameState implements Playable {
 			casse[1] = new Image(DIRECTORY_IMAGES+"destroy2.png");
 			casse[2] = new Image(DIRECTORY_IMAGES+"destroy3.png");
 			casse[3] = new Image(DIRECTORY_IMAGES+"destroy4.png");
+			ammo = new Image(DIRECTORY_IMAGES+"c.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -56,7 +58,7 @@ public class World extends BasicGameState implements Playable {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.drawImage(fond,startX,startY);
+		context.drawImage(fond,startX,startY,startX+taille,startY+taille,0,0,fond.getWidth(),fond.getHeight());
 		platform.render(container, game, context);
 	}
 
@@ -72,7 +74,7 @@ public class World extends BasicGameState implements Playable {
 		taille = (width>height)?height:width;
 		startX = (width>height)?width/2-height/2:0;
 		startY = (width<height)?height/2-width/2:0;
-		platform = new Platform(this, 15);
+		platform = new Platform(this, 12);
 	}
 
 	@Override
