@@ -36,7 +36,7 @@ public class Player {
 		multi += appInput.isControlPressed(AppInput.BUTTON_B,controllerId) ? 1:0;
 		multi += appInput.isControlPressed(AppInput.BUTTON_X,controllerId) ? 1:0;
 		multi += appInput.isControlPressed(AppInput.BUTTON_Y,controllerId) ? 1:0;
-		if (multi >= 3 ){
+		if (multi >= 2 ){
 			score -= 5;
 		} else if (multi == 1){
 			score += multi;
