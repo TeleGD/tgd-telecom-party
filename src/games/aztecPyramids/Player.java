@@ -9,7 +9,7 @@ public class Player {
 	private int floor;
 
 	private int value;
-	private int compteur;
+	
 	private int T1;
 	private int T3;
 	private int T5;
@@ -20,45 +20,40 @@ public class Player {
 	private boolean twoPressEn;
 	private boolean threePressEn;
 
-	public Player(int T1,int T3, int T5) {
+	private World world;
+
+	public Player(World world, int T1,int T3, int T5) {
 
 		this.T1 = T1;
 		this.T3 = T3;
 		this.T5 = T5;
+		this.world = world;
 		floor = 0;
 		onePress = false;
 		twoPress = false;
 		threePress = false;
 		value=0;
-		compteur = 0;
+		
 
 	}
 
-	private Player tabPlay[] = {new Player(Input.KEY_LEFT,Input.KEY_UP,Input.KEY_RIGHT),new Player(Input.KEY_A,Input.KEY_Z,Input.KEY_E)};
+
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
-		compteur += 1;
-		if (compteur >= 300) {
-			valueChange();
-			afterChange();
-			for (int i=0;i<=tabPlay.length;i++){
-				isEqual(tabPlay[i],this);
-			}
-			climb();
-		}
+		
 
 
 	}
 
 	public void valueChange() {
 		if (onePress == true){
-			this.value = 1;
+			this.value =  1;
 		}
-		if (twoPress == true){
-			this.value = 3;
+		else if (twoPress == true){
+			this.value =  3;
 		}
-		if (threePress == true){
-			this.value = 5;
+		else if (threePress == true){
+			this.value =  5;
 		}
 	}
 
@@ -84,22 +79,34 @@ public class Player {
 	public void climb(){
 		this.floor = this.floor + this.value;
 	}
-
+	
+	public int getFloor() {
+		return this.floor;
+	}
+	
 	public void keyReleased(int key, char c) {
 
-			if (key == T5) {
-				threePressEn = true;
-			}
-			if (key == T1) {
-				onePressEn = true;
-			}
-			if (key == T3) {
-				twoPressEn = true;
-			}
 	}
 
-		public void keyPressed(int key, char c) {
+	public void keyEnabled() {
+			threePressEn = true;
+			onePressEn = true;
+			twoPressEn = true;
+}
+	
+	public void keyDisabled() {
 
+		
+		threePressEn = false;
+		onePressEn = false;
+		twoPressEn = false;
+}
+	
+	
+		public void keyPressed(int key, char c) {
+        
+			
+			
 		if (threePressEn == true && twoPressEn == true && onePressEn == true){
 			if (key == T5){
 				threePress = true;
