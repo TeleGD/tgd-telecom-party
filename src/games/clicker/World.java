@@ -90,6 +90,9 @@ public class World extends BasicGameState implements Playable{
 					context.drawString(s,i*4*width/6+x,y);
 				}
 			}
+			context.setColor(Color.white);
+			String s2 = "Temps restant : " + count/1000;
+			context.drawString(s2,width/2-75,height/2);
 		}
 
 	}
