@@ -20,7 +20,7 @@ public class Cell {
 	private int srcy2;
 	private int taille;
 	private float tailleSegImg;
-	private boolean hasPlayer;
+	private Player player;
 	private boolean hasAmmo;
 	
 	public Cell(World w, boolean notExist, int X, int Y, int size) {
@@ -39,7 +39,7 @@ public class Cell {
 		this.srcy=(int) (tailleSegImg*posY);
 		this.srcx2=(int) (tailleSegImg*(posX+1));
 		this.srcy2=(int) (tailleSegImg*(posY+1));
-		this.hasPlayer=false;
+		this.player=null;
 		this.hasAmmo=false;
 	}
 	
@@ -64,7 +64,7 @@ public class Cell {
 		if (state<=0) {
 			state=0;
 			hasAmmo=false;
-			hasPlayer=false;
+			player=null;
 		}
 	}
 
@@ -73,7 +73,15 @@ public class Cell {
 	}
 	
 	public boolean hasPlayer() {
-		return hasPlayer;
+		return (player!=null);
+	}
+	
+	public void setPlayer(Player p) {
+		player=p;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 	
 	public boolean hasAmmo() {
