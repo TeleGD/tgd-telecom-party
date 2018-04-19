@@ -42,6 +42,14 @@ public class Games extends AppMenu {
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_BOMBERMAN_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_BOMBERMAN_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
+				}
+			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_CLICKER_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
@@ -61,6 +69,14 @@ public class Games extends AppMenu {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_KOMTUVE_WORLD]) {
 				public void itemSelected () {
 					game.enterState (AppGame.GAMES_KOMTUVE_WORLD);
+				}
+			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_MAZE_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_MAZE_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PONG_WORLD]) {
