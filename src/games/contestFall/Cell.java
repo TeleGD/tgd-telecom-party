@@ -22,9 +22,12 @@ public class Cell {
 	private float tailleSegImg;
 	private Player player;
 	private boolean hasAmmo;
+	private int resistance;
+	private World world;
 	
 	public Cell(World w, boolean notExist, int X, int Y, int size) {
 		this.state=notExist?0:5;
+		this.world=w;
 		this.posX=X;
 		this.posY=Y;
 		this.taille=w.taille/(size);
@@ -41,6 +44,7 @@ public class Cell {
 		this.srcy2=(int) (tailleSegImg*(posY+1));
 		this.player=null;
 		this.hasAmmo=false;
+		this.resistance=1000;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
@@ -59,12 +63,28 @@ public class Cell {
 		}
 	}
 	
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		if (player!=null) {
+			resistance-=delta;
+			if (resistance<=0) {
+				resistance=1000+resistance;
+				degrade(1);
+			}
+		}
+	}
+	
 	public void degrade(int damages) {
-		state-=damages;
-		if (state<=0) {
-			state=0;
-			hasAmmo=false;
-			player=null;
+		if (state>0) {
+			state-=damages;
+			if (state<=0) {
+				state=0;
+				hasAmmo=false;
+				player=null;
+				world.platform.getCell(posX-1,posY).degrade(Math.random()<0.5?1:0);
+				world.platform.getCell(posX+1,posY).degrade(Math.random()<0.5?1:0);
+				world.platform.getCell(posX,posY-1).degrade(Math.random()<0.5?1:0);
+				world.platform.getCell(posX,posY+1).degrade(Math.random()<0.5?1:0);
+			}
 		}
 	}
 
@@ -77,7 +97,11 @@ public class Cell {
 	}
 	
 	public void setPlayer(Player p) {
-		player=p;
+		if (state>0) {
+			player=p;
+		} else {
+			player=null;
+		}
 	}
 	
 	public Player getPlayer() {

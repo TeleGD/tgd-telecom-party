@@ -34,6 +34,11 @@ public class Platform {
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		for (int i=0;i<size;i++) {
+			for (int j=0;j<size;j++) {
+				grid[i][j].update(container, game, delta);
+			}
+		}
 		if (r.nextInt((50-size>0)?50-size:1)==0) {
 			int state = 0;
 			int cpt = 0;

@@ -40,14 +40,15 @@ public class Player {
 		posY = startPosY;
 		direction = startDirection;
 		size = w.taille/(w.platform.getSize());
-		x=(posX)*size;
-		x2=(posX+1)*size;
-		y=(posY)*size;
-		y2=(posY+1)*size;
+		x=w.startX+(posX)*size;
+		x2=w.startX+(posX+1)*size;
+		y=w.startY+(posY)*size;
+		y2=w.startY+(posY+1)*size;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		// TODO
+		context.setColor(couleur);
+		context.fillRect(x+size/4, y+size/4, size/2, size/2);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -55,6 +56,7 @@ public class Player {
 			AppInput appInput = (AppInput) container.getInput();
 			move(appInput);
 			shoot(appInput);
+			appInput.clearControlPressedRecord();
 		} else {
 			fallCount-=delta;
 		}
@@ -63,7 +65,7 @@ public class Player {
 	private void shoot(AppInput appInput) {
 		if (ammo>0 && appInput.isControlPressed(AppInput.BUTTON_A,controllerID)) {
 			ammo--;
-			// TODO w.projectile.add(new Projectile(this,direction, x+size/2, y+size/2, size));
+			w.projectiles.add(new Projectile(w, this,direction, x+size/2, y+size/2, size));
 		}
 	}
 
@@ -71,34 +73,22 @@ public class Player {
 		// Déplacement à gauche
 		if (appInput.isControlPressed(AppInput.BUTTON_LEFT,controllerID) && !(w.platform.getCell(posX-1,posY).hasPlayer())) {
 			direction=3;
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posX=posX-1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			x=x-size;
+			forceMove(direction);
 		}
 		// Déplacement à droite
 		if (appInput.isControlPressed(AppInput.BUTTON_RIGHT,controllerID) && !(w.platform.getCell(posX+1,posY).hasPlayer())) {
 			direction=1;
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posX=posX+1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			x=x+size;
+			forceMove(direction);
 		}
 		// Déplacement en haut
 		if (appInput.isControlPressed(AppInput.BUTTON_UP,controllerID) && !(w.platform.getCell(posX,posY-1).hasPlayer())) {
 			direction=2;
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posY=posY-1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			y=y-size;
+			forceMove(direction);
 		}
 		// Déplacement en bas
 		if (appInput.isControlPressed(AppInput.BUTTON_DOWN,controllerID) && !(w.platform.getCell(posX,posY+1).hasPlayer())) {
 			direction=0;
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posY=posY+1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			y=y+size;
+			forceMove(direction);
 		}
 		// Tombe dans le vide
 		if (w.platform.getCell(posX,posY).getState()<=0) {
@@ -113,28 +103,16 @@ public class Player {
 	}
 	
 	public void forceMove(int dir) {
-		if (dir==0 && !(w.platform.getCell(posX,posY-1).hasPlayer())) {
+		int nextPosX=posX+((-direction+2)%2);
+		int nextPosY=posY+((-direction+1)%2);
+		if (!w.platform.getCell(nextPosX,nextPosY).hasPlayer()) {
 			w.platform.getCell(posX,posY).setPlayer(null);
-			posY=posY-1;
+			posX=nextPosX;
+			posY=nextPosY;
 			w.platform.getCell(posX,posY).setPlayer(this);
-			y=y-size;
-		} else if (dir==1 && !(w.platform.getCell(posX+1,posY).hasPlayer())) {
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posX=posX+1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			x=x+size;
-		} else if (dir==2 && !(w.platform.getCell(posX,posY+1).hasPlayer())) {
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posY=posY+1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			y=y+size;
-		} else if (dir==3 && !(w.platform.getCell(posX-1,posY).hasPlayer())) {
-			w.platform.getCell(posX,posY).setPlayer(null);
-			posX=posX-1;
-			w.platform.getCell(posX,posY).setPlayer(this);
-			x=x-size;
+			x=x+size*((-direction+2)%2);
+			y=y+size*((-direction+1)%2);
 		}
-		
 	}
 	
 	public boolean isDead() {
