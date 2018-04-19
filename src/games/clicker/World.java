@@ -6,6 +6,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -62,7 +64,13 @@ public class World extends AppWorld {
 				context.setColor(Color.black);
 				context.fillRect(width/2-width/6+1,height/2-height/6+1,width/3-1,height/3-1);
 				if (nbJoueursInit == 3){
-					//lucas.draw in bottom corner
+			Image image = null;
+			try {
+				image = new Image("images/clicker/lucas.png");
+			} catch (SlickException e) {
+
+			}
+			image.draw(width*3/4-8*marge,height*3/4-13*marge);
 				}
 				for (int i = 0; i < nbJoueursInit; i++){
 					context.setColor(players.get(i).getColor());

@@ -14,7 +14,6 @@ public class Bonus {
 
 	static enum bonusType {bGrandis,bRetrecis,bRapide,bLent,bMort,bInverseBonus,bInverseMalus,bRemis,bInvincible};
 
-
 	bonusType type;
 	private Image imageBonus;
 	private int rayon;

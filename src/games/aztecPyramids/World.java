@@ -88,14 +88,31 @@ public class World extends BasicGameState {
 			for (int j=0;j<this.tabPlay.length;j++){
 				this.tabPlay[j].valueChange();
 				this.tabPlay[j].afterChange();
-				for (int i=0;i<this.tabPlay.length;i++){
-					this.tabPlay[i].isEqual(this.tabPlay[i],this.tabPlay[j]);
 			}
+			for (int j=0;j<this.tabPlay.length;j++){
+				for (int i=0;i<this.tabPlay.length;i++){
+					if (i!=j){
+						this.tabPlay[j].isEqual(this.tabPlay[i]);
+					}
+			}
+
+		}
+			for (int j=0;j<this.tabPlay.length;j++){
+				this.tabPlay[j].finalChange();
+			}
+			for (int j=0;j<this.tabPlay.length;j++){
 				this.tabPlay[j].climb();
 				compteur =0;
+			}
+
+		}
+		if (compteur == 1) {
+		for (int j=0;j<this.tabPlay.length;j++){
+			this.tabPlay[j].isWinner();
+			}
 		}
 		}
-	}
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(aztecPyramid,0,0);
@@ -103,8 +120,9 @@ public class World extends BasicGameState {
 		g.drawImage(aztecSnake,1080,610);
 		g.drawString("AZTEC PYRAMID",1120,220);
 		g.drawString("Score :",1150,250);
-		g.drawImage(aztecHead1,500,600-this.tabPlay[0].getFloor()*50);
-		g.drawString(Integer.toString(this.tabPlay[0].getValue()),1150,450);
+		g.drawImage(aztecHead1,500,600-this.tabPlay[0].getFloor()*40);
+		g.drawImage(aztecHead2,480,600-this.tabPlay[1].getFloor()*40);
+		g.drawString(Integer.toString(this.tabPlay[0].getFloor()),1150,450);
 		g.drawString(Integer.toString(compteur),1150,350);
 		if (compteur >= 3000 && compteur <= 3500) {
 			g.drawString("3",500,250);
@@ -124,10 +142,10 @@ public class World extends BasicGameState {
 		if (compteur >= 14500 && compteur <= 15000) {
 			g.drawString("2",500,250);
 		}
-		if (compteur >= 15500 && compteur <= 16000) {
+		if (compteur >= 15000 && compteur <= 15500) {
 			g.drawString("1",500,250);
 		}
-		if (compteur >= 16000 && compteur <= 16500) {
+		if (compteur >= 15500 && compteur <= 16000) {
 			g.drawString("Terminé",500,250);
 		}
 
