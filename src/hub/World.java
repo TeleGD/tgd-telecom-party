@@ -84,7 +84,7 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		this.listeJoueurs = new ArrayList <Player> (); // initialisation de listeJoueur
 		for (AppPlayer appPlayer: ((AppGame) game).appPlayers) {
-			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/player/pion.png"));
+			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/hub/pion.png"));
 		}
 	}
 

@@ -36,7 +36,7 @@ public class Case {
 	public Case (World plateau, int id, int x, int y, int type) {
 		this.plateau = plateau;
 		this.type = type;
-		// sprite=new Image("images/case" + id + ".jpg");
+		// sprite=new Image("images/hub/case" + id + ".jpg");
 		this.x = x;
 		this.y = y;
 		this.id = id;
