@@ -26,6 +26,7 @@ public class Player {
 	private int controllerID;
 	private Color couleur;
 	private String name;
+	private boolean blocked;
 
 	public Player(World w, int startPosX, int startPosY, AppPlayer appPlayer) {
 		this.controllerID = appPlayer.getControllerID();
@@ -41,6 +42,7 @@ public class Player {
 		y=posY*size;
 		y2=(posY+1)*size;
 		w.board.getCell(posX,posY).setPlayer(this);
+		blocked=false;
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
@@ -54,6 +56,9 @@ public class Player {
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput();
 		move(appInput);
+		blocked = (blocked || (
+				(posX==0 || w.board.getCell(posX-1,posY).hasPlayer()) && (posX==w.board.getColumns()-1 || w.board.getCell(posX+1,posY).hasPlayer())
+				&& (posY==0 || w.board.getCell(posX,posY-1).hasPlayer()) && (posY==w.board.getRows()-1 || w.board.getCell(posX,posY+1).hasPlayer())));
 	}
 
 	private void move(AppInput appInput) {
@@ -91,5 +96,13 @@ public class Player {
 
 	public Color getCouleur() {
 		return this.couleur;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public int getControllerID() {
+		return controllerID;
 	}
 }

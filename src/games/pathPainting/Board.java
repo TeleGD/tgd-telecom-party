@@ -1,5 +1,7 @@
 package games.pathPainting;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -53,6 +55,18 @@ public class Board {
 
 	public int getRows() {
 		return rows;
+	}
+
+	public int[] countScore(ArrayList<Player> players) {
+		int scores[] = new int[players.size()];
+		for (int i=0;i<rows;i++) {
+			for (int j=0;j<columns;j++) {
+				if (grid[i][j].hasPlayer()) {
+					scores[players.indexOf(grid[i][j].getPlayer())] += 1;
+				}
+			}
+		}
+		return scores;
 	}
 
 }

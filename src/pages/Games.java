@@ -27,7 +27,7 @@ public class Games extends AppMenu {
 		super.initSize (container, game, 600, 400);
 		super.init (container, game);
 		this.setTitle ("Mini-jeux");
-		this.setSubtitle ("Sans sous-titre");
+		this.setSubtitle ("A découvrir et redécouvrir");
 		this.setMenu (Arrays.asList (new MenuItem [] {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_AZTECPYRAMIDS_WORLD]) {
 				public void itemSelected () {
@@ -61,6 +61,14 @@ public class Games extends AppMenu {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_KOMTUVE_WORLD]) {
 				public void itemSelected () {
 					game.enterState (AppGame.GAMES_KOMTUVE_WORLD);
+				}
+			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_PATHPAINTING_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_PATHPAINTING_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PONG_WORLD]) {
