@@ -111,28 +111,32 @@ public class World extends BasicGameState implements Playable {
 		for (int i = 0; i < appGame.appPlayers.size(); i++) {
 			int pStartX = 0;
 			int pStartY = 0;
+			int direction = 0;
 			switch (i) {
 			case 0:
 				pStartX = 1;
 				pStartY = platformSize/2;
+				direction=3;
 				break;
 			case 1:
 				pStartX = platformSize-2;
 				pStartY = platformSize/2;
+				direction=1;
 				break;
 			case 2:
 				pStartX = platformSize/2;
 				pStartY = 1;
+				direction=2;
 				break;
 			case 3:
 				pStartX = platformSize/2;
 				pStartY = platformSize-2;
+				direction=0;
 				break;
 			default:
 				break;
 			}
-			// TODO Direction pas correctes, à fixer
-			this.players.add(new Player(this, pStartX, pStartY, i, appGame.appPlayers.get(i)));
+			this.players.add(new Player(this, pStartX, pStartY, direction, appGame.appPlayers.get(i)));
 		}
 		
 		projectiles = new ArrayList<Projectile>();
