@@ -2,6 +2,7 @@ package games.pathPainting;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -54,8 +55,19 @@ public class World extends AppWorld {
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
 			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
+			int blockedPlayers=0;
 			for (Player p : players) {
 				p.update(container, game, delta);
+				blockedPlayers+=p.isBlocked()?1:0;
+			}
+			if (blockedPlayers==players.size()) {
+				// fin de la partie
+				int[] scores = board.countScore(players);
+				HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
+				for (int i=0 ; i<players.size();i++) {
+					classement.put(players.get(i).getControllerID(),scores[i]);
+				}
+				System.out.println(classement.toString());
 			}
 		}
 	}

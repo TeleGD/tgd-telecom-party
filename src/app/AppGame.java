@@ -20,10 +20,11 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_CONTESTFALL_WORLD = 9;
 	public static final int GAMES_KOMTUVE_WORLD = 10;
 	public static final int GAMES_MAZE_WORLD = 11;
-	public static final int GAMES_PONG_WORLD = 12;
-	public static final int GAMES_REFLEX_WORLD = 13;
-	public static final int GAMES_SNAKE_WORLD = 14;
-	public static final int GAMES_T7LASER_WORLD = 15;
+	public static final int GAMES_PATHPAINTING_WORLD = 12;
+	public static final int GAMES_PONG_WORLD = 13;
+	public static final int GAMES_REFLEX_WORLD = 14;
+	public static final int GAMES_SNAKE_WORLD = 15;
+	public static final int GAMES_T7LASER_WORLD = 16;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -38,6 +39,7 @@ public class AppGame extends StateBasedGame {
 		"Contest Fall",
 		"Comme tu veux",
 		"Labyrinthe",
+		"Path Painting",
 		"Pong multijoueur",
 		"Reflex",
 		"Snake",
@@ -75,6 +77,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.contestFall.World (AppGame.GAMES_CONTESTFALL_WORLD));
 		this.addState (new games.komtuve.World (AppGame.GAMES_KOMTUVE_WORLD));
 		this.addState (new games.maze.World (AppGame.GAMES_MAZE_WORLD));
+		this.addState (new games.pathPainting.World (AppGame.GAMES_PATHPAINTING_WORLD));
 		this.addState (new games.pong.World (AppGame.GAMES_PONG_WORLD));
 		this.addState (new games.reflex.World (AppGame.GAMES_REFLEX_WORLD));
 		this.addState (new games.snake.World (AppGame.GAMES_SNAKE_WORLD));
