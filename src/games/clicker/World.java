@@ -1,25 +1,24 @@
 package games.clicker;
 
-import general.AppGame;
-import general.AppInput;
-import general.AppPlayer;
-import general.utils.FontUtils;
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import general.Playable;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import java.util.ArrayList;
+import app.AppGame;
+import app.AppInput;
+import app.AppPlayer;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-public class World extends BasicGameState implements Playable{
+public class World extends AppWorld {
 
-	public static final org.newdawn.slick.Font Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
+	public static final Font Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 	private final int ID;
 	private ArrayList<Player> players;
 	private int count;
@@ -36,7 +35,7 @@ public class World extends BasicGameState implements Playable{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class World extends BasicGameState implements Playable{
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition(), new FadeInTransition());
+			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition(), new FadeInTransition());
 		} else if (!finished){
 			count -= delta;
 			for (Player player : players) {
@@ -116,7 +115,7 @@ public class World extends BasicGameState implements Playable{
 	}
 
 	@Override
-	public void initPlayers(GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		finished =false;
 		count = 30000;

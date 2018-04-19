@@ -2,15 +2,14 @@ package games.battle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import general.AppGame;
-import general.AppInput;
-import general.AppPlayer;
-import general.Playable;
-public class World extends BasicGameState implements Playable {
+import app.AppGame;
+import app.AppInput;
+import app.AppPlayer;
+import app.AppWorld;
+public class World extends AppWorld {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
@@ -65,7 +64,7 @@ public class World extends BasicGameState implements Playable {
 			if (BUTTON_PLUS == ((gameMasterRecord & AppInput.BUTTON_PLUS) == 0)) {
 				gameMasterRecord ^= AppInput.BUTTON_PLUS;
 				if (BUTTON_PLUS) {
-					appGame.enterState (AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+					appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 				};
 			};
 			gameMaster.setButtonPressedRecord (gameMasterRecord);
@@ -85,7 +84,7 @@ public class World extends BasicGameState implements Playable {
 			player.render (container, game, context);
 		};
 	};
-	public void initPlayers (GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
 		this.players = new Player [n];

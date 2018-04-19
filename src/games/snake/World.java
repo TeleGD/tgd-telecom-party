@@ -1,9 +1,9 @@
 package games.snake;
 
-import general.AppGame;
-import general.AppInput;
-import general.Playable;
-import general.utils.FontUtils;
+import java.util.Random;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,20 +12,19 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import java.util.Random;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import app.AppGame;
+import app.AppInput;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-public class World extends BasicGameState implements Playable {
-	
+public class World extends AppWorld {
+
     private int ID;
-    
+
     public int nbcasesh;
     public int nbcasesl;
     public int longueur;
@@ -34,14 +33,14 @@ public class World extends BasicGameState implements Playable {
     private float widthBandeau;
     private ArrayList<Bonus> bonus;
     private ArrayList<Snake> snakes;
-    private ArrayList<Snake> morts;  
+    private ArrayList<Snake> morts;
 
     public final static String GAME_FOLDER_NAME="snake";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public static final TrueTypeFont Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 20, true);
-	
+
 	private boolean jeuTermine;
 
     static Sound sonMouette;
@@ -53,7 +52,7 @@ public class World extends BasicGameState implements Playable {
     static Sound sonMartien;
     static Sound sonPerdu;
     private static Music soundMusicBackground;
-    
+
     static {
     	try {
 	    	sonMouette = new Sound(DIRECTORY_SOUNDS+"seagulls-chatting.ogg");
@@ -68,7 +67,7 @@ public class World extends BasicGameState implements Playable {
     	} catch (SlickException e) {
     	}
     }
-    
+
     public World (int ID) {
 		this.ID = ID;
 	}
@@ -77,11 +76,11 @@ public class World extends BasicGameState implements Playable {
 	public int getID() {
 		return this.ID;
 	}
-    
+
     @Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 	}
-    
+
     @Override
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
         soundMusicBackground.loop(1,0.3f);
@@ -92,7 +91,6 @@ public class World extends BasicGameState implements Playable {
         for(int i=0;i<bonus.size();i++){
             bonus.get(i).render(container, game, g);
         }
-
 
         for(int i=0;i<snakes.size();i++){
             snakes.get(i).render(container, game, g);
@@ -142,17 +140,17 @@ public class World extends BasicGameState implements Playable {
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
 			soundMusicBackground.stop();
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 	    	if(!jeuTermine){
 	    	   	jeuTermine = isFini();
 	           	addBonus();
 	           	for(int i=0;i<snakes.size();i++) {
 	                Snake snake = snakes.get(i);
-	
+
 	                snake.GScore(1);
 	                snake.update(container, game, delta);
-	
+
 	                for (int j = 0; j < bonus.size(); j++) {
 	                	bonus.get(j).update(container, game, delta);
 	                    if (!snakes.get(i).mort) {
@@ -163,9 +161,9 @@ public class World extends BasicGameState implements Playable {
 	                        }
 	                    }
 	                }
-	
+
 	                for (int j = 0; j < snakes.size(); j++) {
-	
+
 	                    if (j != i) {
 	                        if (!snakes.get(i).mort) {
 	                            if (collide(snake.body.get(0), snakes.get(j),false)) {
@@ -253,7 +251,7 @@ public class World extends BasicGameState implements Playable {
     }
 
 	@Override
-	public void initPlayers(GameContainer container, StateBasedGame game) {
+	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int nJoueur = appGame.appPlayers.size();
 		longueur = container.getWidth();

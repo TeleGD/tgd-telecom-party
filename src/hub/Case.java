@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 // import org.newdawn.slick.Image;
 
 public class Case {
-	private WorldPlateau plateau;
+	private World plateau;
 	private int id;
 	private Color backgroundColor;
 	private Color textColor;
@@ -33,7 +33,7 @@ public class Case {
 
 	// private Image sprite;
 
-	public Case (WorldPlateau plateau, int id, int x, int y, int type) {
+	public Case (World plateau, int id, int x, int y, int type) {
 		this.plateau = plateau;
 		this.type = type;
 		// sprite=new Image("images/case" + id + ".jpg");
@@ -95,7 +95,5 @@ public class Case {
 	public float getY () {
 		return y;
 	}
-
-
 
 }

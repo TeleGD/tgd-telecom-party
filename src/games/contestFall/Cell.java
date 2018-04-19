@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Cell {
-	
+
 	private int state;
 	private int posX;
 	private int posY;
@@ -24,7 +24,7 @@ public class Cell {
 	private boolean hasAmmo;
 	private int resistance;
 	private World world;
-	
+
 	public Cell(World w, boolean notExist, int X, int Y, int size) {
 		this.state=notExist?0:5;
 		this.world=w;
@@ -46,7 +46,7 @@ public class Cell {
 		this.hasAmmo=false;
 		this.resistance=1000;
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		if (state > 0) {
 			context.setColor(Color.black);
@@ -62,7 +62,7 @@ public class Cell {
 			}
 		}
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		if (player!=null) {
 			resistance-=delta;
@@ -72,7 +72,7 @@ public class Cell {
 			}
 		}
 	}
-	
+
 	public void degrade(int damages) {
 		if (state>0) {
 			state-=damages;
@@ -91,11 +91,11 @@ public class Cell {
 	public int getState() {
 		return state;
 	}
-	
+
 	public boolean hasPlayer() {
 		return (player!=null);
 	}
-	
+
 	public void setPlayer(Player p) {
 		if (state>0) {
 			player=p;
@@ -103,21 +103,21 @@ public class Cell {
 			player=null;
 		}
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public boolean hasAmmo() {
 		return hasAmmo;
 	}
 
 	public void removeAmmo() {
-		hasAmmo=false;		
+		hasAmmo=false;
 	}
 
 	public void addAmmo() {
 		hasAmmo=true;
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-package menus.ui;
+package app;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -7,9 +7,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.utils.FontUtils;
+import app.utils.FontUtils;
 
-public abstract class Page extends BasicGameState {
+public abstract class AppPage extends BasicGameState {
 
 	static protected Color foregroundColor = Color.white;
 	static protected Color backgroundColor = Color.black;
@@ -72,22 +72,22 @@ public abstract class Page extends BasicGameState {
 	private int hintBlinkPeriod;
 	private int hintBlinkCountdown;
 
-	public Page () {}
+	public AppPage () {}
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
 		this.titleBoxWidth = this.contentWidth;
-		this.titleBoxHeight = Page.titleLineHeight;
+		this.titleBoxHeight = AppPage.titleLineHeight;
 		this.titleBoxX = this.contentX;
 		this.titleBoxY = this.contentY;
 
 		this.subtitleBoxWidth = this.contentWidth;
-		this.subtitleBoxHeight = Page.subtitleLineHeight;
+		this.subtitleBoxHeight = AppPage.subtitleLineHeight;
 		this.subtitleBoxX = this.contentX;
-		this.subtitleBoxY = this.titleBoxY + this.titleBoxHeight + Page.gap;
+		this.subtitleBoxY = this.titleBoxY + this.titleBoxHeight + AppPage.gap;
 
 		this.hintBoxWidth = this.contentWidth;
-		this.hintBoxHeight = Page.hintLineHeight;
+		this.hintBoxHeight = AppPage.hintLineHeight;
 		this.hintBoxX = this.contentX;
 		this.hintBoxY = this.contentY + this.contentHeight - this.hintBoxHeight;
 
@@ -120,23 +120,23 @@ public abstract class Page extends BasicGameState {
 	}
 
 	private void renderBackground (GameContainer container, StateBasedGame game, Graphics context) {
-		context.setBackground (Page.backgroundColor);
+		context.setBackground (AppPage.backgroundColor);
 	}
 
 	private void renderTitle (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.titleVisibility) {
-			context.setFont (Page.titleFont);
-			context.setColor (Page.highlightColor);
+			context.setFont (AppPage.titleFont);
+			context.setColor (AppPage.highlightColor);
 			context.drawString (this.title, this.titleX - 2, this.titleY - 2);
-			context.setColor (Page.foregroundColor);
+			context.setColor (AppPage.foregroundColor);
 			context.drawString (this.title, this.titleX + 2, this.titleY + 2);
 		}
 	}
 
 	private void renderSubtitle (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.subtitleVisibility) {
-			context.setFont (Page.subtitleFont);
-			context.setColor (Page.foregroundColor);
+			context.setFont (AppPage.subtitleFont);
+			context.setColor (AppPage.foregroundColor);
 			context.drawRect (this.subtitleBoxX, this.subtitleBoxY, this.subtitleBoxWidth, this.subtitleBoxHeight);
 			context.drawString (this.subtitle, this.subtitleX, this.subtitleY);
 		}
@@ -144,13 +144,13 @@ public abstract class Page extends BasicGameState {
 
 	private void renderHint (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.hintVisibility) {
-			context.setFont (Page.hintFont);
-			context.setColor (Page.foregroundColor);
+			context.setFont (AppPage.hintFont);
+			context.setColor (AppPage.foregroundColor);
 			context.drawRect (this.hintBoxX, this.hintBoxY, this.hintBoxWidth, this.hintBoxHeight);
 			if (this.hintBlink) {
-				int r = Page.foregroundColor.getRed ();
-				int g = Page.foregroundColor.getGreen ();
-				int b = Page.foregroundColor.getBlue ();
+				int r = AppPage.foregroundColor.getRed ();
+				int g = AppPage.foregroundColor.getGreen ();
+				int b = AppPage.foregroundColor.getBlue ();
 				int a = 1024 * this.hintBlinkCountdown / this.hintBlinkPeriod - 512;
 				if (a < 0) {
 					a *= -1;
@@ -165,8 +165,8 @@ public abstract class Page extends BasicGameState {
 
 	public void setTitle (String title) {
 		this.title = title;
-		this.titleWidth = Page.titleFont.getWidth (title);
-		this.titleHeight = Page.titleFont.getHeight (title);
+		this.titleWidth = AppPage.titleFont.getWidth (title);
+		this.titleHeight = AppPage.titleFont.getHeight (title);
 		this.titleX = this.titleBoxX + (this.titleBoxWidth - this.titleWidth) / 2;
 		this.titleY = this.titleBoxY + (this.titleBoxHeight - this.titleHeight) / 2;
 	}
@@ -177,8 +177,8 @@ public abstract class Page extends BasicGameState {
 
 	public void setSubtitle (String subtitle) {
 		this.subtitle = subtitle;
-		this.subtitleWidth = Page.subtitleFont.getWidth (subtitle);
-		this.subtitleHeight = Page.subtitleFont.getHeight (subtitle);
+		this.subtitleWidth = AppPage.subtitleFont.getWidth (subtitle);
+		this.subtitleHeight = AppPage.subtitleFont.getHeight (subtitle);
 		this.subtitleX = this.subtitleBoxX + (this.subtitleBoxWidth - this.subtitleWidth) / 2;
 		this.subtitleY = this.subtitleBoxY + (this.subtitleBoxHeight - this.subtitleHeight) / 2;
 	}
@@ -189,8 +189,8 @@ public abstract class Page extends BasicGameState {
 
 	public void setHint (String hint) {
 		this.hint = hint;
-		this.hintWidth = Page.hintFont.getWidth (hint);
-		this.hintHeight = Page.hintFont.getHeight (hint);
+		this.hintWidth = AppPage.hintFont.getWidth (hint);
+		this.hintHeight = AppPage.hintFont.getHeight (hint);
 		this.hintX = this.hintBoxX + (this.hintBoxWidth - this.hintWidth) / 2;
 		this.hintY = this.hintBoxY + (this.hintBoxHeight - this.hintHeight) / 2;
 	}

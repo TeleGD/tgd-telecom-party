@@ -1,4 +1,4 @@
-package general.ui;
+package app.ui;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -21,7 +21,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	protected Color borderColorEntered;
 	protected Color borderColorPressed;
 
-
 	protected int borderWidth;
 	protected int cornerRadius;
 	protected float paddingTop;
@@ -39,7 +38,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	protected long timeInit;
 
-
 	public TGDComponent(GameContainer container,float x, float y, float width, float height) {
 		super(x, y, width, height);
 		paddingTop=5;
@@ -48,7 +46,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		paddingLeft=5;
 		initDefaultUI();
 		timeInit=System.currentTimeMillis();
-
 
 		container.getInput().addMouseListener(this);
 		container.getInput().addKeyListener(this);
@@ -93,7 +90,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		g.resetLineWidth();
 	}
 
-
 	protected float getAutomaticWidth() {
 		return 100;
 	}
@@ -125,7 +121,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public void setBackgroundColorPressed(Color backgroundColorPressed) {
 		this.backgroundColorPressed = backgroundColorPressed;
 	}
-
 
 	public int getCornerRadius() {
 		return cornerRadius;
@@ -177,8 +172,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public Color getBorderColor() {
 		return borderColor;
 	}
-
-
 
 	public void setBorderColor(Color borderColor) {
 		this.borderColor = borderColor;
@@ -253,15 +246,11 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	}
 
-
-
 	@Override
 	public void keyPressed(int arg0, char arg1) {
 		if(System.currentTimeMillis()-time>500)hasFocus=false;
 		if(!hasFocus)return;
 	}
-
-
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
@@ -293,7 +282,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		return true;
 
 	}
-
 
 	public void setOnClickListener(OnClickListener listener){
 		this.listener=listener;

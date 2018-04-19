@@ -12,33 +12,32 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.Playable;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppInput;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-public class World extends BasicGameState implements Playable{
+public class World extends AppWorld {
 
 	private int ID;
-	
+
 	public final static String GAME_FOLDER_NAME="t7Laser";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public static final Font Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
-	
+
 	private List<Player> players;
 	private List<Player> morts;
 	private static Grid grid;
 	private static Music music;
 	private static Music end;
 	static Sound cat;
-	
+
 	static {
 		try {
 			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
@@ -49,13 +48,13 @@ public class World extends BasicGameState implements Playable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	private float renderScale = 1;
 	public int height;
 	public int width;
 	private int nbJoueursInit;
 	private boolean fin;
-	
+
 	public World (int ID) {
 		this.ID = ID;
 	}
@@ -63,17 +62,17 @@ public class World extends BasicGameState implements Playable{
 	@Override
 	public int getID () {
 		return this.ID;
-	}	
-	
+	}
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		width=container.getWidth();
 		height=container.getHeight();
 	}
-	
+
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps	
+		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		music.loop();
 	}
 
@@ -106,14 +105,14 @@ public class World extends BasicGameState implements Playable{
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
 			music.stop();
 			end.stop();
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			if (!fin) {
 				for (Player p : players) {
 					p.update(container,game,delta);
 				}
 				grid.update(container,game,delta);
-				
+
 				for (int i=0 ; i<players.size() ; i++) {
 					if (players.get(i).getLives()==0) {
 						players.get(i).addScore(200*morts.size());
@@ -122,7 +121,7 @@ public class World extends BasicGameState implements Playable{
 						players.remove(i);
 					}
 				}
-				
+
 				if (morts.size()>=nbJoueursInit) {
 					music.stop();
 					end.play();
@@ -145,25 +144,25 @@ public class World extends BasicGameState implements Playable{
 			}
 		}
 	}
-	
+
 	public Grid getGrid(){
 		return grid;
 	}
-	
+
 	public List<Player> getPlayers(){
 		return players;
 	}
-	
+
 	public float  getRenderScale(){
 		return renderScale;
 	}
-	
+
 	public void setRenderScale(float d){
 		 renderScale = d;
 	}
 
 	@Override
-	public void initPlayers(GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		fin = false;
 		try {

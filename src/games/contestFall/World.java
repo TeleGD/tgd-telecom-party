@@ -8,20 +8,19 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.Playable;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppInput;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-public class World extends BasicGameState implements Playable {
+public class World extends AppWorld {
 
 	private int id;
-	
+
 	public final static String GAME_FOLDER_NAME="contestFall";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -32,14 +31,14 @@ public class World extends BasicGameState implements Playable {
 	public static Image fond;
 	public static Image[] casse = new Image[4];
 	public static Image ammo;
-	
+
 	Platform platform;
 	int startX;
 	int startY;
 	int taille;
 	private ArrayList<Player> players;
 	ArrayList<Projectile> projectiles;
-	
+
 	static {
 		try {
 			fondPlateforme = new Image(DIRECTORY_IMAGES+"plateforme.png");
@@ -53,7 +52,7 @@ public class World extends BasicGameState implements Playable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public World(int id) {
 		this.id = id;
 	}
@@ -80,7 +79,7 @@ public class World extends BasicGameState implements Playable {
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			platform.update(container, game, delta);
 			for (int i=players.size()-1; i>=0 ; i--) {
@@ -96,7 +95,7 @@ public class World extends BasicGameState implements Playable {
 	}
 
 	@Override
-	public void initPlayers(GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		int width = container.getWidth();
 		int height = container.getHeight();
 		taille = (width>height)?height:width;
@@ -105,7 +104,7 @@ public class World extends BasicGameState implements Playable {
 		int platformSize = 12;
 		platform = new Platform(this, platformSize);
 		platformSize=platform.getSize();
-		
+
 		AppGame appGame = (AppGame) game;
 		this.players = new ArrayList<Player>();
 		for (int i = 0; i < appGame.appPlayers.size(); i++) {
@@ -138,7 +137,7 @@ public class World extends BasicGameState implements Playable {
 			}
 			this.players.add(new Player(this, pStartX, pStartY, direction, appGame.appPlayers.get(i)));
 		}
-		
+
 		projectiles = new ArrayList<Projectile>();
 	}
 

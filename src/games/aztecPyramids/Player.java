@@ -9,7 +9,7 @@ public class Player {
 	private int floor;
 
 	private int value;
-	
+
 	private int T1;
 	private int T3;
 	private int T5;
@@ -33,15 +33,10 @@ public class Player {
 		twoPress = false;
 		threePress = false;
 		value=0;
-		
 
 	}
 
-
-
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
-		
-
 
 	}
 
@@ -56,8 +51,6 @@ public class Player {
 			this.value =  5;
 		}
 	}
-
-
 
 	public void afterChange() {
 		onePress = false;
@@ -79,11 +72,11 @@ public class Player {
 	public void climb(){
 		this.floor = this.floor + this.value;
 	}
-	
+
 	public int getFloor() {
 		return this.floor;
 	}
-	
+
 	public void keyReleased(int key, char c) {
 
 	}
@@ -93,20 +86,16 @@ public class Player {
 			onePressEn = true;
 			twoPressEn = true;
 }
-	
+
 	public void keyDisabled() {
 
-		
 		threePressEn = false;
 		onePressEn = false;
 		twoPressEn = false;
 }
-	
-	
+
 		public void keyPressed(int key, char c) {
-        
-			
-			
+
 		if (threePressEn == true && twoPressEn == true && onePressEn == true){
 			if (key == T5){
 				threePress = true;
@@ -122,10 +111,6 @@ public class Player {
 			}
 		}
 
-
-
 	}
-
-
 
 	}

@@ -1,4 +1,4 @@
-package general.ui;
+package app.ui;
 
 import java.awt.Font;
 import org.newdawn.slick.Color;
@@ -8,8 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.utils.FontUtils;
-
+import app.utils.FontUtils;
 
 @SuppressWarnings("serial")
 public class Button extends TGDComponent{
@@ -83,7 +82,6 @@ public class Button extends TGDComponent{
 
 	//GETTERS AND SETTERS
 
-
 	@Override
 	public float getAutomaticWidth(){
 		return textFont.getWidth(text)+paddingLeft+paddingRight;
@@ -99,7 +97,6 @@ public class Button extends TGDComponent{
 	public void setText(String text) {
 		this.text = text;
 	}
-
 
 	public Color getTextColor() {
 		return textColor;
@@ -117,7 +114,6 @@ public class Button extends TGDComponent{
 		this.textFont = textFont;
 	}
 
-
 	public int getTextSize() {
 		return textSize;
 	}
@@ -134,7 +130,6 @@ public class Button extends TGDComponent{
 		this.upperCaseLock = upperCaseLock;
 	}
 
-
 	public Color getTextColorEntered() {
 		return textColorEntered;
 	}
@@ -150,8 +145,5 @@ public class Button extends TGDComponent{
 	public void setTextColorPressed(Color textColorPressed) {
 		this.textColorPressed = textColorPressed;
 	}
-
-
-
 
 }

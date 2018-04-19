@@ -9,12 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Bonus {
-	
+
 	private Point pt;
-	
+
 	static enum bonusType {bGrandis,bRetrecis,bRapide,bLent,bMort,bInverseBonus,bInverseMalus,bRemis,bInvincible};
-	
-	
+
+
 	bonusType type;
 	private Image imageBonus;
 	private int rayon;
@@ -22,7 +22,7 @@ public class Bonus {
 	private int timer=0;
 	private int nextX=0;
 	private int nextY=0;
-	
+
 	public static Bonus RandomBonus(World world, Point pt){
 		Random r = new Random();
 		double b = r.nextFloat();
@@ -45,10 +45,10 @@ public class Bonus {
 			bonus = bonusType.bMort;
 		else
 			bonus = bonusType.bRemis;
-		
+
 		return new Bonus(world,pt,bonus,r.nextInt(2)+1);
 	}
-	
+
 	public void CreeRemi(Point pt,int nx, int ny){
 		Bonus b = new Bonus(w,pt,bonusType.bMort,1);
 		b.nextX = nx;
@@ -56,11 +56,11 @@ public class Bonus {
 		b.timer =300;
 		w.addBonus(b);
 	}
-	
+
 	public Bonus(World world, Point pt,int numBonus,int rayon){
 		this(world, pt,bonusType.values()[numBonus],rayon);
 	}
-	
+
 	public Bonus(World world, Point pt,bonusType bonus,int rayon){
 		this.pt=pt;
 		this.type = bonus;
@@ -71,10 +71,10 @@ public class Bonus {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		
+
 		this.rayon = rayon;
 	}
-	
+
 	public void applyBonus(Snake s){
 		switch(this.type){
 		case bGrandis:
@@ -134,7 +134,7 @@ public class Bonus {
 			break;
 		}
 	}
-	
+
 	private String imagePath(){
 		String path = World.DIRECTORY_IMAGES;
 		switch(type){
@@ -166,18 +166,18 @@ public class Bonus {
 			path+="mouette";
 		break;
 		}
-		
+
 		return path+".png";
 	}
-	
+
 	public Boolean isInBonus(Point p){
 		return(this.pt.x-p.x <= rayon && p.x-this.pt.x <= rayon && this.pt.y - p.y <= rayon && p.y-this.pt.y  <= rayon);
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		imageBonus.draw(pt.x*10-10*rayon,pt.y*10-10*rayon,10+20*rayon,10+20*rayon);
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(type == bonusType.bMort){
 			if(timer > 0){
@@ -187,14 +187,14 @@ public class Bonus {
 				this.pt.y = (pt.y + nextY) %72;
 				if(pt.y < 0)
 					pt.y+= 72;
-				
+
 				timer--;
 			}
 		}
-	}	
-	
+	}
+
 	public int getScore(){
 		return 0;
 	}
-	
+
 }

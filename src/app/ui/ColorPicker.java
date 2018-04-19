@@ -1,4 +1,4 @@
-package general.ui;
+package app.ui;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -8,7 +8,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 @SuppressWarnings("serial")
 public class ColorPicker extends TGDComponent {
-
 
 	private Color colorSelected ;
 
@@ -57,7 +56,6 @@ public class ColorPicker extends TGDComponent {
 			g.drawString(""+c[i],x+width/2-10,y+paddingTop+h/6*i+h/30);
 
 		}
-
 
 		g.setColor(Color.black);
 		g.fillRect(x+paddingLeft,y+paddingTop+4*h/6,w,h/6);
@@ -123,7 +121,6 @@ public class ColorPicker extends TGDComponent {
 					c[row] = etat;
 				}
 			}
-
 
 			/*
 

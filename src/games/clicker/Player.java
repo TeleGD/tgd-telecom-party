@@ -1,11 +1,12 @@
 package games.clicker;
 
-import general.AppInput;
-import general.AppPlayer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppInput;
+import app.AppPlayer;
 
 public class Player {
 
@@ -17,15 +18,15 @@ public class Player {
 
 	public Player(AppPlayer appPlayer) {
 		this.name = appPlayer.getName();
-		this.color = appPlayer.FILL_COLORS[appPlayer.getColorID()];
+		this.color = AppPlayer.FILL_COLORS[appPlayer.getColorID()];
 		this.controllerId = appPlayer.getControllerID();
 		score = 0;
 		multi =0;
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {

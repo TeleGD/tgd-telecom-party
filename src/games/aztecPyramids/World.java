@@ -2,7 +2,6 @@ package games.aztecPyramids;
 
 import java.io.File;
 
-//import java.io.File;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,12 +14,12 @@ public class World extends BasicGameState {
 
 	private int ID;
 	private int compteur;
-	
+
 	public final static String GAME_FOLDER_NAME="aztecPyramids";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-	
+
 	private static Image aztecPyramid;
 	private static Image aztecCalendar;
 	private static Image aztecSnake;
@@ -28,11 +27,9 @@ public class World extends BasicGameState {
 	private static Image aztecHead2;
 	private static Image aztecHead3;
 	private static Image aztecHead4;
-	
-	
-	
+
 	public Player tabPlay[];
-	
+
 	static {
 		try {
 			aztecPyramid = new Image(DIRECTORY_IMAGES+"aztec.jpg");
@@ -46,7 +43,7 @@ public class World extends BasicGameState {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public World (int ID) {
 		this.ID = ID;
 	}
@@ -66,7 +63,6 @@ public class World extends BasicGameState {
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 
-
 	public void startGame(){
 	}
 
@@ -76,8 +72,7 @@ public class World extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		compteur += delta;
-		
-		
+
 		if (compteur == 5000) {
 			for (int j=0;j<this.tabPlay.length;j++){
 				this.tabPlay[j].keyEnabled();
@@ -88,8 +83,7 @@ public class World extends BasicGameState {
 				this.tabPlay[j].keyDisabled();
 			}
 		}
-		
-		
+
 		if (compteur >= 20000) {
 			for (int j=0;j<this.tabPlay.length;j++){
 				this.tabPlay[j].valueChange();
@@ -136,10 +130,9 @@ public class World extends BasicGameState {
 		if (compteur >= 16000 && compteur <= 16500) {
 			g.drawString("Terminé",500,250);
 		}
-		
+
 	}
 
-	
 	@Override
 	public void keyReleased(int key, char c) {
 	}
@@ -152,8 +145,7 @@ public class World extends BasicGameState {
 		for (int j=0;j<this.tabPlay.length;j++){
 			this.tabPlay[j].keyPressed(key,c);
 		}
-		
-		
+
 	}
 
 }

@@ -11,38 +11,32 @@ public class Ennemy {
 	private int y = 0;
 	private World w;
 	private Image image;
-	
+
 	int moveTimer = 100;
-	
+
 	public int getX() {
 		return x;
 	}
-
 
 	public void setX(int x) {
 		this.x = x;
 	}
 
-
 	public int getY() {
 		return y;
 	}
-
 
 	public void setY(int y) {
 		this.y = y;
 	}
 
-
 	public Image getImage() {
 		return image;
 	}
 
-
 	public void setImage(Image image) {
 		this.image = image;
 	}
-
 
 	public Ennemy(World world, int x, int y){
 		try{
@@ -53,9 +47,7 @@ public class Ennemy {
 		w=world;
 		w.getGrid().getCell(x, y).setDeadly(true);
 	}
-	
-	
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		image.draw(280+(x*100*w.getRenderScale())+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,y*100*w.getRenderScale()+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,100*w.getRenderScale(),100*w.getRenderScale());
@@ -84,14 +76,13 @@ public class Ennemy {
 				newY = y-1;
 			if(y < nearestPlayer.getY())
 				newY = y+1;
-			
+
 			if(w.getGrid().MoveEnnemy(newX, newY, this)){
 				//move
 				x = newX;
 				y = newY;
 			}
-				
-			
+
 			moveTimer=50;
 		}
 	}

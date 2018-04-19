@@ -7,11 +7,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Platform {
-	
+
 	private int size;
 	private Cell[][] grid;
 	private Random r = new Random();
-	
+
 	public Platform(World w, int s) {
 		this.size=s;
 		while (!(this.size%3==2 && this.size%2==1)) {
@@ -24,7 +24,7 @@ public class Platform {
 			}
 		}
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		for (int i=0;i<size;i++) {
 			for (int j=0;j<size;j++) {
@@ -32,7 +32,7 @@ public class Platform {
 			}
 		}
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		for (int i=0;i<size;i++) {
 			for (int j=0;j<size;j++) {
@@ -65,15 +65,15 @@ public class Platform {
 			}
 			grid[i][j].addAmmo();
 		}
-		
+
 	}
 
 	public int getSize() {
 		return size;
 	}
-	
+
 	public Cell getCell(int posX, int posY) {
 		return grid[posX][posY];
 	}
-	
+
 }

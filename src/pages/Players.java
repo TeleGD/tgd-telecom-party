@@ -1,4 +1,4 @@
-package menus;
+package pages;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -7,15 +7,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.AppPlayer;
-import general.Playable;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppInput;
+import app.AppPage;
+import app.AppPlayer;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-import menus.ui.Page;
-
-public class PlayersMenu extends Page {
+public class Players extends AppPage {
 
 	static private Font playersFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 14, true);
 
@@ -34,7 +33,7 @@ public class PlayersMenu extends Page {
 
 	private int playersColumnWidth;
 
-	public PlayersMenu (int ID) {
+	public Players (int ID) {
 		this.ID = ID;
 	}
 
@@ -52,20 +51,20 @@ public class PlayersMenu extends Page {
 		this.nextID = -1;
 
 		this.playersBoxX = this.contentX;
-		this.playersBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
+		this.playersBoxY = this.subtitleBoxY + this.subtitleBoxHeight + AppPage.gap;
 		this.playersBoxWidth = this.contentWidth;
-		this.playersBoxHeight = this.hintBoxY - this.playersBoxY - Page.gap;
+		this.playersBoxHeight = this.hintBoxY - this.playersBoxY - AppPage.gap;
 
-		this.playersColumnWidth = (this.playersBoxWidth + Page.gap) / 4 - Page.gap;
+		this.playersColumnWidth = (this.playersBoxWidth + AppPage.gap) / 4 - AppPage.gap;
 
 		this.playersVisibility = true;
 
 		this.hintVisibility = false;
 		this.hintBlink = true;
 
-		this.setTitle ("INSERER TITRE ICI");
-		this.setSubtitle ("INSERER SOUS-TITRE ICI");
-		this.setHint ("PRESS ENTER");
+		this.setTitle ("Joueurs");
+		this.setSubtitle ("Sans sous-titre");
+		this.setHint ("PRESS [A]");
 	}
 
 	@Override
@@ -145,7 +144,7 @@ public class PlayersMenu extends Page {
 			if (BUTTON_A == ((gameMasterRecord & AppInput.BUTTON_A) == 0)) {
 				gameMasterRecord ^= AppInput.BUTTON_A;
 				if (BUTTON_A && this.nextID != -1) {
-					((Playable) appGame.getState (this.nextID)).initPlayers (container, appGame);
+					((AppWorld) appGame.getState (this.nextID)).play (container, appGame);
 					appGame.enterState (this.nextID, new FadeOutTransition (), new FadeInTransition ());
 				}
 			}
@@ -170,16 +169,16 @@ public class PlayersMenu extends Page {
 		if (this.playersVisibility) {
 			int y = this.playersBoxY;
 			for (int i = 0; i < 4; i++) {
-				int x = this.playersBoxX + (this.playersColumnWidth + Page.gap) * i;
+				int x = this.playersBoxX + (this.playersColumnWidth + AppPage.gap) * i;
 				if (i < appGame.appPlayers.size ()) {
 					AppPlayer appPlayer = appGame.appPlayers.get (i);
 					int color = appPlayer.getColorID ();
 					String name = appPlayer.getName ();
-					int playerWidth = PlayersMenu.playersFont.getWidth (name);
-					int playerHeight = PlayersMenu.playersFont.getHeight (name);
+					int playerWidth = Players.playersFont.getWidth (name);
+					int playerHeight = Players.playersFont.getHeight (name);
 					int playerX = x + (this.playersColumnWidth - playerWidth) / 2;
 					int playerY = y + (this.playersBoxHeight - playerHeight) / 2;
-					context.setFont (PlayersMenu.playersFont);
+					context.setFont (Players.playersFont);
 					context.setColor (AppPlayer.STROKE_COLORS [color]);
 					context.fillRect (x - 4, y - 4, this.playersColumnWidth, this.playersBoxHeight);
 					context.setColor (AppPlayer.FILL_COLORS [color]);
@@ -187,16 +186,16 @@ public class PlayersMenu extends Page {
 					context.setColor (AppPlayer.STROKE_COLORS [color]);
 					context.drawString (name, playerX + 4, playerY + 4);
 				} else {
-					int playerWidth = Page.titleFont.getWidth ("+");
-					int playerHeight = Page.titleFont.getHeight ("+");
+					int playerWidth = AppPage.titleFont.getWidth ("+");
+					int playerHeight = AppPage.titleFont.getHeight ("+");
 					int playerX = x + (this.playersColumnWidth - playerWidth) / 2;
 					int playerY = y + (this.playersBoxHeight - playerHeight) / 2;
-					context.setFont (Page.titleFont);
-					context.setColor (Page.foregroundColor);
+					context.setFont (AppPage.titleFont);
+					context.setColor (AppPage.foregroundColor);
 					context.drawRect (x, y, this.playersColumnWidth, this.playersBoxHeight);
-					context.setColor (Page.highlightColor);
+					context.setColor (AppPage.highlightColor);
 					context.drawString ("+", playerX - 2, playerY - 2);
-					context.setColor (Page.foregroundColor);
+					context.setColor (AppPage.foregroundColor);
 					context.drawString ("+", playerX + 2, playerY + 2);
 				}
 			}

@@ -47,7 +47,6 @@ public class Player {
 			climb();
 		}
 
-
 	}
 
 	public void valueChange() {
@@ -61,8 +60,6 @@ public class Player {
 			this.value = 5;
 		}
 	}
-
-
 
 	public void afterChange() {
 		onePress = false;
@@ -115,10 +112,6 @@ public class Player {
 			}
 		}
 
-
-
 	}
-
-
 
 	}

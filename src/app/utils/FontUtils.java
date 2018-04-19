@@ -1,4 +1,4 @@
-package general.utils;
+package app.utils;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -10,7 +10,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class FontUtils {
 
-	public static final String FONT_DIRECTORY_NAME="font";
+	public static final String FONT_DIRECTORY_NAME="fonts";
 	public static final String FONT_PATH=FONT_DIRECTORY_NAME+File.separator;
 	public static final boolean ENABLE_LOG=false;
 
@@ -27,7 +27,6 @@ public class FontUtils {
 		Font fontTemp = new Font(FONT_PATH+name, type, size);
 		return new TrueTypeFont(fontTemp, true);
 	}
-
 
 	/**
 	 * Charger une police personnalisé qui se trouve dans le répertoire font

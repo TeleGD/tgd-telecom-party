@@ -1,4 +1,4 @@
-package general.ui;
+package app.ui;
 
 import java.awt.Font;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.utils.FontUtils;
+import app.utils.FontUtils;
 
 /**
  * TextField Personnalisable a gogo
@@ -46,7 +46,6 @@ public class TextField extends TGDComponent{
 	private int textSize;
 	private int placeHolderTextSize;
 
-
 	private float cursorWidth;
 
 	private boolean cursorEnabled;
@@ -61,14 +60,12 @@ public class TextField extends TGDComponent{
 	public TextField(GameContainer container,float x,float y,float width,float height){
 		super(container,x,y,width,height);
 
-
 		unauthorizedKeys=new ArrayList<Integer>();
 		unauthorizedKeys.add(Input.KEY_RIGHT);
 		unauthorizedKeys.add(Input.KEY_LEFT);
 		unauthorizedKeys.add(Input.KEY_UP);
 		unauthorizedKeys.add(Input.KEY_DOWN);
 		unauthorizedKeys.add(Input.KEY_ENTER);
-
 
 	}
 
@@ -116,7 +113,6 @@ public class TextField extends TGDComponent{
 			g.setFont(textFont);
 			g.drawString(text, x+paddingLeft, y+paddingTop);
 
-
 		}else {
 			g.setColor(placeHolderColor);
 			g.setFont(placeHolderFont);
@@ -141,9 +137,6 @@ public class TextField extends TGDComponent{
 	public float getAutomaticHeight(){
 		return Math.max(textFont.getHeight(text),placeHolderFont.getHeight(placeHolder))+paddingTop+paddingBottom;
 	}
-
-
-
 
 	//GETTERS AND SETTERS
 	public String getPlaceHolder() {
@@ -194,7 +187,6 @@ public class TextField extends TGDComponent{
 		this.placeHolderFont = placeHolderFont;
 	}
 
-
 	public int getPlaceHolderTextSize() {
 		return placeHolderTextSize;
 	}
@@ -211,7 +203,6 @@ public class TextField extends TGDComponent{
 		this.textSize = textSize;
 	}
 
-
 	private void setCursorColor(Color color) {
 		this.cursorColor=color;
 	}
@@ -220,8 +211,6 @@ public class TextField extends TGDComponent{
 		this.cursorWidth=width;
 	}
 
-
-
 	public int getCornerRadius() {
 		return cornerRadius;
 	}
@@ -229,8 +218,6 @@ public class TextField extends TGDComponent{
 	public void setCornerRadius(int cornerRadius) {
 		this.cornerRadius = cornerRadius;
 	}
-
-
 
 	@Override
 	public void keyPressed(int key, char c) {
@@ -273,7 +260,6 @@ public class TextField extends TGDComponent{
 				if(!onlyFigures)text+=c;
 			}
 
-
 			if(upperCaseLock)text=text.toUpperCase();
 		}
 	}
@@ -302,7 +288,6 @@ public class TextField extends TGDComponent{
 		this.upperCaseLock = upperCaseLock;
 	}
 
-
 	public void addUnauthorizedKey(int key){
 		unauthorizedKeys.add(key);
 	}
@@ -318,7 +303,6 @@ public class TextField extends TGDComponent{
 	public void setCursorEnabled(boolean cursorEnabled) {
 		this.cursorEnabled = cursorEnabled;
 	}
-
 
 	public void setEnterActionListener(EnterActionListener listener){
 		this.listener=listener;
@@ -339,6 +323,5 @@ public class TextField extends TGDComponent{
 	public interface EnterActionListener{
 		void onEnterPressed();
 	}
-
 
 }

@@ -10,8 +10,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import general.AppInput;
-import general.AppPlayer;
+import app.AppInput;
+import app.AppPlayer;
 
 public class Player {
 	private static final int nbImages=3;
@@ -62,7 +62,7 @@ public class Player {
 				//victoire
 			}
 		}
-		
+
 	}
 
 }

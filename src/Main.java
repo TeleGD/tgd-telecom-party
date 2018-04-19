@@ -1,17 +1,16 @@
 import org.newdawn.slick.SlickException;
 
-import general.AppContainer;
-import general.AppGame;
+import app.AppContainer;
+import app.AppGame;
 
-public class Main {
+public final class Main {
 
-	public static void main (String [] arguments) throws SlickException {
-		AppGame appGame = new AppGame ("Projet_2018 #NoName");
+	public static final void main (String [] arguments) throws SlickException {
+		AppGame appGame = new AppGame ("Projet 2018");
 		AppContainer container = new AppContainer (appGame, 1280, 720, false);
-		//System.out.println (container.getInput ());
 		container.setTargetFrameRate (60);
 		container.setVSync (true);
-		container.setShowFPS (true);
+		container.setShowFPS (false);
 		container.start ();
 	}
 

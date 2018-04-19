@@ -1,4 +1,4 @@
-package menus.ui;
+package app;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.AppGame;
-import general.AppInput;
-import general.AppPlayer;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppInput;
+import app.AppPlayer;
+import app.elements.MenuItem;
+import app.utils.FontUtils;
 
-public abstract class Menu extends Page {
+public abstract class AppMenu extends AppPage {
 
 	static private Font menuFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 14, true);
 
@@ -42,17 +43,15 @@ public abstract class Menu extends Page {
 	private int menuBlinkPeriod;
 	private int menuBlinkCountdown;
 
-	public Menu () {}
-
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
 		super.init (container, game);
 		this.menuBoxX = this.contentX;
-		this.menuBoxY = this.subtitleBoxY + this.subtitleBoxHeight + Page.gap;
+		this.menuBoxY = this.subtitleBoxY + this.subtitleBoxHeight + AppPage.gap;
 		this.menuBoxWidth = this.contentWidth;
-		this.menuBoxHeight = this.hintBoxY - this.menuBoxY - Page.gap;
+		this.menuBoxHeight = this.hintBoxY - this.menuBoxY - AppPage.gap;
 
-		this.itemHeight = Menu.menuLineHeight;
+		this.itemHeight = AppMenu.menuLineHeight;
 
 		this.menuVisibility = true;
 
@@ -145,20 +144,20 @@ public abstract class Menu extends Page {
 	private void renderMenu (GameContainer container, StateBasedGame game, Graphics context) {
 		if (this.menuVisibility) {
 			int dx = -35;
-			context.setFont (Menu.menuFont);
-			context.setColor (Page.foregroundColor);
+			context.setFont (AppMenu.menuFont);
+			context.setColor (AppPage.foregroundColor);
 			for (int i = this.menuScrollY, l = i + this.menuScrollHeight; i < l; i++) {
 				int dy = this.itemHeight * (i - this.menuScrollY);
 				context.drawString (this.menu.get (i).getContent (), this.menuX, this.menuY + dy);
 				if (i == this.selectedItem) {
 					boolean menuBlink = this.menuBlink && this.menuBlinkCountdown <= this.menuBlinkPeriod / 2;
 					if (!menuBlink) {
-						context.setColor (Page.highlightColor);
+						context.setColor (AppPage.highlightColor);
 					};
 					context.drawString (">>", this.menuX + dx, this.menuY + dy);
 					context.drawString ("<<", this.menuX + this.menuWidth - dx, this.menuY + dy);
 					if (!menuBlink) {
-						context.setColor (Page.foregroundColor);
+						context.setColor (AppPage.foregroundColor);
 					}
 				}
 			}
@@ -173,7 +172,7 @@ public abstract class Menu extends Page {
 		this.menuScrollHeight = Math.min (this.menuBoxHeight / this.itemHeight, this.menu.size ());
 		this.menuWidth = 0;
 		for (MenuItem item: this.menu) {
-			int width = Menu.menuFont.getWidth (item.getContent ());
+			int width = AppMenu.menuFont.getWidth (item.getContent ());
 			if (width > this.menuWidth) {
 				this.menuWidth = width;
 			}

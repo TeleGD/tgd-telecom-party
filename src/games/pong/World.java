@@ -10,19 +10,18 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.EmptyImageData;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.Playable;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppInput;
+import app.AppWorld;
+import app.utils.FontUtils;
 
 import games.pong.bonus.*;
 
-public class World extends BasicGameState implements Playable {
+public class World extends AppWorld {
 
 	public static final Font bonusFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 
@@ -50,7 +49,7 @@ public class World extends BasicGameState implements Playable {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) {
 		try {
-			background = new Image ("images/Pong/backgroundDuck.png");
+			background = new Image ("images/pong/backgroundDuck.png");
 		} catch (SlickException exception) {
 			background = new Image (new EmptyImageData (0, 0));
 		}
@@ -72,7 +71,7 @@ public class World extends BasicGameState implements Playable {
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			if (balls.size() == 0) {
 				balls.add(new Ball(this));
@@ -121,7 +120,7 @@ public class World extends BasicGameState implements Playable {
 			}
 			if (nbJoueurs<1) {
 				System.out.println("Partie terminée");
-				game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
+				game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 			}
 			for (Ball b : balls) {
 				b.update(container, game, delta);
@@ -161,7 +160,7 @@ public class World extends BasicGameState implements Playable {
 	}
 
 	@Override
-	public void initPlayers (GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		nbJoueurs = appGame.appPlayers.size ();
 		this.players = new Player [4];

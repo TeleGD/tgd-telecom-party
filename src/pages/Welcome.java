@@ -1,4 +1,4 @@
-package menus;
+package pages;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,13 +9,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.AppPlayer;
+import app.AppGame;
+import app.AppInput;
+import app.AppPage;
+import app.AppPlayer;
 
-import menus.ui.Page;
-
-public class WelcomeMenu extends Page {
+public class Welcome extends AppPage {
 
 	private int ID;
 
@@ -36,7 +35,7 @@ public class WelcomeMenu extends Page {
 	private int logoNaturalWidth;
 	private int logoNaturalHeight;
 
-	public WelcomeMenu (int ID) {
+	public Welcome (int ID) {
 		this.ID = ID;
 	}
 
@@ -54,7 +53,7 @@ public class WelcomeMenu extends Page {
 		this.hintBoxY = this.contentY;
 
 		this.logoBoxX = this.contentX;
-		this.logoBoxY = this.hintBoxY + this.hintBoxHeight + Page.gap;
+		this.logoBoxY = this.hintBoxY + this.hintBoxHeight + AppPage.gap;
 		this.logoBoxWidth = this.contentWidth;
 		this.logoBoxHeight = this.contentY + this.contentHeight - this.logoBoxY;
 
@@ -64,7 +63,7 @@ public class WelcomeMenu extends Page {
 		this.subtitleVisibility = false;
 		this.hintBlink = true;
 
-		this.setHint ("PRESS ENTER");
+		this.setHint ("PRESS [START]");
 		Image logo;
 		try {
 			logo = new Image ("images/logo.png");
@@ -87,7 +86,7 @@ public class WelcomeMenu extends Page {
 				gameMasterID = 0; /* Magic number */
 			} else {
 				for (int i = appInput.getControllerCount () - 1; i >= 0; i--) {
-					if (appInput.isButtonPressed (AppInput.BUTTON_A, i)) {
+					if (appInput.isButtonPressed (AppInput.BUTTON_A | AppInput.BUTTON_PLUS, i)) {
 						gameMasterID = i;
 						break;
 					}
@@ -96,8 +95,8 @@ public class WelcomeMenu extends Page {
 			if (gameMasterID != AppInput.ANY_CONTROLLER) {
 				int colorID = appGame.availableColorIDs.remove (0);
 				String name = "Joueur " + AppPlayer.COLOR_NAMES [colorID]; // TODO: set user name
-				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name, AppInput.BUTTON_A));
-				appGame.enterState (AppGame.MENUS_MAIN_MENU, new FadeOutTransition (), new FadeInTransition ());
+				appGame.appPlayers.add (0, new AppPlayer (colorID, gameMasterID, name, AppInput.BUTTON_A | AppInput.BUTTON_PLUS));
+				appGame.enterState (AppGame.PAGES_TITLES, new FadeOutTransition (), new FadeInTransition ());
 			}
 		}
 	}

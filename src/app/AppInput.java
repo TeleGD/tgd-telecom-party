@@ -1,4 +1,4 @@
-package general;
+package app;
 
 import org.newdawn.slick.Input;
 

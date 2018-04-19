@@ -1,6 +1,5 @@
 package games.t7Laser;
 
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,11 +7,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.AppInput;
-import general.AppPlayer;
+import app.AppInput;
+import app.AppPlayer;
 
 public class Player{
-	
+
 	private int x = 0;
 	private int y = 0;
 	private float width = 100;
@@ -25,12 +24,12 @@ public class Player{
 	private World w;
 	private int score;
 	private int lives = 1;
-	
+
 	private boolean moveLeft,moveRight,moveUp,moveDown=false;
 	private int controllerID;
 	private Color couleur;
 	private String name;
-	
+
 	public Player(World world, int x, int y, int i, AppPlayer appPlayer) throws SlickException{
 		//position initiale
 		controllerID = appPlayer.getControllerID ();
@@ -47,16 +46,14 @@ public class Player{
 		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
 		this.setImage(this.down);
 	}
-	
+
 	public Color getCouleur() {
 		return couleur;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
@@ -71,7 +68,7 @@ public class Player{
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		callMove();
 	}
-	
+
 	public void callMove() throws SlickException{
 		if(moveUp && !moveDown){ //haut
 			move(x,y-1);
@@ -94,11 +91,10 @@ public class Player{
 			moveRight = false;
 		}
 	}
-	
+
 	public boolean isMoveUp() {
 		return moveUp;
 	}
-
 
 	public boolean isMoveDown() {
 		return moveDown;
@@ -107,20 +103,20 @@ public class Player{
 	public void setMoveUp(boolean b){
 		moveUp = b;
 	}
-	
+
 	public void setMoveDown(boolean b){
 		moveDown = b;
 	}
 
 	public void move(int x,int y){
-		
+
 		if(w.getGrid().MovePlayer(x, y, this)){
 			//if move worked
 			this.x = x;
 			this.y =y;
 		}
 	}
-		
+
 	public boolean isDead(){
 		return this.lives <= 0;
 	}
@@ -165,21 +161,17 @@ public class Player{
 		return score;
 	}
 
-
 	public void setScore(int score) {
 		this.score = score;
 	}
-
 
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
 
-
 	public Image getImage() {
 		return image;
 	}
-
 
 	public void setImage(Image image) {
 		this.image = image;
@@ -188,6 +180,5 @@ public class Player{
 	public void addScore(int i) {
 		this.score = this.score+i;
 	}
-	
-	
+
 }

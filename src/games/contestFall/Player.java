@@ -5,8 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.AppInput;
-import general.AppPlayer;
+import app.AppInput;
+import app.AppPlayer;
 
 public class Player {
 	private World w;
@@ -30,7 +30,7 @@ public class Player {
 	private int controllerID;
 	private Color couleur;
 	private String name;
-	
+
 	public Player(World w, int startPosX, int startPosY, int startDirection, AppPlayer appPlayer) {
 		this.controllerID = appPlayer.getControllerID();
 		this.couleur = AppPlayer.FILL_COLORS[appPlayer.getColorID()];
@@ -45,7 +45,7 @@ public class Player {
 		y=w.startY+(posY)*size;
 		y2=w.startY+(posY+1)*size;
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		context.setColor(couleur);
 		context.fillRect(x+size/4, y+size/4, size/2, size/2);
@@ -101,7 +101,7 @@ public class Player {
 			w.platform.getCell(posX,posY).removeAmmo();
 		}
 	}
-	
+
 	public void forceMove(int dir) {
 		int nextPosX=posX+((-direction+2)%2);
 		int nextPosY=posY+((-direction+1)%2);
@@ -114,7 +114,7 @@ public class Player {
 			y=y+size*((-direction+1)%2);
 		}
 	}
-	
+
 	public boolean isDead() {
 		return fallCount<=0;
 	}
@@ -122,5 +122,5 @@ public class Player {
 	public Color getColor() {
 		return this.couleur;
 	}
-	
+
 }

@@ -7,12 +7,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-// import general.AppGame;
+public class Player {
 
-
-public class JoueurPlateau {
-
-	private WorldPlateau plateau;
+	private World plateau;
 	private Dice playerDice;
 	private int place;
 	private int colorID;
@@ -22,7 +19,7 @@ public class JoueurPlateau {
 	private float x;
 	private float y;
 
-	public JoueurPlateau(WorldPlateau plateau, int colorID, int controllerID, String name, String nameSprite) {
+	public Player (World plateau, int colorID, int controllerID, String name, String nameSprite) {
 		this.plateau = plateau;
 		place=0;
 		playerDice = new Dice(6, new int[] {1,2,3,4,5,6},1); // Initialise le dé du joueur : 4 faces
