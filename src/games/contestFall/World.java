@@ -2,6 +2,7 @@ package games.contestFall;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,6 +38,7 @@ public class World extends AppWorld {
 	int startY;
 	int taille;
 	private ArrayList<Player> players;
+	private ArrayList<Player> morts;
 	ArrayList<Projectile> projectiles;
 
 	static {
@@ -85,13 +87,25 @@ public class World extends AppWorld {
 			for (int i=players.size()-1; i>=0 ; i--) {
 				players.get(i).update(container, game, delta);
 				if (players.get(i).isDead()) {
+					morts.add(players.get(i));
 					players.remove(i);
 				}
 			}
 			for (int i=projectiles.size()-1; i>=0 ; i--) {
 				projectiles.get(i).update(container, game, delta);
 			}
+			if (players.size()==0) {
+				end();
+			}
 		}
+	}
+
+	public void end() {
+		HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
+		for (int i=0; i<morts.size(); i++) {
+			classement.put(morts.get(i).getControllerID(), i);
+		}
+		System.out.println(classement.toString());
 	}
 
 	@Override
@@ -107,6 +121,7 @@ public class World extends AppWorld {
 
 		AppGame appGame = (AppGame) game;
 		this.players = new ArrayList<Player>();
+		this.morts = new ArrayList<Player>();
 		for (int i = 0; i < appGame.appPlayers.size(); i++) {
 			int pStartX = 0;
 			int pStartY = 0;

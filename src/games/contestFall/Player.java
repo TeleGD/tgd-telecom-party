@@ -122,5 +122,9 @@ public class Player {
 	public Color getColor() {
 		return this.couleur;
 	}
+	
+	public int getControllerID() {
+		return this.controllerID;
+	}
 
 }

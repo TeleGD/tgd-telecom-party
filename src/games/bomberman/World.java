@@ -2,6 +2,7 @@ package games.bomberman;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
@@ -46,6 +47,8 @@ public class World extends AppWorld {
 	private Aside gui;
 	private List <Player> players;
 	private List <Bomb> bombs;
+
+	private ArrayList<Player> morts;
 	private static Music music;
 	private static Sound poseBombe;
 	private static Sound theEnd;
@@ -106,6 +109,15 @@ public class World extends AppWorld {
 	@Override
 	public void leave (GameContainer container, StateBasedGame game) {}
 
+
+	public void end() {
+		HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
+		for (int i=0; i<morts.size(); i++) {
+			classement.put(morts.get(i).getControllerID(), i);
+		}
+		System.out.println(classement.toString());
+	}
+	
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput ();
@@ -120,13 +132,17 @@ public class World extends AppWorld {
 			for (Bomb b: bombs) {
 				b.update (delta);
 			}
-			for (int i = 0 ; i < players.size () ; i++) {
+			for (int i = players.size()-1 ; i >= 0 ; i--) {
 				if (players.get (i).getLife () <= 0) {
 					theEnd.play (1, (float) 1);
+					morts.add(players.get(i));
 					players.remove (i);
+					if (players.size()==0) {
+						end();
+					}
 				}
 			}
-			for (int i = 0 ; i < bombs.size () ; i++) {
+			for (int i = bombs.size ()-1 ; i >=0; i--) {
 				if (bombs.get (i).isDetruite ()) {
 					board.getCase (bombs.get (i).getI (), bombs.get (i).getJ ()).setBomb (null);
 					bombs.remove (i);
