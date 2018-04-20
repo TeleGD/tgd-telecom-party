@@ -206,7 +206,6 @@ public abstract class Player {
 		for (Player p: world.players) {
 			if (!p.equals (this)) {
 				if (willBeInside (p.getX (), p.getY (), p.getWidth (), p.getHeight ())) {
-					this.collideWithPlayer (p);
 					p.collideWithPlayer (this);
 				}
 			}
