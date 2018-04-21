@@ -1,4 +1,4 @@
-package games.contestFall;
+package games.codeFall;
 
 import java.util.Random;
 

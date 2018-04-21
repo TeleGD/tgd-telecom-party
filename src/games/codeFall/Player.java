@@ -1,4 +1,4 @@
-package games.contestFall;
+package games.codeFall;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

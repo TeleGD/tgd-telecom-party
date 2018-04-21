@@ -17,7 +17,7 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_BATTLE_WORLD = 6;
 	public static final int GAMES_BOMBERMAN_WORLD = 7;
 	public static final int GAMES_CLICKER_WORLD = 8;
-	public static final int GAMES_CONTESTFALL_WORLD = 9;
+	public static final int GAMES_CODEFALL_WORLD = 9;
 	public static final int GAMES_KOMTUVE_WORLD = 10;
 	public static final int GAMES_MAZE_WORLD = 11;
 	public static final int GAMES_PATHPAINTING_WORLD = 12;
@@ -36,7 +36,7 @@ public class AppGame extends StateBasedGame {
 		"Bataille PacMan",
 		"Bomberman",
 		"Clicker",
-		"Contest Fall",
+		"Code Fall",
 		"Comme tu veux",
 		"Labyrinthe",
 		"Path Painting",
@@ -74,7 +74,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.battle.World (AppGame.GAMES_BATTLE_WORLD));
 		this.addState (new games.bomberman.World (AppGame.GAMES_BOMBERMAN_WORLD));
 		this.addState (new games.clicker.World (AppGame.GAMES_CLICKER_WORLD));
-		this.addState (new games.contestFall.World (AppGame.GAMES_CONTESTFALL_WORLD));
+		this.addState (new games.codeFall.World (AppGame.GAMES_CODEFALL_WORLD));
 		this.addState (new games.komtuve.World (AppGame.GAMES_KOMTUVE_WORLD));
 		this.addState (new games.maze.World (AppGame.GAMES_MAZE_WORLD));
 		this.addState (new games.pathPainting.World (AppGame.GAMES_PATHPAINTING_WORLD));

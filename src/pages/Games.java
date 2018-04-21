@@ -58,11 +58,11 @@ public class Games extends AppMenu {
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
-			new MenuItem (AppGame.TITLES [AppGame.GAMES_CONTESTFALL_WORLD]) {
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_CODEFALL_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
 					players.setPreviousID (AppGame.PAGES_GAMES);
-					players.setNextID (AppGame.GAMES_CONTESTFALL_WORLD);
+					players.setNextID (AppGame.GAMES_CODEFALL_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
