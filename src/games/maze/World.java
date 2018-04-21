@@ -50,9 +50,9 @@ public class World extends AppWorld {
 		width = container.getWidth ();
 		board = new Board (this, 50);
 		players = new ArrayList <Player> ();
-		players.add (new VictimPlayer (this, appGame.appPlayers.get (0)));
+		players.add (new VictimPlayer (this, appGame.appPlayers.get (0),0));
 		for (int i = 1; i < n; i++) {
-			players.add (new HunterPlayer (this, appGame.appPlayers.get (i)));
+			players.add (new HunterPlayer (this, appGame.appPlayers.get (i),i));
 		}
 		timer = 90000; //temps de la partie (90s)
 	}
