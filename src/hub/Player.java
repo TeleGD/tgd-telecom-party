@@ -45,7 +45,7 @@ public class Player {
 
 	public void avance(int n) {
 		place+=n;
-
+		plateau.getTrack().getCase(place).doEffect(this); // On applique l'effet de la case d'arrivée
 	}
 
 	public void updateCoordonnees() {

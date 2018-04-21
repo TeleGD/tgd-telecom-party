@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import app.AppGame;
+import hub.cases.Remi;
 
 public class SpiralTrack {
 
@@ -29,9 +30,17 @@ public class SpiralTrack {
 
 		for (int i = 0; i < length; i++) {
 			int [] coord = getCoordinates(i);
-
-			this.cases [i] = new Case (plateau, i,coord[0],coord[1],typeCases.get(i));
-		};
+			int type = typeCases.get(i);
+			switch(type) {
+				case 0 : this.cases [i] = new Case (plateau, i,coord[0],coord[1],type); break;
+				case 1 : this.cases [i] = new Remi (plateau, i,coord[0],coord[1],type); 
+						plateau.getListeRemis().add((Remi) this.cases[i]);
+						break;
+				
+				default : this.cases [i] = new Case (plateau, i,coord[0],coord[1],type); break;
+					
+			}
+		}
 
 	}
 

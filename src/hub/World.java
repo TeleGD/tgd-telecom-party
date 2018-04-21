@@ -18,6 +18,7 @@ import app.AppWorld;
 // import app.ui.Button;
 // import app.ui.TGDComponent;
 // import app.ui.TGDComponent.OnClickListener;
+import hub.cases.Remi;
 
 public class World extends AppWorld {
 
@@ -32,6 +33,7 @@ public class World extends AppWorld {
 	private int gridGap;
 	private int turnNumber;
 	private List<Player> listeJoueurs;
+	private ArrayList<Remi> listeRemis; // La liste des cases Rémi Bachelet ! TODO : l'initialiser
 	private boolean enterPress;
 
 	public World (int ID) {
@@ -50,6 +52,7 @@ public class World extends AppWorld {
 		gridWidth = 64;
 		gridHeight = 64;
 		gridGap = 16;
+		listeRemis = new ArrayList<Remi>();
 		this.track = new SpiralTrack (this, 70);
 
 		this.turnNumber = 0; // numéro du tour
@@ -116,6 +119,14 @@ public class World extends AppWorld {
 
 	public int getGridGap() {
 		return this.gridGap;
+	}
+	
+	public List<Player> getListeJoueurs() {
+		return listeJoueurs;
+	}
+
+	public List<Remi> getListeRemis() {
+		return listeRemis;
 	}
 
 }
