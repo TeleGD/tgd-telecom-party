@@ -7,14 +7,13 @@ import games.maze.World;
 
 public class HunterPlayer extends Player {
 
-	public HunterPlayer (World w, AppPlayer aplayer) {
-		super (w, aplayer);
-		// TODO Auto - generated constructor stub
+	public HunterPlayer (World w, AppPlayer aplayer, int id) {
+		super (w, aplayer, id);
 	}
 
 	public void collideWithPlayer (Player p) {
 		if (p instanceof VictimPlayer) {
-			super.world.endGame (this);
+			world.endGame(this);
 		}
 	}
 

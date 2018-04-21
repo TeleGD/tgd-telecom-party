@@ -34,6 +34,7 @@ public abstract class Player {
 	protected boolean moveUp = false;
 	protected boolean canMoveHorizontal, canMoveVertical;
 	protected int controllerID;
+	protected int id;
 	static {
 		try {
 			spriteDown = new Image (World.DIRECTORY_IMAGES + "personnage.png");
@@ -42,8 +43,9 @@ public abstract class Player {
 		}
 	}
 
-	public Player (World w, AppPlayer appPlayer) {
+	public Player (World w, AppPlayer appPlayer, int id) {
 		controllerID = appPlayer.getControllerID ();
+		this.id=id;
 		world = w;
 		this.board = w.board;
 		size = board.getSize ();
@@ -54,7 +56,7 @@ public abstract class Player {
 		width = spriteDown.getWidth () * ((float)size / board.getImgInitSize () [0]);
 		height = spriteDown.getHeight () * ((float)size / board.getImgInitSize () [1]);
 		// Attribution des positions de départ en fonction du n° de joueur
-		switch (controllerID) {
+		switch (id) {
 			case 0 :
 				posX = (int) (columns / 2) + 1;
 				posY = (int) (rows / 2) + 1;
@@ -205,7 +207,7 @@ public abstract class Player {
 		//Player collisions
 		for (Player p: world.players) {
 			if (!p.equals (this)) {
-				if (willBeInside (p.getX (), p.getY (), p.getWidth (), p.getHeight ())) {
+				if (willBeInside (p.getX (), p.getY (), p.getX ()+p.getWidth (), p.getY ()+p.getHeight ())) {
 					p.collideWithPlayer (this);
 				}
 			}
@@ -251,7 +253,7 @@ public abstract class Player {
 	}
 
 	public int getID () {
-		return controllerID;
+		return id;
 	}
 
 }

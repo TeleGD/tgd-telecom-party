@@ -10,15 +10,15 @@ public class VictimPlayer extends Player {
 	private boolean invulnerable;
 	private boolean immaterial;
 
-	public VictimPlayer (World w, AppPlayer aplayer) {
-		super (w, aplayer);
+	public VictimPlayer (World w, AppPlayer aplayer, int id) {
+		super (w, aplayer,id);
 		invulnerable = false;
 		immaterial = false;
 	}
 
 	public void collideWithPlayer (Player p) {
 		if (p instanceof HunterPlayer) {
-			super.world.endGame (p);
+			world.endGame(p);
 		}
 	}
 
