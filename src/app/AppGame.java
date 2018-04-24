@@ -22,9 +22,10 @@ public class AppGame extends StateBasedGame {
 	public static final int GAMES_MAZE_WORLD = 11;
 	public static final int GAMES_PATHPAINTING_WORLD = 12;
 	public static final int GAMES_PONG_WORLD = 13;
-	public static final int GAMES_REFLEX_WORLD = 14;
-	public static final int GAMES_SNAKE_WORLD = 15;
-	public static final int GAMES_T7LASER_WORLD = 16;
+	public static final int GAMES_PRECISELOCK_WORLD = 14;
+	public static final int GAMES_REFLEX_WORLD = 15;
+	public static final int GAMES_SNAKE_WORLD = 16;
+	public static final int GAMES_T7LASER_WORLD = 17;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
@@ -41,6 +42,7 @@ public class AppGame extends StateBasedGame {
 		"Labyrinthe",
 		"Path Painting",
 		"Pong multijoueur",
+		"Precise lock",
 		"Reflex",
 		"Snake",
 		"T7Laser Remake"
@@ -79,6 +81,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new games.maze.World (AppGame.GAMES_MAZE_WORLD));
 		this.addState (new games.pathPainting.World (AppGame.GAMES_PATHPAINTING_WORLD));
 		this.addState (new games.pong.World (AppGame.GAMES_PONG_WORLD));
+		this.addState (new games.preciseLock.World (AppGame.GAMES_PRECISELOCK_WORLD));
 		this.addState (new games.reflex.World (AppGame.GAMES_REFLEX_WORLD));
 		this.addState (new games.snake.World (AppGame.GAMES_SNAKE_WORLD));
 		this.addState (new games.t7Laser.World (AppGame.GAMES_T7LASER_WORLD));

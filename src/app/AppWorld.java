@@ -13,5 +13,4 @@ public abstract class AppWorld extends BasicGameState {
 	// public void pause (GameContainer container, StateBasedGame game) {};
 
 	// public void resume (GameContainer container, StateBasedGame game) {};
-
 }

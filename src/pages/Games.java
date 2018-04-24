@@ -95,6 +95,14 @@ public class Games extends AppMenu {
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_PRECISELOCK_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_PRECISELOCK_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
+				}
+			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_REFLEX_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
