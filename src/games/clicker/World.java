@@ -1,5 +1,6 @@
 package games.clicker;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -7,6 +8,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -22,6 +24,8 @@ public class World extends AppWorld {
 
 	public static final Font Font = FontUtils.loadFont("Kalinga", java.awt.Font.BOLD, 18, true);
 	private final int ID;
+	public final static String GAME_FOLDER_NAME="clicker";
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	private ArrayList<Player> players;
 	private int count;
 	private boolean finished;
@@ -30,6 +34,17 @@ public class World extends AppWorld {
 	private int nbJoueursInit;
 	private static int marge = 10;
 
+	private static Music music;
+	
+	static {
+		try {
+			music = new Music(DIRECTORY_MUSICS+"Sticky_and_Addictive.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public World(int id) {
 		this.ID = id;
 	}
@@ -112,6 +127,7 @@ public class World extends AppWorld {
 		int gameMasterID = appGame.appPlayers.get(0).getControllerID();
 		if (appInput.isKeyPressed(AppInput.KEY_ESCAPE)
 				|| appInput.isButtonPressed(AppInput.BUTTON_PLUS, gameMasterID)) {
+			music.stop();
 			game.enterState(app.AppGame.PAGES_GAMES, new FadeOutTransition(), new FadeInTransition());
 		} else if (!finished) {
 			count -= delta;
@@ -120,6 +136,7 @@ public class World extends AppWorld {
 			}
 			if (count < 0) {
 				finished = true;
+				music.stop();
 			}
 		}
 	}
@@ -127,7 +144,11 @@ public class World extends AppWorld {
 	@Override
 	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
+		AppInput appInput = (AppInput) container.getInput ();
+		appInput.clearKeyPressedRecord ();
+		appInput.clearControlPressedRecord ();
 		finished = false;
+		music.loop(1, (float) 0.4);
 		count = 30000;
 		players = new ArrayList<Player>();
 		for (AppPlayer player : appGame.appPlayers) {
