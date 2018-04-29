@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -20,7 +23,7 @@ public class World extends AppWorld {
 
 	private int id;
 
-	public final static String GAME_FOLDER_NAME="pathPaint";
+	public final static String GAME_FOLDER_NAME="pathPainting";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -30,6 +33,16 @@ public class World extends AppWorld {
 	private int width;
 	private int height;
 	private ArrayList<Player> players;
+	
+	private static Music music;
+	
+	static {
+		try {
+			music = new Music(DIRECTORY_MUSICS + "Akira_vs_Konono.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public World(int id) {
 		this.id = id;
@@ -53,6 +66,7 @@ public class World extends AppWorld {
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
+			music.stop();
 			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 			int blockedPlayers=0;
@@ -62,6 +76,7 @@ public class World extends AppWorld {
 			}
 			if (blockedPlayers==players.size()) {
 				// fin de la partie
+				music.stop();
 				int[] scores = board.countScore(players);
 				HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
 				for (int i=0 ; i<players.size();i++) {
@@ -80,12 +95,16 @@ public class World extends AppWorld {
 		board = new Board(this, boardMinSize);
 
 		AppGame appGame = (AppGame) game;
+		AppInput appInput = (AppInput) container.getInput ();
+		appInput.clearKeyPressedRecord ();
+		appInput.clearControlPressedRecord ();
 		this.players = new ArrayList<Player>();
 		int w = board.getColumns ();
 		int h = board.getRows ();
 		for (int i = 0; i < appGame.appPlayers.size(); i++) {
 			this.players.add(new Player(this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), appGame.appPlayers.get(i)));
 		}
+		music.loop(1, (float) 0.5);
 	}
 
 	@Override

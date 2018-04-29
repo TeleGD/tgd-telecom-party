@@ -3,6 +3,8 @@ package games.pathPainting;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppInput;
@@ -27,6 +29,15 @@ public class Player {
 	private Color couleur;
 	private String name;
 	private boolean blocked;
+	private static Sound sound;
+	
+	static {
+		try {
+			sound = new Sound("musics/pathPainting/critical_stop.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Player(World w, int startPosX, int startPosY, AppPlayer appPlayer) {
 		this.controllerID = appPlayer.getControllerID();
@@ -56,6 +67,11 @@ public class Player {
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput();
 		move(appInput);
+		if (!blocked && (
+				(posX==0 || w.board.getCell(posX-1,posY).hasPlayer()) && (posX==w.board.getColumns()-1 || w.board.getCell(posX+1,posY).hasPlayer())
+				&& (posY==0 || w.board.getCell(posX,posY-1).hasPlayer()) && (posY==w.board.getRows()-1 || w.board.getCell(posX,posY+1).hasPlayer()))) {
+			sound.play(1, (float) 0.5);
+		}
 		blocked = (blocked || (
 				(posX==0 || w.board.getCell(posX-1,posY).hasPlayer()) && (posX==w.board.getColumns()-1 || w.board.getCell(posX+1,posY).hasPlayer())
 				&& (posY==0 || w.board.getCell(posX,posY-1).hasPlayer()) && (posY==w.board.getRows()-1 || w.board.getCell(posX,posY+1).hasPlayer())));
