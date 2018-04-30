@@ -37,21 +37,21 @@ public class Titles extends AppMenu {
 					players.setPreviousID (AppGame.PAGES_TITLES);
 					players.setNextID (AppGame.HUB_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
-				};
+				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.PAGES_GAMES]) {
 				public void itemSelected () {
 					game.enterState (AppGame.PAGES_GAMES);
-				};
+				}
 			},
 			new MenuItem ("Retour") {
 				public void itemSelected () {
 					AppGame appGame = (AppGame) game;
 					for (int i = appGame.appPlayers.size () - 1; i >= 0; i--) {
 						appGame.availableColorIDs.add (0, appGame.appPlayers.remove (i).getColorID ());
-					};
+					}
 					appGame.enterState (AppGame.PAGES_WELCOME, new FadeOutTransition (), new FadeInTransition ());
-				};
+				}
 			}
 		}));
 		this.setHint ("SELECT A TITLE");
