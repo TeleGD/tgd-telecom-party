@@ -97,6 +97,7 @@ public class World extends AppWorld {
 		board = new Board (this, 13, 25);
 		players = new ArrayList <Player> ();
 		bombs = new ArrayList <Bomb> ();
+		morts = new ArrayList<Player>();
 		for (int i = 0; i < n; i++) {
 			players.add (new Player (this, appGame.appPlayers.get (i), i));
 		}

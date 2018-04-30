@@ -27,7 +27,7 @@ public class Aside {
 			int right = (i * longueur - 1) / (players.size ());
 			context.drawLine (right, hauteurPlateau, right, hauteurPlateau + hauteur);
 			context.setColor (players.get (i).getFillColor ());
-			context.drawString ("Joueur 1 : ", right, hauteurPlateau + 5);
+			context.drawString ("Joueur " + (i+1) + " : ", right, hauteurPlateau + 5);
 			context.drawString ("Vies : " + players.get (i).getLife (), right + 10, hauteurPlateau + 25);
 			context.drawString ("Bombes disponibles : " + players.get (i).getBombAvailable (), right + 10, hauteurPlateau + 40);
 		}
