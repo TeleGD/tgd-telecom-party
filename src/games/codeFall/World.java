@@ -20,8 +20,6 @@ import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-	private int id;
-
 	public final static String GAME_FOLDER_NAME="codeFall";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -55,8 +53,8 @@ public class World extends AppWorld {
 		}
 	}
 
-	public World(int id) {
-		this.id = id;
+	public World (int ID) {
+		super (ID);
 	}
 
 	@Override
@@ -154,11 +152,6 @@ public class World extends AppWorld {
 		}
 
 		projectiles = new ArrayList<Projectile>();
-	}
-
-	@Override
-	public int getID() {
-		return id;
 	}
 
 }

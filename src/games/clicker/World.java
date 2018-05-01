@@ -23,7 +23,6 @@ import app.utils.FontUtils;
 public class World extends AppWorld {
 
 	public static final Font Font = FontUtils.loadFont("Kalinga", java.awt.Font.BOLD, 18, true);
-	private final int ID;
 	public final static String GAME_FOLDER_NAME="clicker";
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	private ArrayList<Player> players;
@@ -35,7 +34,7 @@ public class World extends AppWorld {
 	private static int marge = 10;
 
 	private static Music music;
-	
+
 	static {
 		try {
 			music = new Music(DIRECTORY_MUSICS+"Sticky_and_Addictive.ogg");
@@ -44,9 +43,9 @@ public class World extends AppWorld {
 			e.printStackTrace();
 		}
 	}
-	
-	public World(int id) {
-		this.ID = id;
+
+	public World (int ID) {
+		super (ID);
 	}
 
 	@Override
@@ -157,11 +156,6 @@ public class World extends AppWorld {
 		height = container.getHeight();
 		width = container.getWidth();
 		nbJoueursInit = appGame.appPlayers.size();
-	}
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 }

@@ -23,8 +23,6 @@ import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-    private int ID;
-
     public int nbcasesh;
     public int nbcasesl;
     public int longueur;
@@ -68,13 +66,8 @@ public class World extends AppWorld {
     	}
     }
 
-    public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID() {
-		return this.ID;
+	public World (int ID) {
+		super (ID);
 	}
 
     @Override

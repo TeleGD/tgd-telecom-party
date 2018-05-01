@@ -22,8 +22,6 @@ import hub.cases.Remi;
 
 public class World extends AppWorld {
 
-	private int ID;
-
 	@Deprecated
 	private StateBasedGame game;
 
@@ -37,12 +35,7 @@ public class World extends AppWorld {
 	private boolean enterPress;
 
 	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override
@@ -120,7 +113,7 @@ public class World extends AppWorld {
 	public int getGridGap() {
 		return this.gridGap;
 	}
-	
+
 	public List<Player> getListeJoueurs() {
 		return listeJoueurs;
 	}

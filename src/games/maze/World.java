@@ -18,8 +18,6 @@ import games.maze.players.VictimPlayer;
 
 public class World extends AppWorld {
 
-	private int ID;
-
 	public final static String GAME_FOLDER_NAME = "maze";
 	public final static String DIRECTORY_SOUNDS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
 	public final static String DIRECTORY_MUSICS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
@@ -31,12 +29,7 @@ public class World extends AppWorld {
 	private int timer;
 
 	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override

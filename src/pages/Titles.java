@@ -13,15 +13,8 @@ import app.elements.MenuItem;
 
 public class Titles extends AppMenu {
 
-	private int ID;
-
 	public Titles (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override

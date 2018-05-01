@@ -15,14 +15,13 @@ import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-	private int ID;
 	public static final Font BUTTON_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 	protected final static int GOAL=20;
 	private ArrayList<Player> players;
 
 	public World (int ID) {
-		this.ID = ID;
-	};
+		super (ID);
+	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -50,11 +49,6 @@ public class World extends AppWorld {
 			p.update(container, game, delta);
 		}
 
-	}
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 	@Override

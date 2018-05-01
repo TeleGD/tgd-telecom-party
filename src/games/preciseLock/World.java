@@ -16,13 +16,12 @@ import app.AppWorld;
 
 public class World extends AppWorld {
 
-	private int ID;
 	private Random r;
 	private ArrayList<Player> players;
 	private HashMap<Integer, Integer> classement;
 
-	public World(int id) {
-		this.ID = id;
+	public World (int ID) {
+		super (ID);
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class World extends AppWorld {
 		} else {
 			for (Player p : players) {
 				if (!p.hasFinished()) {
-					p.update(container, game, delta);	
+					p.update(container, game, delta);
 					if (p.hasFinished()) {
 						int stillPlaying = 0;
 						for (Player pl : players) {
@@ -82,11 +81,6 @@ public class World extends AppWorld {
 			players.add(new Player(appGame.appPlayers.get(i), angle, (i < 2) ? 0 : width, (i % 2 == 0) ? 0 : height,
 					width, height));
 		}
-	}
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 }

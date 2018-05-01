@@ -21,8 +21,6 @@ import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-	private int id;
-
 	public final static String GAME_FOLDER_NAME="pathPainting";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -33,9 +31,9 @@ public class World extends AppWorld {
 	private int width;
 	private int height;
 	private ArrayList<Player> players;
-	
+
 	private static Music music;
-	
+
 	static {
 		try {
 			music = new Music(DIRECTORY_MUSICS + "Akira_vs_Konono.ogg");
@@ -44,8 +42,8 @@ public class World extends AppWorld {
 		}
 	}
 
-	public World(int id) {
-		this.id = id;
+	public World (int ID) {
+		super (ID);
 	}
 
 	@Override
@@ -105,11 +103,6 @@ public class World extends AppWorld {
 			this.players.add(new Player(this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), appGame.appPlayers.get(i)));
 		}
 		music.loop(1, (float) 0.5);
-	}
-
-	@Override
-	public int getID() {
-		return id;
 	}
 
 	public int getWidth() {

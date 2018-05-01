@@ -23,8 +23,6 @@ import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-	private int ID;
-
 	public final static String GAME_FOLDER_NAME="t7Laser";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -56,12 +54,7 @@ public class World extends AppWorld {
 	private boolean fin;
 
 	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override

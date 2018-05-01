@@ -14,7 +14,6 @@ public class World extends AppWorld {
 		// y = (4h / d) (x - x² / d)
 		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
 	};
-	private int ID;
 	private int width;
 	// private int height;
 	private Color backgroundColor;
@@ -22,10 +21,7 @@ public class World extends AppWorld {
 	private Color strokeColor;
 	private Player [] players;
 	public World (int ID) {
-		this.ID = ID;
-	};
-	public int getID () {
-		return this.ID;
+		super (ID);
 	};
 	public void init (GameContainer container, StateBasedGame game) {
 		int radius = 32;

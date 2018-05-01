@@ -31,8 +31,6 @@ import games.bomberman.cases.Ground;
 
 public class World extends AppWorld {
 
-	private int ID;
-
 	public final static String GAME_FOLDER_NAME = "bomberman";
 	public final static String DIRECTORY_SOUNDS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
 	public final static String DIRECTORY_MUSICS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
@@ -72,12 +70,7 @@ public class World extends AppWorld {
 	}
 
 	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override
@@ -118,7 +111,7 @@ public class World extends AppWorld {
 		}
 		System.out.println(classement.toString());
 	}
-	
+
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput ();

@@ -25,8 +25,6 @@ public class World extends AppWorld {
 
 	public static final Font bonusFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 
-	private int ID;
-
 	public int milieu[];
 	public int taille;
 
@@ -38,12 +36,7 @@ public class World extends AppWorld {
 	private Random r;
 
 	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+		super (ID);
 	}
 
 	@Override
