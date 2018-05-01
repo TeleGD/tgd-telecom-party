@@ -37,17 +37,17 @@ public class World extends AppWorld {
 		for (Player player: this.players) {
 			boolean keyGape = appInput.isButtonPressed (AppInput.BUTTON_A, player.controllerID);
 			boolean keyJump = appInput.isButtonPressed (AppInput.BUTTON_B | AppInput.BUTTON_Y | AppInput.BUTTON_X, player.controllerID);
-			// float axisY = appInput.getAxisValue (controllerID, 0);
-			float axisX = appInput.getAxisValue (player.controllerID, AppInput.AXIS_XL);
+			// float axisY = appInput.getAxisValue (0, controllerID);
+			float axisX = appInput.getAxisValue (AppInput.AXIS_XL, player.controllerID);
 			player.jumpDuration -= delta;
 			player.gape = !keyGape;
 			player.jump = keyJump;
-			// player.x += Math.round (axisX * 5) / 5 * delta * .48;
-			player.x += axisX * delta * .48;
+			// player.x += Math.round (axisX * 5) / 5 * delta * .48f;
+			player.x += axisX * delta * .48f;
 			player.x = (player.x >= this.width / 2) ? player.x % this.width - this.width : player.x;
 			player.x = (player.x < -this.width / 2) ? player.x % this.width + this.width : player.x;
-			player.y = World.jump ((float) player.jumpDuration / 1000, (float) player.radius * 4, (float) .8);
-			player.direction = axisX > 0 ? 0 : (axisX < 0 ? 1 : player.direction);
+			player.y = World.jump (player.jumpDuration / 1000f, player.radius * 4f, .8f);
+			player.direction = axisX > 0f ? 0 : (axisX < 0f ? 1 : player.direction);
 			if (player.jump && player.jumpDuration <= 0) {
 				player.jumpDuration = 800;
 			};
