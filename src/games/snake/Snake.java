@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppInput;
@@ -157,14 +156,14 @@ public class Snake {
 		}
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		for  (int i = 0 ; i<body.size(); i++) {
 			g.setColor(couleur);
 			g.fillRect(body.get(i).x*horizontal,body.get(i).y*vertical,horizontal,vertical);
 		}
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		AppInput input = (AppInput) container.getInput();
 		if (input.isControlPressed(AppInput.BUTTON_LEFT,controllerID)) {
 			moveLeft=true;

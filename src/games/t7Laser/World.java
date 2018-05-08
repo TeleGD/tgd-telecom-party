@@ -58,19 +58,19 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) {
 		width=container.getWidth();
 		height=container.getHeight();
 	}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+	public void enter(GameContainer container, StateBasedGame game) {
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		music.loop();
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		//Affichage
 		Color c = fin ? Color.black : Color.white;
 		g.setColor(c);
@@ -91,7 +91,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
@@ -158,11 +158,7 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		fin = false;
-		try {
-			grid = new Grid(this,4,4);
-		} catch (SlickException e1) {
-			e1.printStackTrace();
-		}
+		grid = new Grid(this,4,4);
 		renderScale = 1;
 		nbJoueursInit = appGame.appPlayers.size ();
 		this.players = new ArrayList<Player>();
@@ -170,11 +166,7 @@ public class World extends AppWorld {
 		int w = grid.getColumns ();
 		int h = grid.getRows ();
 		for (int i = 0; i < nbJoueursInit; i++) {
-		    try {
-				this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 		}
 	}
 

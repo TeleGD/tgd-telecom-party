@@ -2,7 +2,6 @@ package games.aztecPyramids;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Player {
@@ -38,7 +37,7 @@ public class Player {
 		value=0;
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta) {
 
 	}
 

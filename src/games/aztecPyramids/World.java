@@ -54,23 +54,23 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer container, StateBasedGame arg1) {
 		this.tabPlay = new Player [] {new Player(this, Input.KEY_LEFT,Input.KEY_UP,Input.KEY_RIGHT),new Player(this, Input.KEY_A,Input.KEY_Z,Input.KEY_E)};
 	}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+	public void enter(GameContainer container, StateBasedGame game){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 
 	public void startGame(){
 	}
 
-	public void startAgain() throws SlickException{
+	public void startAgain(){
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		compteur += delta;
 
 		if (compteur == 5000) {
@@ -114,7 +114,7 @@ public class World extends BasicGameState {
 		}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		g.drawImage(aztecPyramid,0,0);
 		g.drawImage(aztecCalendar,1080,0);
 		g.drawImage(aztecSnake,1080,610);

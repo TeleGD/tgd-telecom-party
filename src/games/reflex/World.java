@@ -6,7 +6,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
@@ -24,7 +23,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) {
 		// TODO Auto-generated method stub
 
 	}
@@ -34,7 +33,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics context) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		for (Player p:players) {
 			p.render(container, game, context);
 			context.setBackground(Color.lightGray);
@@ -44,7 +43,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		for (Player p:players) {
 			p.update(container, game, delta);
 		}

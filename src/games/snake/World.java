@@ -71,15 +71,15 @@ public class World extends AppWorld {
 	}
 
     @Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer arg0, StateBasedGame arg1) {
 	}
 
     @Override
-    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+    public void enter(GameContainer container, StateBasedGame game) {
         soundMusicBackground.loop(1,0.3f);
     }
 
-    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
 
         for(int i=0;i<bonus.size();i++){
             bonus.get(i).render(container, game, g);
@@ -127,7 +127,7 @@ public class World extends AppWorld {
 
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
     	AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();

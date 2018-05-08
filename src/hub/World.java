@@ -7,7 +7,6 @@ import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -52,7 +51,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update (GameContainer container, StateBasedGame game, int delta) {
 		if (enterPress) {
 			int nbJoueurs = listeJoueurs.size ();
 			listeJoueurs.get(turnNumber % nbJoueurs).playRound(); // Lance le tour du joueur à qui c'est le tour
@@ -65,7 +64,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void render (GameContainer container,StateBasedGame game, Graphics context) throws SlickException {
+	public void render (GameContainer container,StateBasedGame game, Graphics context) {
 		// Affichage du plateau :
 		for (int i = 0; i < this.track.length; i++) {
 			track.getCase(i).render(container, game, context);

@@ -6,7 +6,6 @@ import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Grid {
@@ -25,7 +24,7 @@ public class Grid {
 	private int waveNumber;
 	private World w;
 
-	public Grid(World world, int r, int c) throws SlickException{
+	public Grid(World world, int r, int c){
 		maxRows = 20;
 		maxCols = 20;
 		rows = r;
@@ -57,7 +56,7 @@ public class Grid {
 		return grid[x][y];
 	}
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
 				grid[i][j].getImage().draw(280+360-this.getColumns()*100*w.getRenderScale()/2+i*100*w.getRenderScale(),0+j*100*w.getRenderScale()+360-this.getColumns()*100*w.getRenderScale()/2,100*w.getRenderScale(),100*w.getRenderScale());
@@ -78,7 +77,7 @@ public class Grid {
 		this.waveNumber = waveNumber;
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
 
@@ -99,7 +98,7 @@ public class Grid {
 		}
 
 		for(int i = 0; i<this.rows; i++)//init row
-			for(int j=0;j<this.columns;j++) //init cologne
+			for(int j=0;j<this.columns;j++) //init column
 				grid[i][j].update(arg0, arg1, arg2);
 
 		waveTimer--;

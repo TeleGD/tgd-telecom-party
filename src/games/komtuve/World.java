@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,27 +22,27 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer container, StateBasedGame arg1) {
 
 	}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+	public void enter(GameContainer container, StateBasedGame game){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 
 	public void startGame(){
 	}
 
-	public void startAgain() throws SlickException{
+	public void startAgain(){
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 
 	}
 

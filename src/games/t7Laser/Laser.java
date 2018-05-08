@@ -3,7 +3,6 @@ package games.t7Laser;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Laser {
@@ -64,7 +63,7 @@ public class Laser {
 		}
 	}
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) {
 		if(!shooting)
 			g.setColor(new Color(255,128,0,204));
 		else
@@ -81,8 +80,8 @@ public class Laser {
 
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if(!shooting){ //temps de pr�vention
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
+		if(!shooting){ //temps de prévention
 			setupTime--;
 			if(setupTime == 0){
 				shooting = true;
@@ -95,7 +94,7 @@ public class Laser {
 				this.setDeadlyCells(false);
 			}
 		}
-		//une fois que tout �a c'est fini
+		//une fois que tout ça c'est fini
 		if(setupTime == 0 && shootingTime == 0)
 			w.getGrid().removeLaser(this);
 	}

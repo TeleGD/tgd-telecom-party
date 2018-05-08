@@ -12,7 +12,7 @@ import app.AppWorld;
 public class World extends AppWorld {
 	static private float jump (float x, float h, float d) {
 		// y = (4h / d) (x - x² / d)
-		return (float) ((0 <= x && x < d) ? (4 * h * (Math.pow (x, 2) / d - x) / d) : 0);
+		return 0f <= x && x < d ? ((float) Math.pow (x, 2f) / d - x) * h / d * 4f : 0f;
 	};
 	private int width;
 	// private int height;

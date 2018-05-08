@@ -30,7 +30,7 @@ public class Player{
 	private Color couleur;
 	private String name;
 
-	public Player(World world, int x, int y, int i, AppPlayer appPlayer) throws SlickException{
+	public Player(World world, int x, int y, int i, AppPlayer appPlayer){
 		//position initiale
 		controllerID = appPlayer.getControllerID ();
 		this.couleur= AppPlayer.FILL_COLORS[appPlayer.getColorID()];
@@ -40,10 +40,14 @@ public class Player{
 		this.y = y;
 		w.getGrid().getCell(x,y).setContains(i);
 		this.score=0;
-		this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
-		this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
-		this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
-		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
+		try {
+			this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
+			this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
+			this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
+			this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		this.setImage(this.down);
 	}
 
@@ -55,12 +59,12 @@ public class Player{
 		return name;
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		//Affichage
 		image.draw(280+(x*100*w.getRenderScale())+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,y*100*w.getRenderScale()+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,100*w.getRenderScale(),100*w.getRenderScale(),this.couleur);
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		AppInput input = (AppInput) container.getInput();
 		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
 		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
@@ -69,7 +73,7 @@ public class Player{
 		callMove();
 	}
 
-	public void callMove() throws SlickException{
+	public void callMove(){
 		if(moveUp && !moveDown){ //haut
 			move(x,y-1);
 			this.setImage(up);

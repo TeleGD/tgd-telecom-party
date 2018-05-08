@@ -3,7 +3,6 @@ package games.t7Laser;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Ennemy {
@@ -48,13 +47,13 @@ public class Ennemy {
 		w.getGrid().getCell(x, y).setDeadly(true);
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		//Affichage
 		image.draw(280+(x*100*w.getRenderScale())+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,y*100*w.getRenderScale()+360-w.getGrid().getColumns()*100*w.getRenderScale()/2,100*w.getRenderScale(),100*w.getRenderScale());
 
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		moveTimer--;
 		Player nearestPlayer = w.getPlayers().get(0);
 		double minDistance=Math.sqrt((double) Math.pow((nearestPlayer.getX()-x),2)+Math.pow((nearestPlayer.getY()-y),2));
