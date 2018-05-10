@@ -8,8 +8,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
 import app.AppPlayer;
@@ -52,6 +50,7 @@ public class World extends AppWorld {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
+		super.update (container, game, delta);
 		if (enterPress) {
 			int nbJoueurs = listeJoueurs.size ();
 			listeJoueurs.get(turnNumber % nbJoueurs).playRound(); // Lance le tour du joueur à qui c'est le tour
@@ -86,9 +85,6 @@ public class World extends AppWorld {
 	@Override
 	public void keyPressed (int key, char c) {
 		switch (key) {
-			case Input.KEY_ESCAPE:
-				this.game.enterState (AppGame.PAGES_TITLES, new FadeOutTransition (), new FadeInTransition ());
-				break;
 			case Input.KEY_ENTER:
 				enterPress = true ;
 				break;

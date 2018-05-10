@@ -12,25 +12,28 @@ public class AppGame extends StateBasedGame {
 	public static final int PAGES_TITLES = 1;
 	public static final int PAGES_GAMES = 2;
 	public static final int PAGES_PLAYERS = 3;
-	public static final int HUB_WORLD = 4;
-	public static final int GAMES_AZTECPYRAMIDS_WORLD = 5;
-	public static final int GAMES_BATTLE_WORLD = 6;
-	public static final int GAMES_BOMBERMAN_WORLD = 7;
-	public static final int GAMES_CLICKER_WORLD = 8;
-	public static final int GAMES_CODEFALL_WORLD = 9;
-	public static final int GAMES_KOMTUVE_WORLD = 10;
-	public static final int GAMES_MAZE_WORLD = 11;
-	public static final int GAMES_PATHPAINTING_WORLD = 12;
-	public static final int GAMES_PONG_WORLD = 13;
-	public static final int GAMES_PRECISELOCK_WORLD = 14;
-	public static final int GAMES_REFLEX_WORLD = 15;
-	public static final int GAMES_SNAKE_WORLD = 16;
-	public static final int GAMES_T7LASER_WORLD = 17;
+	public static final int PAGES_PAUSE = 4;
+	// public static final int PAGES_SCORES = 5;
+	public static final int HUB_WORLD = 5;
+	public static final int GAMES_AZTECPYRAMIDS_WORLD = 6;
+	public static final int GAMES_BATTLE_WORLD = 7;
+	public static final int GAMES_BOMBERMAN_WORLD = 8;
+	public static final int GAMES_CLICKER_WORLD = 9;
+	public static final int GAMES_CODEFALL_WORLD = 10;
+	public static final int GAMES_KOMTUVE_WORLD = 11;
+	public static final int GAMES_MAZE_WORLD = 12;
+	public static final int GAMES_PATHPAINTING_WORLD = 13;
+	public static final int GAMES_PONG_WORLD = 14;
+	public static final int GAMES_PRECISELOCK_WORLD = 15;
+	public static final int GAMES_REFLEX_WORLD = 16;
+	public static final int GAMES_SNAKE_WORLD = 17;
+	public static final int GAMES_T7LASER_WORLD = 18;
 
 	public static final String [] TITLES = new String [] {
 		"Accueil",
 		"Titres",
 		"Mini-jeux",
+		"Pause",
 		"Joueurs",
 		"Jeu de plateau",
 		"Pyramides aztecs",
@@ -71,6 +74,7 @@ public class AppGame extends StateBasedGame {
 		this.addState (new pages.Titles (AppGame.PAGES_TITLES));
 		this.addState (new pages.Games (AppGame.PAGES_GAMES));
 		this.addState (new pages.Players (AppGame.PAGES_PLAYERS));
+		this.addState (new pages.Pause (AppGame.PAGES_PAUSE));
 		this.addState (new hub.World (AppGame.HUB_WORLD));
 		this.addState (new games.aztecPyramids.World (AppGame.GAMES_AZTECPYRAMIDS_WORLD));
 		this.addState (new games.battle.World (AppGame.GAMES_BATTLE_WORLD));

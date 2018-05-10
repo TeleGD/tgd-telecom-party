@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
-import app.AppInput;
 import app.AppWorld;
 
 import games.maze.players.HunterPlayer;
@@ -58,15 +55,10 @@ public class World extends AppWorld {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
-			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			board.update (container, game, delta);
-			for (Player p: players) {
-				p.update (container, game, delta);
-			}
+		super.update (container, game, delta);
+		board.update (container, game, delta);
+		for (Player p: players) {
+			p.update (container, game, delta);
 		}
 		timer -= delta;
 		if (timer <= 0) {

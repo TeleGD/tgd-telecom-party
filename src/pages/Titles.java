@@ -27,8 +27,11 @@ public class Titles extends AppMenu {
 			new MenuItem (AppGame.TITLES [AppGame.HUB_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_TITLES);
 					players.setNextID (AppGame.HUB_WORLD);
+					pause.setPreviousID (AppGame.PAGES_TITLES);
+					pause.setNextID (AppGame.HUB_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},

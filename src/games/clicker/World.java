@@ -11,8 +11,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
 import app.AppInput;
@@ -121,22 +119,14 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get(0).getControllerID();
-		if (appInput.isKeyPressed(AppInput.KEY_ESCAPE)
-				|| appInput.isButtonPressed(AppInput.BUTTON_PLUS, gameMasterID)) {
+		super.update (container, game, delta);
+		count -= delta;
+		for (Player player : players) {
+			player.update(container, game, delta);
+		}
+		if (count < 0) {
+			finished = true;
 			music.stop();
-			game.enterState(app.AppGame.PAGES_GAMES, new FadeOutTransition(), new FadeInTransition());
-		} else if (!finished) {
-			count -= delta;
-			for (Player player : players) {
-				player.update(container, game, delta);
-			}
-			if (count < 0) {
-				finished = true;
-				music.stop();
-			}
 		}
 	}
 
@@ -156,6 +146,16 @@ public class World extends AppWorld {
 		height = container.getHeight();
 		width = container.getWidth();
 		nbJoueursInit = appGame.appPlayers.size();
+	}
+
+	@Override
+	public void pause (GameContainer container, StateBasedGame game) {
+		music.pause ();
+	}
+
+	@Override
+	public void resume (GameContainer container, StateBasedGame game) {
+		music.resume ();
 	}
 
 }

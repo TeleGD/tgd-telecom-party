@@ -7,11 +7,8 @@ import java.util.Random;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
-import app.AppInput;
 import app.AppWorld;
 
 public class World extends AppWorld {
@@ -37,26 +34,19 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get(0).getControllerID();
-		if (appInput.isKeyPressed(AppInput.KEY_ESCAPE)
-				|| appInput.isButtonPressed(AppInput.BUTTON_PLUS, gameMasterID)) {
-			game.enterState(app.AppGame.PAGES_GAMES, new FadeOutTransition(), new FadeInTransition());
-		} else {
-			for (Player p : players) {
-				if (!p.hasFinished()) {
-					p.update(container, game, delta);
-					if (p.hasFinished()) {
-						int stillPlaying = 0;
-						for (Player pl : players) {
-							pl.slowRotation();
-							stillPlaying+=(!pl.hasFinished())?1:0;
-						}
-						classement.put(p.getControllerID(),stillPlaying);
-						if (classement.size()==players.size()) {
-							end();
-						}
+		super.update (container, game, delta);
+		for (Player p : players) {
+			if (!p.hasFinished()) {
+				p.update(container, game, delta);
+				if (p.hasFinished()) {
+					int stillPlaying = 0;
+					for (Player pl : players) {
+						pl.slowRotation();
+						stillPlaying+=(!pl.hasFinished())?1:0;
+					}
+					classement.put(p.getControllerID(),stillPlaying);
+					if (classement.size()==players.size()) {
+						end();
 					}
 				}
 			}

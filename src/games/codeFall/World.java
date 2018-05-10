@@ -10,11 +10,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
-import app.AppInput;
 import app.AppWorld;
 import app.utils.FontUtils;
 
@@ -75,26 +72,20 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			platform.update(container, game, delta);
-			for (int i=players.size()-1; i>=0 ; i--) {
-				players.get(i).update(container, game, delta);
-				if (players.get(i).isDead()) {
-					morts.add(players.get(i));
-					players.remove(i);
-				}
+		super.update (container, game, delta);
+		platform.update(container, game, delta);
+		for (int i=players.size()-1; i>=0 ; i--) {
+			players.get(i).update(container, game, delta);
+			if (players.get(i).isDead()) {
+				morts.add(players.get(i));
+				players.remove(i);
 			}
-			for (int i=projectiles.size()-1; i>=0 ; i--) {
-				projectiles.get(i).update(container, game, delta);
-			}
-			if (players.size()==0) {
-				end();
-			}
+		}
+		for (int i=projectiles.size()-1; i>=0 ; i--) {
+			projectiles.get(i).update(container, game, delta);
+		}
+		if (players.size()==0) {
+			end();
 		}
 	}
 

@@ -11,8 +11,6 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
 import app.AppInput;
@@ -98,6 +96,16 @@ public class World extends AppWorld {
 	}
 
 	@Override
+	public void pause (GameContainer container, StateBasedGame game) {
+		music.pause ();
+	}
+
+	@Override
+	public void resume (GameContainer container, StateBasedGame game) {
+		music.resume ();
+	}
+
+	@Override
 	public void enter (GameContainer container, StateBasedGame game) {}
 
 	@Override
@@ -114,41 +122,35 @@ public class World extends AppWorld {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
-			music.stop ();
-			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			for (Player p: players) {
-				p.update (container, game, delta);
-			}
-			for (Bomb b: bombs) {
-				b.update (delta);
-			}
-			for (int i = players.size()-1 ; i >= 0 ; i--) {
-				if (players.get (i).getLife () <= 0) {
-					theEnd.play (1, (float) 1);
-					morts.add(players.get(i));
-					players.remove (i);
-					if (players.size()==0) {
-						end();
-					}
-				}
-			}
-			for (int i = bombs.size ()-1 ; i >=0; i--) {
-				if (bombs.get (i).isDetruite ()) {
-					board.getCase (bombs.get (i).getI (), bombs.get (i).getJ ()).setBomb (null);
-					bombs.remove (i);
-				}
-			}
-			time -= delta;
-			if (time <= 0) {
-				generateBonus ();
-				time = 30000;
-			}
-			board.update (container, game, delta);
+		super.update (container, game, delta);
+		for (Player p: players) {
+			p.update (container, game, delta);
 		}
+		for (Bomb b: bombs) {
+			b.update (delta);
+		}
+		for (int i = players.size()-1 ; i >= 0 ; i--) {
+			if (players.get (i).getLife () <= 0) {
+				theEnd.play (1, (float) 1);
+				morts.add(players.get(i));
+				players.remove (i);
+				if (players.size()==0) {
+					end();
+				}
+			}
+		}
+		for (int i = bombs.size ()-1 ; i >=0; i--) {
+			if (bombs.get (i).isDetruite ()) {
+				board.getCase (bombs.get (i).getI (), bombs.get (i).getJ ()).setBomb (null);
+				bombs.remove (i);
+			}
+		}
+		time -= delta;
+		if (time <= 0) {
+			generateBonus ();
+			time = 30000;
+		}
+		board.update (container, game, delta);
 	}
 
 	@Override

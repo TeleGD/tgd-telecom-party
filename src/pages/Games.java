@@ -30,32 +30,44 @@ public class Games extends AppMenu {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_BATTLE_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_BATTLE_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_BATTLE_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_BOMBERMAN_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_BOMBERMAN_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_BOMBERMAN_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_CLICKER_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_CLICKER_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_CLICKER_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_CODEFALL_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_CODEFALL_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_CODEFALL_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
@@ -67,56 +79,77 @@ public class Games extends AppMenu {
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_MAZE_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_MAZE_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_MAZE_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PATHPAINTING_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_PATHPAINTING_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_PATHPAINTING_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PONG_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_PONG_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_PONG_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_PRECISELOCK_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_PRECISELOCK_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_PRECISELOCK_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_REFLEX_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_REFLEX_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_REFLEX_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_SNAKE_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_SNAKE_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_SNAKE_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
 			new MenuItem (AppGame.TITLES [AppGame.GAMES_T7LASER_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					Pause pause = (Pause) game.getState (AppGame.PAGES_PAUSE);
 					players.setPreviousID (AppGame.PAGES_GAMES);
 					players.setNextID (AppGame.GAMES_T7LASER_WORLD);
+					pause.setPreviousID (AppGame.PAGES_GAMES);
+					pause.setNextID (AppGame.GAMES_T7LASER_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},

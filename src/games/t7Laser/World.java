@@ -13,11 +13,8 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
-import app.AppInput;
 import app.AppWorld;
 import app.utils.FontUtils;
 
@@ -92,48 +89,40 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			music.stop();
-			end.stop();
-			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			if (!fin) {
-				for (Player p : players) {
-					p.update(container,game,delta);
-				}
-				grid.update(container,game,delta);
+		super.update (container, game, delta);
+		if (!fin) {
+			for (Player p : players) {
+				p.update(container,game,delta);
+			}
+			grid.update(container,game,delta);
 
-				for (int i=0 ; i<players.size() ; i++) {
-					if (players.get(i).getLives()==0) {
-						players.get(i).addScore(200*morts.size());
-						morts.add(players.get(i));
-						grid.getCell(players.get(i).getX(), players.get(i).getY()).setContains(-1);
-						players.remove(i);
-					}
+			for (int i=0 ; i<players.size() ; i++) {
+				if (players.get(i).getLives()==0) {
+					players.get(i).addScore(200*morts.size());
+					morts.add(players.get(i));
+					grid.getCell(players.get(i).getX(), players.get(i).getY()).setContains(-1);
+					players.remove(i);
 				}
+			}
 
-				if (morts.size()>=nbJoueursInit) {
-					music.stop();
-					end.play();
-					Player tri[] = new Player[morts.size()];
-					for (int i=0; i<morts.size(); i++) {
-						tri[i] = morts.get(i);
-					}
-					for (int i=tri.length-1 ; i>0 ; i--) {
-						for (int j=0; j<i ; j++) {
-							if (tri[j+1].getScore()<tri[j].getScore()) {
-								Player tmp = tri[j+1];
-								tri[j+1] = tri[j];
-								tri[j]=tmp;
-							}
+			if (morts.size()>=nbJoueursInit) {
+				music.stop();
+				end.play();
+				Player tri[] = new Player[morts.size()];
+				for (int i=0; i<morts.size(); i++) {
+					tri[i] = morts.get(i);
+				}
+				for (int i=tri.length-1 ; i>0 ; i--) {
+					for (int j=0; j<i ; j++) {
+						if (tri[j+1].getScore()<tri[j].getScore()) {
+							Player tmp = tri[j+1];
+							tri[j+1] = tri[j];
+							tri[j]=tmp;
 						}
 					}
-					morts = new ArrayList<>(Arrays.asList(tri));
-					fin = true;
 				}
+				morts = new ArrayList<>(Arrays.asList(tri));
+				fin = true;
 			}
 		}
 	}
@@ -168,6 +157,18 @@ public class World extends AppWorld {
 		for (int i = 0; i < nbJoueursInit; i++) {
 			this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 		}
+	}
+
+	@Override
+	public void pause (GameContainer container, StateBasedGame game) {
+		music.pause ();
+		end.pause ();
+	}
+
+	@Override
+	public void resume (GameContainer container, StateBasedGame game) {
+		music.resume ();
+		// end.resume (); // TODO: select which music to resume
 	}
 
 }

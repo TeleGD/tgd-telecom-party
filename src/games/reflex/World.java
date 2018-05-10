@@ -44,6 +44,7 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		super.update (container, game, delta);
 		for (Player p:players) {
 			p.update(container, game, delta);
 		}

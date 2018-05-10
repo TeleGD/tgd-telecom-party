@@ -3,11 +3,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 import app.AppGame;
 import app.AppInput;
-import app.AppPlayer;
 import app.AppWorld;
 public class World extends AppWorld {
 	static private float jump (float x, float h, float d) {
@@ -32,8 +29,8 @@ public class World extends AppWorld {
 		this.strokeColor = new Color (0, 102, 51);
 	};
 	public void update (GameContainer container, StateBasedGame game, int delta) {
+		super.update (container, game, delta);
 		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
 		for (Player player: this.players) {
 			boolean keyGape = appInput.isButtonPressed (AppInput.BUTTON_A, player.controllerID);
 			boolean keyJump = appInput.isButtonPressed (AppInput.BUTTON_B | AppInput.BUTTON_Y | AppInput.BUTTON_X, player.controllerID);
@@ -51,19 +48,6 @@ public class World extends AppWorld {
 			if (player.jump && player.jumpDuration <= 0) {
 				player.jumpDuration = 800;
 			};
-		};
-		{
-			AppPlayer gameMaster = appGame.appPlayers.get (0);
-			int gameMasterID = gameMaster.getControllerID ();
-			boolean BUTTON_PLUS = appInput.isKeyDown (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID);
-			int gameMasterRecord = gameMaster.getButtonPressedRecord ();
-			if (BUTTON_PLUS == ((gameMasterRecord & AppInput.BUTTON_PLUS) == 0)) {
-				gameMasterRecord ^= AppInput.BUTTON_PLUS;
-				if (BUTTON_PLUS) {
-					appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-				};
-			};
-			gameMaster.setButtonPressedRecord (gameMasterRecord);
 		};
 	};
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {

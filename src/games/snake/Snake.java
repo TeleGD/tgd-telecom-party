@@ -63,8 +63,8 @@ public class Snake {
 			if ((moveRight && !inverse) || (moveLeft && inverse)) {
 				dir = (dir+1) % 4;
 			} else if ((moveRight && inverse) || (moveLeft && !inverse)) {
-	            dir = (dir+3) % 4;
-	        }
+				dir = (dir+3) % 4;
+			}
 
 			Point ajout = null;
 			if (dir == 0) { //haut

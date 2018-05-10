@@ -11,8 +11,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import app.AppGame;
 import app.AppInput;
@@ -60,28 +58,21 @@ public class World extends AppWorld {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
+		super.update (container, game, delta);
+		int blockedPlayers=0;
+		for (Player p : players) {
+			p.update(container, game, delta);
+			blockedPlayers+=p.isBlocked()?1:0;
+		}
+		if (blockedPlayers==players.size()) {
+			// fin de la partie
 			music.stop();
-			game.enterState (app.AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			int blockedPlayers=0;
-			for (Player p : players) {
-				p.update(container, game, delta);
-				blockedPlayers+=p.isBlocked()?1:0;
+			int[] scores = board.countScore(players);
+			HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
+			for (int i=0 ; i<players.size();i++) {
+				classement.put(players.get(i).getControllerID(),scores[i]);
 			}
-			if (blockedPlayers==players.size()) {
-				// fin de la partie
-				music.stop();
-				int[] scores = board.countScore(players);
-				HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
-				for (int i=0 ; i<players.size();i++) {
-					classement.put(players.get(i).getControllerID(),scores[i]);
-				}
-				System.out.println(classement.toString());
-			}
+			System.out.println(classement.toString());
 		}
 	}
 
@@ -103,6 +94,16 @@ public class World extends AppWorld {
 			this.players.add(new Player(this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), appGame.appPlayers.get(i)));
 		}
 		music.loop(1, (float) 0.5);
+	}
+
+	@Override
+	public void pause (GameContainer container, StateBasedGame game) {
+		music.pause ();
+	}
+
+	@Override
+	public void resume (GameContainer container, StateBasedGame game) {
+		music.resume ();
 	}
 
 	public int getWidth() {
