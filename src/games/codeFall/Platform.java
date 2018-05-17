@@ -65,7 +65,6 @@ public class Platform {
 			}
 			grid[i][j].addAmmo();
 		}
-
 	}
 
 	public int getSize() {

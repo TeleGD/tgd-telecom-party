@@ -12,6 +12,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
+import app.AppInput;
 import app.AppWorld;
 import app.utils.FontUtils;
 
@@ -81,6 +82,8 @@ public class World extends AppWorld {
 				players.remove(i);
 			}
 		}
+		AppInput appInput = (AppInput) container.getInput();
+		appInput.clearControlPressedRecord();
 		for (int i=projectiles.size()-1; i>=0 ; i--) {
 			projectiles.get(i).update(container, game, delta);
 		}
