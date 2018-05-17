@@ -15,7 +15,12 @@ import general.Playable;
 import general.utils.FontUtils;
 
 public class World extends BasicGameState implements Playable {
-
+	
+	/*idees :
+	 *rajouter un temps d'attente apres avoir appuyé
+	 *rajouter un malus si on appuie mal
+	 */
+	
 	private int ID;
 	public static final Font BUTTON_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
 	protected final static int GOAL=20;
