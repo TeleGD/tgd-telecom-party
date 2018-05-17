@@ -16,7 +16,6 @@ import app.utils.FontUtils;
 
 	
 	/*idees :
-	 *rajouter un temps d'attente apres avoir appuyé
 	 *rajouter un malus si on appuie mal
 	 */
 	
