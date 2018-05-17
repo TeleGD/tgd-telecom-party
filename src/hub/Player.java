@@ -45,7 +45,6 @@ public class Player {
 
 	public void avance(int n) {
 		place+=n;
-		plateau.getTrack().getCase(place).doEffect(this); // On applique l'effet de la case d'arrivée
 	}
 
 	public void updateCoordonnees() {
@@ -64,16 +63,16 @@ public class Player {
 		 * 1 : 	le joueur lance son dé (peut être modifié par des effets) il avance du nombre de cases correspondant
 		 * 2 : 	arrive sur une case :
 		 * 			si c’est une case à effet : applique l’effet de la case
-		 * 			sinon : fait le mini-jeu du type de la case (duel, normal…)
-		 * 3 : 	le gagnant d’un mini-jeu gagne un avantage (meilleur dé pour son prochain lancer)
 		 */
 
+		// Phase 1 : lancer de dé
 		playerDice.roll();
 		//TODO : affiche résultat du dé
 		System.out.println("Joueur " + controllerID + "Avance de " + playerDice.getValue());
 		avance(playerDice.getValue());
-
-		//TODO : gérer l'étape 2 et 3
+		
+		// Phase 2 : 
+		plateau.getTrack().getCase(place).doEffect(this); // On applique l'effet de la case d'arrivée
 
 	}
 
@@ -91,5 +90,9 @@ public class Player {
 
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
+	}
+	
+	public int getControllerID() {
+		return controllerID;
 	}
 }
