@@ -16,7 +16,7 @@ public class ButtonP extends Button {
 		super(player, num);
 		radius = 30;
 		assert(numero>=0 && numero<4) : "erreur d'input";
-		
+
 		switch (numero) {
 		case 0 :
 			letter="A";

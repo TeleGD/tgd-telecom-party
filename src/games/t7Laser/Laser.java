@@ -3,29 +3,26 @@ package games.t7Laser;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Laser {
-	
+
 	private int axe; //0 pour horizontal et 1 pour vertical
 	private int pos; //position associée à la case correspondante
 	private Boolean shooting = false;
 	private World w;
 	private int setupTime;
 	private int shootingTime;
-	
-	
+
 	public Laser(World w,int axe, int pos){
 		this.setAxe(axe);
 		this.setPos(pos);
 		this.w=w;
 		this.setupTime = 50;
 		this.shootingTime = 100;
-		
+
 	}
-	
-	
+
 	public int getAxe() {
 		return axe;
 	}
@@ -33,7 +30,7 @@ public class Laser {
 	public void setAxe(int axe) {
 		this.axe = axe;
 	}
-	
+
 	public int getPos() {
 		return pos;
 	}
@@ -41,7 +38,7 @@ public class Laser {
 	public void setPos(int pos) {
 		this.pos = pos;
 	}
-	
+
 	public Boolean getShooting() {
 		return shooting;
 	}
@@ -49,7 +46,7 @@ public class Laser {
 	public void setShooting(Boolean shooting) {
 		this.shooting = shooting;
 	}
-	
+
 	public void setDeadlyCells(boolean deadly){
 		Grid g = w.getGrid();
 		if(axe == 0) {
@@ -65,10 +62,8 @@ public class Laser {
 			}
 		}
 	}
-	
-	
-	
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
+
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) {
 		if(!shooting)
 			g.setColor(new Color(255,128,0,204));
 		else
@@ -82,11 +77,11 @@ public class Laser {
 			//vertical
 			g.fillRect((pos*100+25)*w.getRenderScale()+280+360-w.getGrid().getColumns()*100*w.getRenderScale()/2, +360-w.getGrid().getColumns()*100*w.getRenderScale()/2, 50*w.getRenderScale(), (float)100*w.getGrid().getColumns()*w.getRenderScale());
 		}
-		
+
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if(!shooting){ //temps de pr�vention
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
+		if(!shooting){ //temps de prévention
 			setupTime--;
 			if(setupTime == 0){
 				shooting = true;
@@ -99,7 +94,7 @@ public class Laser {
 				this.setDeadlyCells(false);
 			}
 		}
-		//une fois que tout �a c'est fini
+		//une fois que tout ça c'est fini
 		if(setupTime == 0 && shootingTime == 0)
 			w.getGrid().removeLaser(this);
 	}

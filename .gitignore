@@ -1,4 +1,6 @@
 /bin
 /out
-/.idea
+.idea
 *.iml
+*.log
+Thumbs.db

@@ -2,7 +2,6 @@ package games.komtuve;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Player {
@@ -36,7 +35,7 @@ public class Player {
 
 	private Player tabPlay[] = {new Player(Input.KEY_LEFT,Input.KEY_UP,Input.KEY_RIGHT),new Player(Input.KEY_A,Input.KEY_Z,Input.KEY_E)};
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta) {
 		compteur += 1;
 		if (compteur >= 300) {
 			valueChange();
@@ -46,7 +45,6 @@ public class Player {
 			}
 			climb();
 		}
-
 
 	}
 
@@ -61,8 +59,6 @@ public class Player {
 			this.value = 5;
 		}
 	}
-
-
 
 	public void afterChange() {
 		onePress = false;
@@ -115,10 +111,6 @@ public class Player {
 			}
 		}
 
-
-
 	}
-
-
 
 	}

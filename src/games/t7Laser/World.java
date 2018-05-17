@@ -12,33 +12,27 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.AppGame;
-import general.AppInput;
-import general.Playable;
-import general.utils.FontUtils;
+import app.AppGame;
+import app.AppWorld;
+import app.utils.FontUtils;
 
-public class World extends BasicGameState implements Playable{
+public class World extends AppWorld {
 
-	private int ID;
-	
 	public final static String GAME_FOLDER_NAME="t7Laser";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public static final Font Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
-	
+
 	private List<Player> players;
 	private List<Player> morts;
 	private static Grid grid;
 	private static Music music;
 	private static Music end;
 	static Sound cat;
-	
+
 	static {
 		try {
 			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
@@ -49,36 +43,31 @@ public class World extends BasicGameState implements Playable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	private float renderScale = 1;
 	public int height;
 	public int width;
 	private int nbJoueursInit;
 	private boolean fin;
-	
+
 	public World (int ID) {
-		this.ID = ID;
+		super (ID);
 	}
 
 	@Override
-	public int getID () {
-		return this.ID;
-	}	
-	
-	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) {
 		width=container.getWidth();
 		height=container.getHeight();
 	}
-	
+
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps	
+	public void enter(GameContainer container, StateBasedGame game) {
+		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		music.loop();
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		//Affichage
 		Color c = fin ? Color.black : Color.white;
 		g.setColor(c);
@@ -99,78 +88,66 @@ public class World extends BasicGameState implements Playable{
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		AppInput appInput = (AppInput) container.getInput ();
-		AppGame appGame = (AppGame) game;
-		int gameMasterID = appGame.appPlayers.get (0).getControllerID ();
-		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE) || appInput.isButtonPressed (AppInput.BUTTON_PLUS, gameMasterID)) {
-			music.stop();
-			end.stop();
-			game.enterState (general.AppGame.MENUS_GAMES_MENU, new FadeOutTransition (), new FadeInTransition ());
-		} else {
-			if (!fin) {
-				for (Player p : players) {
-					p.update(container,game,delta);
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		super.update (container, game, delta);
+		if (!fin) {
+			for (Player p : players) {
+				p.update(container,game,delta);
+			}
+			grid.update(container,game,delta);
+
+			for (int i=0 ; i<players.size() ; i++) {
+				if (players.get(i).getLives()==0) {
+					players.get(i).addScore(200*morts.size());
+					morts.add(players.get(i));
+					grid.getCell(players.get(i).getX(), players.get(i).getY()).setContains(-1);
+					players.remove(i);
 				}
-				grid.update(container,game,delta);
-				
-				for (int i=0 ; i<players.size() ; i++) {
-					if (players.get(i).getLives()==0) {
-						players.get(i).addScore(200*morts.size());
-						morts.add(players.get(i));
-						grid.getCell(players.get(i).getX(), players.get(i).getY()).setContains(-1);
-						players.remove(i);
-					}
+			}
+
+			if (morts.size()>=nbJoueursInit) {
+				music.stop();
+				end.play();
+				Player tri[] = new Player[morts.size()];
+				for (int i=0; i<morts.size(); i++) {
+					tri[i] = morts.get(i);
 				}
-				
-				if (morts.size()>=nbJoueursInit) {
-					music.stop();
-					end.play();
-					Player tri[] = new Player[morts.size()];
-					for (int i=0; i<morts.size(); i++) {
-						tri[i] = morts.get(i);
-					}
-					for (int i=tri.length-1 ; i>0 ; i--) {
-						for (int j=0; j<i ; j++) {
-							if (tri[j+1].getScore()<tri[j].getScore()) {
-								Player tmp = tri[j+1];
-								tri[j+1] = tri[j];
-								tri[j]=tmp;
-							}
+				for (int i=tri.length-1 ; i>0 ; i--) {
+					for (int j=0; j<i ; j++) {
+						if (tri[j+1].getScore()<tri[j].getScore()) {
+							Player tmp = tri[j+1];
+							tri[j+1] = tri[j];
+							tri[j]=tmp;
 						}
 					}
-					morts = new ArrayList<>(Arrays.asList(tri));
-					fin = true;
 				}
+				morts = new ArrayList<>(Arrays.asList(tri));
+				fin = true;
 			}
 		}
 	}
-	
+
 	public Grid getGrid(){
 		return grid;
 	}
-	
+
 	public List<Player> getPlayers(){
 		return players;
 	}
-	
+
 	public float  getRenderScale(){
 		return renderScale;
 	}
-	
+
 	public void setRenderScale(float d){
 		 renderScale = d;
 	}
 
 	@Override
-	public void initPlayers(GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		fin = false;
-		try {
-			grid = new Grid(this,4,4);
-		} catch (SlickException e1) {
-			e1.printStackTrace();
-		}
+		grid = new Grid(this,4,4);
 		renderScale = 1;
 		nbJoueursInit = appGame.appPlayers.size ();
 		this.players = new ArrayList<Player>();
@@ -178,12 +155,20 @@ public class World extends BasicGameState implements Playable{
 		int w = grid.getColumns ();
 		int h = grid.getRows ();
 		for (int i = 0; i < nbJoueursInit; i++) {
-		    try {
-				this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 		}
+	}
+
+	@Override
+	public void pause (GameContainer container, StateBasedGame game) {
+		music.pause ();
+		end.pause ();
+	}
+
+	@Override
+	public void resume (GameContainer container, StateBasedGame game) {
+		music.resume ();
+		// end.resume (); // TODO: select which music to resume
 	}
 
 }
