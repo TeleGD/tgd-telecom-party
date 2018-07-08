@@ -13,7 +13,7 @@ public class Player {
 	private int posX;
 	private int posY;
 	private int ammo=0;
-	private int maxAmmo=5;
+	private int maxAmmo=20;
 	private int direction;
 	/* 0 -> bas
 	 * 1 -> droite
@@ -52,11 +52,11 @@ public class Player {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		System.out.println(this);
 		if (!fallen) {
 			AppInput appInput = (AppInput) container.getInput();
 			move(appInput);
 			shoot(appInput);
-			appInput.clearControlPressedRecord();
 		} else {
 			fallCount-=delta;
 		}

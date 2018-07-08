@@ -10,6 +10,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
+import app.AppInput;
 import app.AppPlayer;
 import app.AppWorld;
 // import app.ui.Button;
@@ -26,10 +27,9 @@ public class World extends AppWorld {
 	private int gridWidth;
 	private int gridHeight;
 	private int gridGap;
-	private int turnNumber;
+	private int numJoueurEnCours;
 	private List<Player> listeJoueurs;
 	private ArrayList<Remi> listeRemis; // La liste des cases Rémi Bachelet ! TODO : l'initialiser
-	private boolean enterPress;
 
 	public World (int ID) {
 		super (ID);
@@ -45,21 +45,32 @@ public class World extends AppWorld {
 		listeRemis = new ArrayList<Remi>();
 		this.track = new SpiralTrack (this, 70);
 
-		this.turnNumber = 0; // numéro du tour
+		this.numJoueurEnCours = 0; // numéro du joueur à qui c'est le tour
 	}
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
-		if (enterPress) {
-			int nbJoueurs = listeJoueurs.size ();
-			listeJoueurs.get(turnNumber % nbJoueurs).playRound(); // Lance le tour du joueur à qui c'est le tour
-			enterPress = false;
-			turnNumber ++;
+		AppInput appInput = (AppInput) container.getInput ();
+		
+		Player joueurEnCours = listeJoueurs.get(numJoueurEnCours);
+		
+		if (appInput.isControlPressed(AppInput.BUTTON_A, joueurEnCours.getControllerID())) {
+			
+			appInput.clearControlPressedRecord();
+			 
+			joueurEnCours.playRound(); // Lance le tour du joueur à qui c'est le tour
+			numJoueurEnCours ++;
+			numJoueurEnCours %= listeJoueurs.size(); // Permet de reboucler 
+			if (numJoueurEnCours == 0) {	// Lorsque tout le monde a joué
+				// TODO : lancer un mini-jeu ici
+				System.out.println("mini-jeu !");
+			}
 		}
 		for (Player p: this.listeJoueurs) {
 			p.update (container, game, delta);
 		}
+		
 	}
 
 	@Override
@@ -81,16 +92,11 @@ public class World extends AppWorld {
 			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/hub/pion.png"));
 		}
 	}
-
+	
 	@Override
-	public void keyPressed (int key, char c) {
-		switch (key) {
-			case Input.KEY_ENTER:
-				enterPress = true ;
-				break;
-			default:
-				super.keyPressed (key, c);
-		}
+	public void enter(GameContainer container, StateBasedGame game) {
+		AppInput appInput = (AppInput) container.getInput ();
+		appInput.clearControlPressedRecord();
 	}
 
 	public SpiralTrack getTrack () {

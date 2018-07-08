@@ -12,6 +12,15 @@ import app.AppGame;
 import app.AppWorld;
 import app.utils.FontUtils;
 
+
+
+	
+	/*idees :
+	 *rajouter un malus si on appuie mal
+	 */
+	
+
+
 public class World extends AppWorld {
 
 	public static final Font BUTTON_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
