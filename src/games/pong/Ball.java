@@ -14,7 +14,7 @@ public class Ball {
 
 	private int [] boxPos;
 	private int boxSize;
-	private int [] pos;
+	private float [] pos;
 	private int size;
 
 	private float [] dir;
@@ -36,7 +36,7 @@ public class Ball {
 			world.pos [1] + start
 		};
 		this.boxSize = span;
-		this.pos = new int [] {
+		this.pos = new float [] {
 			(span - World.BALL_SIZE) / 2,
 			(span - World.BALL_SIZE) / 2
 		};
@@ -119,19 +119,19 @@ public class Ball {
 	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		int x = this.boxPos [0] + this.pos [0];
-		int y = this.boxPos [1] + this.pos [1];
+		int x = this.boxPos [0] + (int) this.pos [0];
+		int y = this.boxPos [1] + (int) this.pos [1];
 		context.setColor (this.fillColor);
 		context.fillOval (x, y, this.size, this.size);
 		context.setColor (this.strokeColor);
 		context.drawOval (x, y, this.size, this.size);
 	}
 
-	public void setPos (int [] pos) {
+	public void setPos (float [] pos) {
 		this.pos = pos;
 	}
 
-	public int [] getPos () {
+	public float [] getPos () {
 		return this.pos;
 	}
 

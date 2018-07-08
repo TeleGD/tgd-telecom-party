@@ -15,7 +15,7 @@ public class BallRandomPos extends Bonus {
 	public void apply (Ball ball) {
 		int start = World.WORLD_PADDING;
 		int span = this.boxSize - World.BALL_SIZE;
-		ball.setPos (new int [] {
+		ball.setPos (new float [] {
 			World.RNG.nextInt (span - World.BALL_SIZE) + start,
 			World.RNG.nextInt (span - World.BALL_SIZE) + start
 		});
