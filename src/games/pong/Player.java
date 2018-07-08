@@ -8,198 +8,67 @@ import org.newdawn.slick.state.StateBasedGame;
 import app.AppInput;
 import app.AppPlayer;
 
-public class Player {
+public class Player extends Side {
 
-	protected int id;
-
-	protected int vies;
-	protected Color couleur;
-	protected int barPosFixe;
-	protected int barPosMove;
-	private double speed;
+	private int controllerID;
 	private String name;
-	private int longueurBarre;
-	private int hauteurBarre;
 
-	private int longBarInit = 80;
-	protected int largBarInit = 8;
+	private int lives;
+	private int speed;
 
-	protected int taille;
-	protected int milieu[];
+	private String label;
+	private int [] labelPos;
 
-	public int controllerID;
+	private Color fillColor;
+	private Color strokeColor;
 
-	private boolean toucheGauche;
-	private boolean toucheDroite;
-
-	public Player(World world, int id, AppPlayer appPlayer) {
-		this(world, id);
-		controllerID = appPlayer.getControllerID ();
-		this.couleur= AppPlayer.STROKE_COLORS[appPlayer.getColorID()];
-		this.name= appPlayer.getName();
+	public Player (World world, int sideID, AppPlayer appPlayer) {
+		super (world, sideID);
+		this.controllerID = appPlayer.getControllerID ();
+		this.name = appPlayer.getName ();
+		this.setStart (this.boxSize [this.axis] / 2);
+		this.setSpan (World.PLAYER_LENGTH);
+		this.setLives (5);
+		this.setSpeed (64);
+		this.label = this.name + " : " + this.lives + " vie(s)";
+		this.labelPos = new int [] {
+			World.WORLD_MARGIN,
+			World.WORLD_MARGIN + World.SCORE_LINE_HEIGHT * sideID
+		};
+		this.fillColor = AppPlayer.STROKE_COLORS [appPlayer.getColorID ()];
+		this.strokeColor = World.WALL_COLOR;
 	}
 
-	public Player(World world, int id) {
-		this.id = id;
-		this.vies = 5;
-		this.speed = 8;
-		this.milieu = world.milieu;
-		this.taille = world.taille;
-
-		switch (id) {
-			case 0:
-				/*
-				*Joueur à gauche :
-				* - Bouge selon l'axe Y
-				* - Position fixe : bord gauche + 20
-				* - Barre verticale
-				*/
-				this.barPosFixe = world.milieu[0]-taille/2+20;
-				this.barPosMove = world.milieu[1];
-				this.longueurBarre = largBarInit;
-				this.hauteurBarre = longBarInit;
-				break;
-			case 1:
-				/*
-				*Joueur à droite :
-				* - Bouge selon l'axe Y
-				* - Position fixe : bord droit - 20
-				* - Barre verticale
-				*/
-				this.barPosFixe = world.milieu[0]+taille/2-20;
-				this.barPosMove = world.milieu[1];
-				this.longueurBarre = largBarInit;
-				this.hauteurBarre = longBarInit;
-				break;
-			case 2:
-				/*
-				*Joueur en haut :
-				* - Bouge selon l'axe X
-				* - Position fixe : bord haut + 20
-				* - Barre verticale
-				*/
-				this.barPosFixe = world.milieu[1]-taille/2+20;
-				this.barPosMove = world.milieu[0];
-				this.longueurBarre = longBarInit;
-				this.hauteurBarre = largBarInit;
-				break;
-			case 3:
-				/*
-				*Joueur en bas :
-				* - Bouge selon l'axe X
-				* - Position fixe : bord bas - 20
-				* - Barre verticale
-				*/
-				this.barPosFixe = world.milieu[1]+taille/2-20;
-				this.barPosMove = world.milieu[0];
-				this.longueurBarre = longBarInit;
-				this.hauteurBarre = largBarInit;
-				break;
-			default:
-				this.vies=0;
-				break;
-		}
-	}
-
-	public void update(GameContainer container, StateBasedGame game, int delta) {
+	public void update (GameContainer container, StateBasedGame game, int delta) {
 		AppInput appInput = (AppInput) container.getInput ();
-		if (id == 0 || id == 1) {
-			toucheGauche= appInput.isControllerUp(controllerID);
-			toucheDroite= appInput.isControllerDown(controllerID);
-		} else if (id==2||id==3) {
-			toucheGauche= appInput.isControllerLeft(controllerID);
-			toucheDroite= appInput.isControllerRight(controllerID);
-		}
-		this.move(delta);
+		this.setStart (this.getStart () + (int) (this.speed * delta * .015f * appInput.getAxisValue (this.axis, this.controllerID)));
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(couleur);
-		context.drawString(name+" : "+vies+" vies", 5, 5+id*15);
-		if (id==0 || id==1) {
-			context.fillRect(barPosFixe-longueurBarre/2, barPosMove-hauteurBarre/2, longueurBarre, hauteurBarre);
-			context.setColor(new Color(30,30,30));
-			context.drawRect(barPosFixe-longueurBarre/2, barPosMove-hauteurBarre/2, longueurBarre, hauteurBarre);
-		} else if (id==2 || id==3){
-			context.fillRect(barPosMove-longueurBarre/2, barPosFixe-hauteurBarre/2, longueurBarre, hauteurBarre);
-			context.setColor(new Color(30,30,30));
-			context.drawRect(barPosMove-longueurBarre/2, barPosFixe-hauteurBarre/2, longueurBarre, hauteurBarre);
-		}
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = this.boxPos [0] + this.pos [0];
+		int y = this.boxPos [1] + this.pos [1];
+		context.setColor (this.fillColor);
+		context.drawString (this.label, this.labelPos [0], this.labelPos [1]);
+		context.fillRect (x, y, this.size [0], this.size [1]);
+		context.setColor (this.strokeColor);
+		context.drawRect (x, y, this.size [0], this.size [1]);
 	}
 
-	public void move(int delta) {
-		if (toucheGauche && (id==2 || id==3)) {
-			if (barPosMove-longueurBarre/2-speed*delta*0.1 < milieu[0] - taille/2 + 20 ) {
-				barPosMove=milieu[0]-taille/2+20+longueurBarre/2;
-			} else {
-				barPosMove=(int) (barPosMove-speed*delta*0.1);
-			}
-		} else if (toucheDroite && (id==2 || id==3)) {
-			if (barPosMove+longueurBarre/2+speed*delta*0.1 > milieu[0] + taille/2 - 20 ) {
-				barPosMove=milieu[0]+taille/2-20-longueurBarre/2;
-			} else {
-				barPosMove=(int) (barPosMove+speed*delta*0.1);
-			}
-		} else if (toucheGauche && (id==0 || id==1)) {
-			if (barPosMove-hauteurBarre/2-speed*delta*0.1 < milieu[1] - taille/2 + 20 ) {
-				barPosMove=milieu[1]-taille/2+20+hauteurBarre/2;
-			} else {
-				barPosMove=(int) (barPosMove-speed*delta*0.1);
-			}
-		} else if (toucheDroite && (id==0 || id==1)) {
-			if (barPosMove+hauteurBarre/2+speed*delta*0.1 > milieu[1] + taille/2 - 20 ) {
-				barPosMove=milieu[1]+taille/2-20-hauteurBarre/2;
-			} else {
-				barPosMove=(int) (barPosMove+speed*delta*0.1);
-			}
-		}
+	public void setLives (int lives) {
+		this.lives = Math.max (lives, 0);
+		this.label = this.name + " : " + this.lives + " vies";
 	}
 
-	public void loseVie() {
-		this.vies--;
+	public int getLives () {
+		return lives;
 	}
 
-	public int getBarPosMove() {
-		return barPosMove;
+	public void setSpeed (int speed) {
+		this.speed = Math.max (speed, 0);
 	}
 
-	public int getBarPosFixe() {
-		return barPosFixe;
+	public int getSpeed () {
+		return this.speed;
 	}
 
-	public int getLongueurBarre() {
-		return longueurBarre;
-	}
-
-	public int getHauteurBarre() {
-		return hauteurBarre;
-	}
-
-	public int getVies() {
-		return vies;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public double getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(double d) {
-		this.speed = d;
-	}
-
-	public void setVies(int vies) {
-		this.vies = vies;
-	}
-
-	public void setLongueurBarre(int longueurBarre) {
-		this.longueurBarre = longueurBarre;
-	}
-
-	public void setHauteurBarre(int hauteurBarre) {
-		this.hauteurBarre = hauteurBarre;
-	}
 }

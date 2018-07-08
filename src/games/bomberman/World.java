@@ -111,7 +111,6 @@ public class World extends AppWorld {
 	@Override
 	public void leave (GameContainer container, StateBasedGame game) {}
 
-
 	public void end() {
 		HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();
 		for (int i=0; i<morts.size(); i++) {

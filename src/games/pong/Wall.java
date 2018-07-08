@@ -5,21 +5,21 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Wall extends Player {
+public class Wall extends Side {
 
-	public Wall(World world, int id) {
-		super(world, id);
-		this.id=~this.id;
-		this.couleur=new Color(30,30,30);
+	private Color color;
+
+	public Wall (World world, int sideID) {
+		super (world, sideID);
+		this.setSpan (this.boxSize [this.axis]);
+		this.color = World.WALL_COLOR;
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(couleur);
-		if (id==-1 || id==-2) {
-			context.fillRect(barPosFixe-largBarInit/2, barPosMove-taille/2+16, largBarInit, taille-32);
-		} else if (id==-3 || id==-4){
-			context.fillRect(barPosMove-taille/2+16, barPosFixe+largBarInit/2-8, taille-32, largBarInit);
-		}
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = this.boxPos [0] + this.pos [0];
+		int y = this.boxPos [1] + this.pos [1];
+		context.setColor (this.color);
+		context.fillRect (x, y, this.size [0], this.size [1]);
 	}
 
 }

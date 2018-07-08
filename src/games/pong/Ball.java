@@ -1,233 +1,166 @@
 package games.pong;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.util.Random;
-
 public class Ball {
 
-	private float speed;
-	private float direction[];
-	private float posX;
-	private float posY;
-	private int radius;
-	private int milieu[];
-	private int taille;
-	private Player[] players;
-	private int lastHit;
-	private int compteurNoPlayer;
-	private boolean inWall;
-	private Random r;
+	private World world;
 
-	public Ball(World world) {
-		this.milieu=world.milieu;
-		this.taille=world.taille;
-		this.players=world.players;
-		this.posX = world.milieu[0];
-		this.posY = world.milieu[1];
-		this.speed = 2;
-		this.radius = 10;
-		this.lastHit = -1;
-		this.compteurNoPlayer=0;
-		this.inWall=false;
-		r = new Random();
-		this.direction = new float[2];
+	private int [] boxPos;
+	private int boxSize;
+	private int [] pos;
+	private int size;
 
-		this.direction[0]=r.nextFloat();
-		this.direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
-		if (r.nextBoolean()) {
-			this.direction[0]=-this.direction[0];
-		}
-		if (r.nextBoolean()) {
-			this.direction[1]=-this.direction[1];
-		}
+	private float [] dir;
+	private int speed;
+
+	private int hitCount;
+	private Player lastHit;
+
+	private Color fillColor;
+	private Color strokeColor;
+
+	public Ball (World world) {
+		int start = World.WORLD_MARGIN + World.WORLD_BORDER;
+		int span = world.size - start * 2;
+		double theta = World.RNG.nextDouble () * Math.PI * 2;
+		this.world = world;
+		this.boxPos = new int [] {
+			world.pos [0] + start,
+			world.pos [1] + start
+		};
+		this.boxSize = span;
+		this.pos = new int [] {
+			(span - World.BALL_SIZE) / 2,
+			(span - World.BALL_SIZE) / 2
+		};
+		this.size = World.BALL_SIZE;
+		this.setDir (new float [] {
+			(float) Math.cos (theta),
+			(float) Math.sin (theta)
+		});
+		this.setSpeed (16);
+		this.hitCount = 0;
+		this.lastHit = null;
+		this.fillColor = World.BALL_FILL_COLOR;
+		this.strokeColor = World.BALL_STROKE_COLOR;
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-		this.collide();
-		this.move(delta);
-	}
-
-	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(new Color(200,200,200));
-		context.fillOval(posX-radius/2,posY-radius/2,radius,radius);
-		context.setColor(Color.black);
-		context.drawOval(posX-radius/2,posY-radius/2,radius,radius);
-	}
-
-	public void move(int delta) {
-		posX=(float) (posX+speed*delta*0.1*direction[0]);
-		posY=(float) (posY+speed*delta*0.1*direction[1]);
-	}
-
-	public void collide() {
-		if (!inWall && posX-radius/2<milieu[0]-taille/2+20+players[0].getLongueurBarre()/2) {
-			speed=(float) (speed+0.1);
-			inWall=true;
-			/*
-			 * A gauche
-		 	 */
-			Player p = players[0];
-			if (p.getId()<0) {
-				// Il y a un rebond sur un mur
-				direction[0]=-direction[0];
-				this.compteurNoPlayer++;
-				if (compteurNoPlayer>9) {
-					direction[1]=Math.signum(direction[1])*r.nextFloat()*0.5f+0.25f;
-					direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1])*Math.signum(direction[0]);
-					compteurNoPlayer=0;
+	public void update (GameContainer container, StateBasedGame game, int delta) {
+		float speed = this.speed * delta * .015f;
+		this.pos [0] += speed * this.dir [0];
+		this.pos [1] += speed * this.dir [1];
+		List <Player> players = this.world.getPlayers ();
+		List <Wall> walls = this.world.getWalls ();
+		List <Side> sides = new ArrayList <Side> ();
+		sides.addAll (players);
+		sides.addAll (walls);
+		List <Ball> balls = this.world.getBalls ();
+		List <Bonus> bonuses = this.world.getBonuses ();
+		for (Side side: sides) {
+			int axis0 = side.getAxis ();
+			int axis1 = axis0 ^ 1;
+			int alignment = side.getAlignment ();
+			if (alignment == 1 ? this.pos [axis1] + this.size >= this.boxSize : this.pos [axis1] < 0) {
+				if (side instanceof Wall) {
+					this.dir [axis1] *= -1;
+					if (this.hitCount > 8) {
+						double theta = World.RNG.nextDouble () * Math.PI;
+						this.dir [axis0] = (float) Math.cos (theta);
+						this.dir [axis1] = (float) Math.sin (theta) * Math.signum (this.dir [axis1]);
+						this.hitCount = 0;
+					} else {
+						this.hitCount++;
+					}
+				} else {
+					Player player = (Player) side;
+					int playerStart = player.getStart ();
+					int playerSpan = player.getSpan ();
+					if (this.pos [axis0] >= playerStart && this.pos [axis0] + this.size < playerStart + playerSpan && (alignment == 1 ? this.pos [axis1] + this.size < this.boxSize + World.WORLD_BORDER : this.pos [axis1] >= -World.WORLD_BORDER)) {
+						this.dir [axis1] *= -1;
+						double distance = (double) (this.pos [axis0] - playerStart) * 2 + this.size - playerSpan;
+						double theta = (Math.asin (this.dir [axis0]) + distance / playerSpan) / 2;
+						this.dir [axis0] = (float) Math.sin (theta);
+						this.dir [axis1] = (float) Math.cos (theta) * Math.signum (this.dir [axis1]);
+						this.lastHit = player;
+						this.hitCount = 0;
+					} else if (alignment == 1 ? this.pos [axis1] + this.size >= this.boxSize + World.WORLD_MARGIN + World.WORLD_BORDER : this.pos [axis1] < -World.WORLD_MARGIN - World.WORLD_BORDER) {
+						int playerLives = player.getLives ();
+						if (playerLives > 1) {
+							player.setLives (playerLives - 1);
+						} else if (this.world.getPlayers ().size () > 0) { // TODO: test if > 1
+							players.remove (player);
+							walls.add (new Wall (this.world, axis1 << 1 | alignment));
+						}
+						balls.remove (this);
+						if (balls.size () == 0) {
+							balls.add (new Ball (this.world));
+						}
+					}
 				}
-			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX+radius/2>milieu[0]-taille/2+20-p.getLongueurBarre()/2){
-				// Il y a rebond sur le joueur
-				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
-				direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1]);
-				lastHit=0;
-				this.compteurNoPlayer=0;
+				this.speed += 1;
 			}
-		} else if (!inWall && posX+radius/2>milieu[0]+taille/2-20-players[1].getLongueurBarre()/2) {
-			speed=(float) (speed+0.1);
-			inWall = true;
-			/*
-			 * A droite
-		 	 */
-			Player p = players[1];
-			if (p.getId()<0) {
-				// Il y a un rebond sur un mur
-				direction[0]=-direction[0];
-				this.compteurNoPlayer++;
-				if (compteurNoPlayer>9) {
-					direction[1]=Math.signum(direction[1])*r.nextFloat()*0.5f+0.25f;
-					direction[0]=(float) Math.sqrt(1-this.direction[1]*this.direction[1])*Math.signum(direction[0]);
-					compteurNoPlayer=0;
-				}
-			} else if (posY+radius/2>p.getBarPosMove()-p.getHauteurBarre()/2 && posY-radius/2<p.getBarPosMove()+p.getHauteurBarre()/2 && posX-radius/2<milieu[0]+taille/2-20+p.getLongueurBarre()/2){
-				// Il y a rebond sur le joueur
-				direction[1]=(float) (0.9*Math.sin(Math.PI/2*(posY-p.getBarPosMove())/(p.getHauteurBarre()/2)));
-				direction[0]=(float) -Math.sqrt(1-this.direction[1]*this.direction[1]);
-				lastHit=1;
-				this.compteurNoPlayer=0;
-			}
-		} else if (!inWall && posY-radius/2<milieu[1]-taille/2+20+players[2].getHauteurBarre()/2) {
-			speed=(float) (speed+0.1);
-			inWall=true;
-			/*
-			 * En haut
-		 	 */
-			Player p = players[2];
-			if (p.getId()<0) {
-				// Il y a un rebond sur un mur
-				direction[1]=-direction[1];
-				this.compteurNoPlayer++;
-				if (compteurNoPlayer>9) {
-					direction[0]=Math.signum(direction[0])*r.nextFloat()*0.5f+0.25f;
-					direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0])*Math.signum(direction[1]);
-					compteurNoPlayer=0;
-				}
-			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2>milieu[1]-taille/2+20-p.getHauteurBarre()/2){
-				// Il y a rebond sur le joueur
-				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
-				direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0]);
-				lastHit=2;
-				this.compteurNoPlayer=0;
-			}
-		} else if (!inWall && posY+radius/2>milieu[1]+taille/2-20-players[3].getHauteurBarre()/2) {
-			speed=(float) (speed+0.1);
-			inWall=true;
-			/*
-			 * En bas
-		 	 */
-			Player p = players[3];
-			if (p.getId()<0) {
-				// Il y a un rebond sur un mur
-				direction[1]=-direction[1];
-				this.compteurNoPlayer++;
-				if (compteurNoPlayer>9) {
-					direction[0]=Math.signum(direction[0])*r.nextFloat()*0.5f+0.25f;
-					direction[1]=(float) Math.sqrt(1-this.direction[0]*this.direction[0])*Math.signum(direction[1]);
-					compteurNoPlayer=0;
-				}
-			} else if (posX+radius/2>p.getBarPosMove()-p.getLongueurBarre()/2 && posX-radius/2<p.getBarPosMove()+p.getLongueurBarre()/2 && posY+radius/2<milieu[1]+taille/2-20+p.getHauteurBarre()/2){
-				// Il y a rebond sur le joueur
-				direction[0]=(float) (0.9*Math.sin(Math.PI/2*(posX-p.getBarPosMove())/(p.getLongueurBarre()/2)));
-				direction[1]=(float) -Math.sqrt(1-this.direction[0]*this.direction[0]);
-				lastHit=3;
-				this.compteurNoPlayer=0;
-			}
-		} else {
-			inWall=false;
 		}
-
-	}
-
-	public int isOut() {
-		int p = 4;
-
-		if (posX<milieu[0]-taille/2 && posY>milieu[1]-taille/2+20 && posY<milieu[1]+taille/2-20) {
-			p=0;
-		} else if (posX>milieu[0]+taille/2 && posY>milieu[1]-taille/2+20 && posY<milieu[1]+taille/2-20) {
-			p=1;
-		} else if (posY<milieu[1]-taille/2 && posX>milieu[0]-taille/2+20 && posX<milieu[0]+taille/2-20) {
-			p=2;
-		} else if (posY>milieu[1]+taille/2 && posX>milieu[0]-taille/2+20 && posX<milieu[0]+taille/2-20) {
-			p=3;
-		} else if (posX>milieu[0]-taille/2 && posX<milieu[0]+taille/2 && posY>milieu[1]-taille/2 && posY<milieu[1]+taille/2) {
-			p=-1;
+		for (int i = bonuses.size () - 1; i >= 0; i--) {
+			Bonus bonus = bonuses.get (i);
+			int [] bonusPos = bonus.getPos ();
+			int bonusSize = bonus.getSize ();
+			if (Math.hypot (bonusPos [0] - this.pos [0] + (bonusSize - this.size) / 2 + World.WORLD_PADDING, bonusPos [1] - this.pos [1] + (bonusSize - this.size) / 2 + World.WORLD_PADDING) < (bonusSize + this.size) / 2) {
+				bonus.apply (this);
+				bonuses.remove (bonus);
+			}
 		}
-		return p;
 	}
 
-	public float getSpeed() {
-		return speed;
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		int x = this.boxPos [0] + this.pos [0];
+		int y = this.boxPos [1] + this.pos [1];
+		context.setColor (this.fillColor);
+		context.fillOval (x, y, this.size, this.size);
+		context.setColor (this.strokeColor);
+		context.drawOval (x, y, this.size, this.size);
 	}
 
-	public void setSpeed(float speed) {
-		this.speed = speed;
+	public void setPos (int [] pos) {
+		this.pos = pos;
 	}
 
-	public float[] getDirection() {
-		return direction;
+	public int [] getPos () {
+		return this.pos;
 	}
 
-	public void setDirection(float[] direction) {
-		this.direction = direction;
+	public void setSize (int size) {
+		this.size = size;
 	}
 
-	public float getPosX() {
-		return posX;
+	public int getSize () {
+		return this.size;
 	}
 
-	public void setPosX(float posX) {
-		this.posX = posX;
+	public void setDir (float [] dir) {
+		this.dir = dir;
 	}
 
-	public float getPosY() {
-		return posY;
+	public float [] getDir () {
+		return this.dir;
 	}
 
-	public void setPosY(float posY) {
-		this.posY = posY;
+	public void setSpeed (int speed) {
+		this.speed = Math.max (speed, 0);
 	}
 
-	public int getRadius() {
-		return radius;
+	public int getSpeed () {
+		return this.speed;
 	}
 
-	public void setRadius(int radius) {
-		this.radius = radius;
+	public Player getLastHit () {
+		return this.lastHit;
 	}
 
-	public Player[] getPlayers() {
-		return players;
-	}
-
-	public int getLastHit() {
-		return lastHit;
-	}
-
-	public int getCompteurNoPlayer() {
-		return compteurNoPlayer;
-	}
 }
