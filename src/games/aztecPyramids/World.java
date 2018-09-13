@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -27,6 +28,7 @@ public class World extends BasicGameState {
 	private static Image aztecHead2;
 	private static Image aztecHead3;
 	private static Image aztecHead4;
+	private static Music soundMusicBackground;
 
 	public Player tabPlay[];
 
@@ -39,6 +41,7 @@ public class World extends BasicGameState {
 			aztecHead2 = new Image(DIRECTORY_IMAGES+"pinkhead.png");
 			aztecHead3 = new Image(DIRECTORY_IMAGES+"yellowhead.png");
 			aztecHead4 = new Image(DIRECTORY_IMAGES+"greenhead.png");
+			soundMusicBackground=new Music(DIRECTORY_SOUNDS+"Kinski-Song.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -61,6 +64,7 @@ public class World extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		soundMusicBackground.loop(1,1f);
 	}
 
 	public void startGame(){
