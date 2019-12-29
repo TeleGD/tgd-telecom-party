@@ -11,10 +11,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppFont;
 import app.AppGame;
 import app.AppInput;
+import app.AppLoader;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
@@ -22,7 +23,7 @@ public class World extends AppWorld {
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static TrueTypeFont Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 20, true);
+	public final static TrueTypeFont Font = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 20);
 
 	public static Image fondPlateforme;
 	public static Image fond;
@@ -53,10 +54,6 @@ public class World extends AppWorld {
 
 	public World (int ID) {
 		super (ID);
-	}
-
-	@Override
-	public void init(GameContainer container, StateBasedGame game) {
 	}
 
 	@Override

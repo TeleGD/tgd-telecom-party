@@ -1,4 +1,4 @@
-package hub;
+package games.telecomParty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import app.AppWorld;
 // import app.ui.Button;
 // import app.ui.TGDComponent;
 // import app.ui.TGDComponent.OnClickListener;
-import hub.cases.Remi;
+import games.telecomParty.cases.Remi;
 
 public class World extends AppWorld {
 
@@ -43,7 +43,7 @@ public class World extends AppWorld {
 		gridHeight = 64;
 		gridGap = 16;
 		listeRemis = new ArrayList<Remi>();
-		this.track = new SpiralTrack (this, 70);
+		this.track = new SpiralTrack(container, this, 70);
 
 		this.numJoueurEnCours = 0; // numéro du joueur à qui c'est le tour
 	}
@@ -52,16 +52,16 @@ public class World extends AppWorld {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		super.update (container, game, delta);
 		AppInput appInput = (AppInput) container.getInput ();
-		
+
 		Player joueurEnCours = listeJoueurs.get(numJoueurEnCours);
-		
+
 		if (appInput.isControlPressed(AppInput.BUTTON_A, joueurEnCours.getControllerID())) {
-			
+
 			appInput.clearControlPressedRecord();
-			 
+
 			joueurEnCours.playRound(); // Lance le tour du joueur à qui c'est le tour
 			numJoueurEnCours ++;
-			numJoueurEnCours %= listeJoueurs.size(); // Permet de reboucler 
+			numJoueurEnCours %= listeJoueurs.size(); // Permet de reboucler
 			if (numJoueurEnCours == 0) {	// Lorsque tout le monde a joué
 				// TODO : lancer un mini-jeu ici
 				System.out.println("mini-jeu !");
@@ -70,7 +70,7 @@ public class World extends AppWorld {
 		for (Player p: this.listeJoueurs) {
 			p.update (container, game, delta);
 		}
-		
+
 	}
 
 	@Override
@@ -89,14 +89,8 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		this.listeJoueurs = new ArrayList <Player> (); // initialisation de listeJoueur
 		for (AppPlayer appPlayer: ((AppGame) game).appPlayers) {
-			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/hub/pion.png"));
+			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/telecomParty/pion.png"));
 		}
-	}
-	
-	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
-		AppInput appInput = (AppInput) container.getInput ();
-		appInput.clearControlPressedRecord();
 	}
 
 	public SpiralTrack getTrack () {

@@ -5,50 +5,24 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class World extends BasicGameState {
+import app.AppState;
 
-	private int ID;
+public class World extends AppState {
 
-	public World (int ID) {
-		this.ID = ID;
+	public World(int ID) {
+		super(ID);
 	}
 
 	@Override
-	public int getID () {
-		return this.ID;
-	}
+	public void init(GameContainer container, StateBasedGame game) {}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1) {
-
-	}
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game){
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-	}
-
-	public void startGame(){
-	}
-
-	public void startAgain(){
-	}
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-	}
-
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-
-	}
-
-	@Override
-	public void keyReleased(int key, char c) {
-	}
+	public void update(GameContainer container, StateBasedGame game, int delta) {}
 
 	@Override
 	public void keyPressed(int key, char c) {

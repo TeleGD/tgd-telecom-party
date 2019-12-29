@@ -1,4 +1,4 @@
-package hub;
+package games.telecomParty;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -36,7 +36,7 @@ public class Case {
 	public Case (World plateau, int id, int x, int y, int type) {
 		this.plateau = plateau;
 		this.type = type;
-		// sprite=new Image("images/hub/case" + id + ".jpg");
+		// sprite=new Image("images/telecomParty/case" + id + ".jpg");
 		this.x = x;
 		this.y = y;
 		this.id = id;
@@ -95,11 +95,11 @@ public class Case {
 	public float getY () {
 		return y;
 	}
-	
+
 	public void doEffect(Player p) {
-		
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}

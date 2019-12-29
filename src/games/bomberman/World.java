@@ -72,9 +72,6 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) {}
-
-	@Override
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		AppInput appInput = (AppInput) container.getInput ();
@@ -104,12 +101,6 @@ public class World extends AppWorld {
 	public void resume (GameContainer container, StateBasedGame game) {
 		music.resume ();
 	}
-
-	@Override
-	public void enter (GameContainer container, StateBasedGame game) {}
-
-	@Override
-	public void leave (GameContainer container, StateBasedGame game) {}
 
 	public void end() {
 		HashMap<Integer,Integer> classement = new HashMap<Integer,Integer>();

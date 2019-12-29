@@ -1,4 +1,4 @@
-package hub;
+package games.telecomParty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.newdawn.slick.GameContainer;
+
 import app.AppGame;
-import hub.cases.Remi;
+import games.telecomParty.cases.Remi;
 
 public class SpiralTrack {
 
@@ -17,14 +19,14 @@ public class SpiralTrack {
 	private int dx;
 	private int dy;
 
-	public SpiralTrack (World plateau, int length) {
+	public SpiralTrack (GameContainer container, World plateau, int length) {
 		assert length >= 0;
 		this.plateau = plateau;
 		this.length = length;
 		this.cases = new Case [length];
 		// Décalage pour centrer la spirale
-		dx = (AppGame.width - this.plateau.getGridWidth()) / 2;
-		dy = (AppGame.height - this.plateau.getGridHeight()) / 2;
+		dx = (container.getWidth() - this.plateau.getGridWidth()) / 2;
+		dy = (container.getHeight() - this.plateau.getGridHeight()) / 2;
 
 		ArrayList<Integer> typeCases = createTrack();
 
@@ -33,12 +35,12 @@ public class SpiralTrack {
 			int type = typeCases.get(i);
 			switch(type) {
 				case 0 : this.cases [i] = new Case (plateau, i,coord[0],coord[1],type); break;
-				case 1 : this.cases [i] = new Remi (plateau, i,coord[0],coord[1],type); 
+				case 1 : this.cases [i] = new Remi (plateau, i,coord[0],coord[1],type);
 						plateau.getListeRemis().add((Remi) this.cases[i]);
 						break;
-				
+
 				default : this.cases [i] = new Case (plateau, i,coord[0],coord[1],type); break;
-					
+
 			}
 		}
 

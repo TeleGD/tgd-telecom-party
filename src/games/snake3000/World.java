@@ -1,4 +1,4 @@
-package games.snake;
+package games.snake3000;
 
 import java.util.Random;
 import java.io.File;
@@ -14,9 +14,10 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppFont;
 import app.AppGame;
+import app.AppLoader;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
@@ -30,11 +31,11 @@ public class World extends AppWorld {
 	private ArrayList<Snake> snakes;
 	private ArrayList<Snake> morts;
 
-	public final static String GAME_FOLDER_NAME="snake";
+	public final static String GAME_FOLDER_NAME="snake3000";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public static final TrueTypeFont Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 20, true);
+	public static final TrueTypeFont Font = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 20);
 
 	private boolean jeuTermine;
 
@@ -65,15 +66,6 @@ public class World extends AppWorld {
 
 	public World (int ID) {
 		super (ID);
-	}
-
-	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) {
-	}
-
-	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
-		soundMusicBackground.loop(1,0.3f);
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -249,6 +241,7 @@ public class World extends AppWorld {
 		}
 		this.bonus = new ArrayList <Bonus> ();
 		this.jeuTermine=false;
+		soundMusicBackground.loop(1,0.3f);
 	}
 
 	@Override

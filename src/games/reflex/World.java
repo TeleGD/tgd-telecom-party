@@ -9,36 +9,27 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
+import app.AppFont;
+import app.AppLoader;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 
 
-	
+
 	/*idees :
 	 *rajouter un malus si on appuie mal
 	 */
-	
+
 
 
 public class World extends AppWorld {
 
-	public static final Font BUTTON_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
+	public static final Font BUTTON_FONT = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 18);
 	protected final static int GOAL=20;
 	private ArrayList<Player> players;
 
 	public World (int ID) {
 		super (ID);
-	}
-
-	@Override
-	public void init(GameContainer container, StateBasedGame game) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void enter(GameContainer container, StateBasedGame game) {
-
 	}
 
 	@Override

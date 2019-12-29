@@ -14,9 +14,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppFont;
 import app.AppGame;
+import app.AppLoader;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
@@ -24,7 +25,7 @@ public class World extends AppWorld {
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public static final Font Font = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 18, true);
+	public static final Font Font = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 18);
 
 	private List<Player> players;
 	private List<Player> morts;
@@ -58,12 +59,6 @@ public class World extends AppWorld {
 	public void init(GameContainer container, StateBasedGame game) {
 		width=container.getWidth();
 		height=container.getHeight();
-	}
-
-	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		music.loop();
 	}
 
 	@Override
@@ -157,6 +152,7 @@ public class World extends AppWorld {
 		for (int i = 0; i < nbJoueursInit; i++) {
 			this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 		}
+		music.loop();
 	}
 
 	@Override

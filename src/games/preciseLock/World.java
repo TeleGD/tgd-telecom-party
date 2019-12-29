@@ -22,10 +22,6 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) {
-	}
-
-	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		for (Player p : players) {
 			p.render(container, game, context);

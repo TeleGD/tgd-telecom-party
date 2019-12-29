@@ -13,9 +13,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.EmptyImageData;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppFont;
 import app.AppGame;
+import app.AppLoader;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 import games.pong.bonuses.BallRandomDir;
 import games.pong.bonuses.BallRandomPos;
@@ -43,10 +44,10 @@ public class World extends AppWorld {
 	public static final Color BALL_STROKE_COLOR = new Color (0f, 0f, 0f);
 
 	public static final int BONUS_SIZE = 24;
-	public static final Font BONUS_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.PLAIN, 16, true);
+	public static final Font BONUS_FONT = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.PLAIN, 16);
 
 	public static final int SCORE_LINE_HEIGHT = 32;
-	public static final Font SCORE_FONT = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 16, true);
+	public static final Font SCORE_FONT = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 16);
 
 	public static final int PLAYER_LENGTH = 80;
 	public static final Color WALL_COLOR = new Color (.2f, .2f, .2f);
@@ -88,11 +89,6 @@ public class World extends AppWorld {
 			(height - size) / 2
 		};
 		this.size = size;
-	}
-
-	@Override
-	public void enter (GameContainer container, StateBasedGame game) {
-		container.getInput ().clearKeyPressedRecord ();
 	}
 
 	@Override

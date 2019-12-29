@@ -1,4 +1,4 @@
-package hub;
+package games.telecomParty;
 
 import org.newdawn.slick.Image;
 //import org.newdawn.slick.Music;
@@ -70,8 +70,8 @@ public class Player {
 		//TODO : affiche résultat du dé
 		System.out.println("Joueur " + controllerID + "Avance de " + playerDice.getValue());
 		avance(playerDice.getValue());
-		
-		// Phase 2 : 
+
+		// Phase 2 :
 		plateau.getTrack().getCase(place).doEffect(this); // On applique l'effet de la case d'arrivée
 
 	}
@@ -91,7 +91,7 @@ public class Player {
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
-	
+
 	public int getControllerID() {
 		return controllerID;
 	}

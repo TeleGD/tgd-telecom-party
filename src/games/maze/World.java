@@ -30,9 +30,6 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) {}
-
-	@Override
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
@@ -46,12 +43,6 @@ public class World extends AppWorld {
 		}
 		timer = 90000; //temps de la partie (90s)
 	}
-
-	@Override
-	public void enter (GameContainer container, StateBasedGame game) {}
-
-	@Override
-	public void leave (GameContainer container, StateBasedGame game) {}
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {

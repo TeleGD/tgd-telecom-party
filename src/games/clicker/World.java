@@ -12,15 +12,16 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppFont;
 import app.AppGame;
 import app.AppInput;
+import app.AppLoader;
 import app.AppPlayer;
 import app.AppWorld;
-import app.utils.FontUtils;
 
 public class World extends AppWorld {
 
-	public static final Font Font = FontUtils.loadFont("Kalinga", java.awt.Font.BOLD, 18, true);
+	public static final Font Font = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 18);
 	public final static String GAME_FOLDER_NAME="clicker";
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	private ArrayList<Player> players;
@@ -47,14 +48,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		// TODO Auto-generated method stub
 		if (finished) {
 			context.setFont(Font);
 			for (int i = players.size() - 1; i >= 0; i--) {

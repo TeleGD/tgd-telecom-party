@@ -1,4 +1,4 @@
-package hub;
+package games.telecomParty;
 
 import java.util.Random;
 //import org.newdawn.slick.Image;

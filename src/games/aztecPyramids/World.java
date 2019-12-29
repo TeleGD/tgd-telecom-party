@@ -8,12 +8,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class World extends BasicGameState {
+import app.AppState;
 
-	private int ID;
+public class World extends AppState {
+
 	private int compteur;
 
 	public final static String GAME_FOLDER_NAME="aztecPyramids";
@@ -41,19 +41,14 @@ public class World extends BasicGameState {
 			aztecHead2 = new Image(DIRECTORY_IMAGES+"pinkhead.png");
 			aztecHead3 = new Image(DIRECTORY_IMAGES+"yellowhead.png");
 			aztecHead4 = new Image(DIRECTORY_IMAGES+"greenhead.png");
-			soundMusicBackground=new Music(DIRECTORY_SOUNDS+"Kinski-Song.ogg");
+			soundMusicBackground=new Music(DIRECTORY_MUSICS+"Kinski-Song.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public World (int ID) {
-		this.ID = ID;
-	}
-
-	@Override
-	public int getID () {
-		return this.ID;
+	public World(int ID) {
+		super(ID);
 	}
 
 	@Override
@@ -65,12 +60,6 @@ public class World extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		soundMusicBackground.loop(1,1f);
-	}
-
-	public void startGame(){
-	}
-
-	public void startAgain(){
 	}
 
 	@Override
@@ -153,10 +142,6 @@ public class World extends BasicGameState {
 			g.drawString("Terminé",500,250);
 		}
 
-	}
-
-	@Override
-	public void keyReleased(int key, char c) {
 	}
 
 	@Override
