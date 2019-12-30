@@ -73,11 +73,6 @@ public class Games extends AppMenu {
 					game.enterState(AppGame.PAGES_PLAYERS);
 				}
 			},
-			new MenuItem(AppGame.TITLES[AppGame.GAMES_KOMTUVE_WORLD]) {
-				public void itemSelected() {
-					game.enterState(AppGame.GAMES_KOMTUVE_WORLD);
-				}
-			},
 			new MenuItem(AppGame.TITLES[AppGame.GAMES_MAZE_WORLD]) {
 				public void itemSelected() {
 					Players players = (Players) game.getState(AppGame.PAGES_PLAYERS);

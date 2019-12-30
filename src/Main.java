@@ -46,7 +46,6 @@ public final class Main {
 				this.addState(new games.bomberman.World(AppGame.GAMES_BOMBERMAN_WORLD));
 				this.addState(new games.clicker.World(AppGame.GAMES_CLICKER_WORLD));
 				this.addState(new games.codeFall.World(AppGame.GAMES_CODE_FALL_WORLD));
-				this.addState(new games.komtuve.World(AppGame.GAMES_KOMTUVE_WORLD));
 				this.addState(new games.maze.World(AppGame.GAMES_MAZE_WORLD));
 				this.addState(new games.pacmanBattle.World(AppGame.GAMES_PACMAN_BATTLE_WORLD));
 				this.addState(new games.pathPainting.World(AppGame.GAMES_PATH_PAINTING_WORLD));
