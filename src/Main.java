@@ -42,7 +42,6 @@ public final class Main {
 				this.addState(new pages.Players(AppGame.PAGES_PLAYERS));
 				this.addState(new pages.Pause(AppGame.PAGES_PAUSE));
 				this.addState(new games.telecomParty.World(AppGame.GAMES_TELECOM_PARTY_WORLD));
-				this.addState(new games.aztecPyramids.World(AppGame.GAMES_AZTEC_PYRAMIDS_WORLD));
 				this.addState(new games.bomberman.World(AppGame.GAMES_BOMBERMAN_WORLD));
 				this.addState(new games.clicker.World(AppGame.GAMES_CLICKER_WORLD));
 				this.addState(new games.codeFall.World(AppGame.GAMES_CODE_FALL_WORLD));

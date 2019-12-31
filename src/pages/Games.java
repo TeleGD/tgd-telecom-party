@@ -35,11 +35,6 @@ public class Games extends AppMenu {
 					game.enterState(AppGame.PAGES_PLAYERS);
 				}
 			},
-			new MenuItem(AppGame.TITLES[AppGame.GAMES_AZTEC_PYRAMIDS_WORLD]) {
-				public void itemSelected() {
-					game.enterState(AppGame.GAMES_AZTEC_PYRAMIDS_WORLD);
-				}
-			},
 			new MenuItem(AppGame.TITLES[AppGame.GAMES_BOMBERMAN_WORLD]) {
 				public void itemSelected() {
 					Players players = (Players) game.getState(AppGame.PAGES_PLAYERS);
