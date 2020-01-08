@@ -1,3 +1,13 @@
+GAMES = bomberman clicker code-fall maze pacman-battle path-painting pong precise-lock reflex
+PACKAGES = bomberman clicker codeFall maze pacmanBattle pathPainting pong preciseLock reflex
+ASSETS = data fonts images musics sounds
+
+install:
+	bash install.sh '$(GAMES)' '$(PACKAGES)' '$(ASSETS)'
+
+uninstall:
+	bash uninstall.sh '$(GAMES)' '$(PACKAGES)' '$(ASSETS)'
+
 build:
 	mkdir -p bin
 	javac -d bin -cp src:res:lib/common/*:lib/x86/* src/Main.java
@@ -44,4 +54,4 @@ clean:
 	rm -r -f tmp/*
 	rm -r -f zip/*
 
-.PHONY: build run run-arm archive exec exec-arm clean
+.PHONY: install uninstall build run run-arm archive exec exec-arm clean
