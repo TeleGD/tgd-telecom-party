@@ -134,24 +134,24 @@ public class Games extends AppMenu {
 					game.enterState(AppGame.PAGES_PLAYERS);
 				}
 			},
-			new MenuItem(AppGame.TITLES[AppGame.GAMES_SNAKE3000_WORLD]) {
+			new MenuItem(AppGame.TITLES[AppGame.GAMES_SNAKE3001_WORLD]) {
 				public void itemSelected() {
 					Players players = (Players) game.getState(AppGame.PAGES_PLAYERS);
 					Pause pause = (Pause) game.getState(AppGame.PAGES_PAUSE);
 					players.setPreviousID(AppGame.PAGES_GAMES);
-					players.setNextID(AppGame.GAMES_SNAKE3000_WORLD);
-					pause.setPreviousID(AppGame.GAMES_SNAKE3000_WORLD);
+					players.setNextID(AppGame.GAMES_SNAKE3001_WORLD);
+					pause.setPreviousID(AppGame.GAMES_SNAKE3001_WORLD);
 					pause.setNextID(AppGame.PAGES_GAMES);
 					game.enterState(AppGame.PAGES_PLAYERS);
 				}
 			},
-			new MenuItem(AppGame.TITLES[AppGame.GAMES_T7_LASER_WORLD]) {
+			new MenuItem(AppGame.TITLES[AppGame.GAMES_T7_MASER_WORLD]) {
 				public void itemSelected() {
 					Players players = (Players) game.getState(AppGame.PAGES_PLAYERS);
 					Pause pause = (Pause) game.getState(AppGame.PAGES_PAUSE);
 					players.setPreviousID(AppGame.PAGES_GAMES);
-					players.setNextID(AppGame.GAMES_T7_LASER_WORLD);
-					pause.setPreviousID(AppGame.GAMES_T7_LASER_WORLD);
+					players.setNextID(AppGame.GAMES_T7_MASER_WORLD);
+					pause.setPreviousID(AppGame.GAMES_T7_MASER_WORLD);
 					pause.setNextID(AppGame.PAGES_GAMES);
 					game.enterState(AppGame.PAGES_PLAYERS);
 				}

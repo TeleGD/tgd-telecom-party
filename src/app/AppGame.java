@@ -25,8 +25,8 @@ public abstract class AppGame extends StateBasedGame {
 	public static final int GAMES_PONG_WORLD = 11;
 	public static final int GAMES_PRECISE_LOCK_WORLD = 12;
 	public static final int GAMES_REFLEX_WORLD = 13;
-	public static final int GAMES_SNAKE3000_WORLD = 14;
-	public static final int GAMES_T7_LASER_WORLD = 15;
+	public static final int GAMES_SNAKE3001_WORLD = 14;
+	public static final int GAMES_T7_MASER_WORLD = 15;
 
 	public static final String[] TITLES = new String[] {
 		"Accueil",
@@ -43,8 +43,8 @@ public abstract class AppGame extends StateBasedGame {
 		"Pong",
 		"Precise Lock",
 		"Reflex",
-		"Snake3000",
-		"T7 Laser"
+		"Snake3001",
+		"T7 Maser"
 	};
 
 	public List<AppPlayer> appPlayers;

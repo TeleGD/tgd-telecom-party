@@ -1,5 +1,5 @@
-GAMES = bomberman clicker code-fall maze pacman-battle path-painting pong precise-lock reflex
-PACKAGES = bomberman clicker codeFall maze pacmanBattle pathPainting pong preciseLock reflex
+GAMES = bomberman clicker code-fall maze pacman-battle path-painting pong precise-lock reflex snake3001 t7-maser
+PACKAGES = bomberman clicker codeFall maze pacmanBattle pathPainting pong preciseLock reflex snake3001 t7Maser
 ASSETS = data fonts images musics sounds
 
 install:

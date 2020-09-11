@@ -51,8 +51,8 @@ public final class Main {
 				this.addState(new games.pong.World(AppGame.GAMES_PONG_WORLD));
 				this.addState(new games.preciseLock.World(AppGame.GAMES_PRECISE_LOCK_WORLD));
 				this.addState(new games.reflex.World(AppGame.GAMES_REFLEX_WORLD));
-				this.addState(new games.snake3000.World(AppGame.GAMES_SNAKE3000_WORLD));
-				this.addState(new games.t7Laser.World(AppGame.GAMES_T7_LASER_WORLD));
+				this.addState(new games.snake3001.World(AppGame.GAMES_SNAKE3001_WORLD));
+				this.addState(new games.t7Maser.World(AppGame.GAMES_T7_MASER_WORLD));
 			}
 
 		};
