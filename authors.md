@@ -1,5 +1,5 @@
 - Amos George (@AmosGeorge)
 - David Forlen (@DavidForlen)
 - Nathan Barloy (@nathanBarloy)
-- Tristan Le Godais (@TrisTOON)
+- Tristan Le Godais (@PolariTOON)
 - Xavier Indice (@XavierIndice)

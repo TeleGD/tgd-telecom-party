@@ -6,7 +6,6 @@ import java.util.List;
 // import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
@@ -89,7 +88,7 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		this.listeJoueurs = new ArrayList <Player> (); // initialisation de listeJoueur
 		for (AppPlayer appPlayer: ((AppGame) game).appPlayers) {
-			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "images/telecomParty/pion.png"));
+			this.listeJoueurs.add (new Player (this, appPlayer.getColorID (), appPlayer.getControllerID (), appPlayer.getName (), "/images/telecomParty/pion.png"));
 		}
 	}
 

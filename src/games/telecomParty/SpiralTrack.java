@@ -1,14 +1,10 @@
 package games.telecomParty;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 
-import app.AppGame;
 import games.telecomParty.cases.Remi;
 
 public class SpiralTrack {

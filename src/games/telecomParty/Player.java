@@ -1,11 +1,11 @@
 package games.telecomParty;
 
 import org.newdawn.slick.Image;
-//import org.newdawn.slick.Music;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 public class Player {
 
@@ -26,13 +26,8 @@ public class Player {
 		this.colorID = colorID;
 		this.controllerID = controllerID;
 		this.name = name;
-		try {
-			sprite = new Image(nameSprite);
-			sprite = sprite.getScaledCopy( (int) (plateau.getGridHeight()*0.9), (int) (plateau.getGridWidth()*0.9) );
-		} catch (SlickException e) {
-			// nous donne la trace de l'erreur si on ne peut charger l'image correctement
-			e.printStackTrace();
-		}
+		sprite = AppLoader.loadPicture(nameSprite);
+		sprite = sprite.getScaledCopy( (int) (plateau.getGridHeight()*0.9), (int) (plateau.getGridWidth()*0.9) );
 	}
 
 	public void render(GameContainer container,StateBasedGame game, Graphics g) {
