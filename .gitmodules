@@ -1,0 +1,33 @@
+[submodule "ext/tgd-bomberman"]
+	path = ext/tgd-bomberman
+	url = https://github.com/TeleGD/tgd-bomberman
+[submodule "ext/tgd-clicker"]
+	path = ext/tgd-clicker
+	url = https://github.com/TeleGD/tgd-clicker
+[submodule "ext/tgd-code-fall"]
+	path = ext/tgd-code-fall
+	url = https://github.com/TeleGD/tgd-code-fall
+[submodule "ext/tgd-maze"]
+	path = ext/tgd-maze
+	url = https://github.com/TeleGD/tgd-maze
+[submodule "ext/tgd-pacman-battle"]
+	path = ext/tgd-pacman-battle
+	url = https://github.com/TeleGD/tgd-pacman-battle
+[submodule "ext/tgd-path-painting"]
+	path = ext/tgd-path-painting
+	url = https://github.com/TeleGD/tgd-path-painting
+[submodule "ext/tgd-pong"]
+	path = ext/tgd-pong
+	url = https://github.com/TeleGD/tgd-pong
+[submodule "ext/tgd-precise-lock"]
+	path = ext/tgd-precise-lock
+	url = https://github.com/TeleGD/tgd-precise-lock
+[submodule "ext/tgd-reflex"]
+	path = ext/tgd-reflex
+	url = https://github.com/TeleGD/tgd-reflex
+[submodule "ext/tgd-snake3001"]
+	path = ext/tgd-snake3001
+	url = https://github.com/TeleGD/tgd-snake3001
+[submodule "ext/tgd-t7-maser"]
+	path = ext/tgd-t7-maser
+	url = https://github.com/TeleGD/tgd-t7-maser
