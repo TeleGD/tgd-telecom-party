@@ -2,24 +2,25 @@
 games=$1
 packages=($2)
 assets=$3
-mkdir -p tmp
-cd tmp
 for game in $games
 do
-	wget -O tgd-$game-master.zip https://codeload.github.com/TeleGD/tgd-$game/zip/master
-	jar xvf tgd-$game-master.zip
-	rm -r -f ../src/games/$packages
-	mv tgd-$game-master/src/games/$packages ../src/games
+	cd ext/tgd-$game
+	git pull
+	cd ../..
+	rm -r -f src/games/$packages
+	cd src/games
+	ln -s ../../ext/tgd-$game/src/games/$packages $packages
+	cd ../..
 	for asset in $assets
 	do
-		mkdir -p ../res/$asset
-		rm -r -f ../res/$asset/$packages
-		if [[ -d tgd-$game-master/res/$asset/$packages && ! -L tgd-$game-master/res/$asset/$packages ]]
+		mkdir -p res/$asset
+		rm -r -f res/$asset/$packages
+		if [[ -d ext/tgd-$game/res/$asset/$packages && ! -L ext/tgd-$game/res/$asset/$packages ]]
 		then
-			mv tgd-$game-master/res/$asset/$packages ../res/$asset
+			cd res/$asset
+			ln -s ../../ext/tgd-$game/res/$asset/$packages $packages
+			cd ../..
 		fi
 	done
-	rm -r -f tgd-$game-master.zip
-	rm -r -f tgd-$game-master
 	packages=(${packages[@]:1})
 done
