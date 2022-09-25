@@ -4,9 +4,6 @@ packages=($2)
 assets=$3
 for game in $games
 do
-	cd ext/tgd-$game
-	git pull
-	cd ../..
 	rm -r -f src/games/$packages
 	cd src/games
 	ln -s ../../ext/tgd-$game/src/games/$packages $packages
